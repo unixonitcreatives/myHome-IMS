@@ -19,4 +19,7 @@ Connected to database <strong>xAcmiyzWOF</strong> Succesful!<br>
 
 <br><strong>MyHome Login:</strong>
 <br>username: joff
-<br>password: joff
+<br>password: 1234567
+<br>
+<br>username: vince
+<br>password: 1234567
