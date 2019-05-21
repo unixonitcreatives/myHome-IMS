@@ -105,14 +105,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="../admin/add-users.php">Add Users</a></li>
-                                <li><a href="../admin/manage-users.php">Manage Users</a></li>
+                                <li><a href="user-add.php">Add Users</a></li>
+                                <li><a href="user-manage.php">Manage Users</a></li>
                             </ul>
                         </li>
 
-                        <li><a href="#"><i class="fa fa-pie-chart"></i> <span>Reports</span></a>
+                        <li><a href="report.php"><i class="fa fa-pie-chart"></i> <span>Reports</span></a>
                         </li>
 
-                        <li><a href="#"><i class="fa fa-superpowers"></i> <span>Support</span></a>
+                        <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
                         </li>
                     </ul>
