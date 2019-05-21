@@ -143,7 +143,7 @@ body {
   <div class="login-box-body">
     
     <img class="img-responsive pad" src="dist/img/logo-01.png">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Sign in your credentials</p>
 
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
