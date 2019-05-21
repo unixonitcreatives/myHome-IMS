@@ -141,8 +141,8 @@ body {
   
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <div class="login-logo">
-    <a href="index.php"><b>MyHome</b>IMS</a></div>
+    
+    <img class="img-responsive pad" src="dist/img/logo-01.png">
     <p class="login-box-msg">Sign in to start your session</p>
 
 
