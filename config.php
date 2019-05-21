@@ -15,4 +15,9 @@ if($link === false){
 }
 ?>
 
-Connected Succesful!
+Connected to database <strong>xAcmiyzWOF</strong> Succesful!<br>
+
+<br><strong>MyHome Login:</strong>
+<br>username: joff
+<br>password: joff
+
