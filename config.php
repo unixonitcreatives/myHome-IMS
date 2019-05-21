@@ -1,10 +1,10 @@
 <?php
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'root');
-define('DB_NAME', 'myhome_database');
+define('DB_SERVER', '69.195.124.192');
+define('DB_USERNAME', 'longrich_myhome');
+define('DB_PASSWORD', 'myhome');
+define('DB_NAME', 'longrich_myhome_db');
  
 /* Attempt to connect to MySQL database */
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("POTA");
