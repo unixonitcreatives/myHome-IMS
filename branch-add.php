@@ -110,7 +110,56 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </section>
 
     <!-- Main content -->
+<section class="content">
+    <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Branch's Information</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Branch Name</label>
+                  <input type="text" class="form-control" placeholder="Branch">
+                </div>
 
+                <div class="form-group">
+                  <label>Branch ID</label>
+                  <input type="text" class="form-control" placeholder="Branch ID">
+                </div>
+
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input type="text" class="form-control" placeholder="Phone">
+                </div>
+
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" class="form-control" placeholder="Email">
+                </div>
+
+                <div class="form-group">
+                  <label>Address</label>
+                  <input type="text" class="form-control" placeholder="Address">
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+
+
+        </div>
+    <!-- /.content -->
+  </div>
+</section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
