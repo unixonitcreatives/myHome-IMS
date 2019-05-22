@@ -16,30 +16,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <div class="pull-left info">
           <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
           <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> 
-            <?php
-                function is_connected()
-                {
-                    $connected = @fsockopen("www.example.com", 80); 
-                                                        //website, port  (try 80 or 443)
-                    if ($connected){
-                        $is_conn = true; //action when connected
-                        echo "Online";
-                        fclose($connected);
-                    }else{
-
-                        $is_conn = false; //action in connection failure
-                        echo "Offline";
-                    }
-                    return $is_conn;
-
-                }
-                ?>
-
-
-
-
-
+          <a href="#"><i class="fa fa-circle text-success"></i> Online
           </a>
         </div>
       </div>
