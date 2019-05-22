@@ -110,7 +110,75 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </section>
 
     <!-- Main content -->
+    <section class="content">
+         <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Product Information</h3>
 
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+
+            <form role="form">
+                <div class="col-md-6">
+                  <!-- 1st column content -->
+                      <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" class="form-control" placeholder="Product Name">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Product Description</label>
+                        <input type="text" class="form-control" placeholder="Product Description">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Product ID</label>
+                        <input type="text" class="form-control" placeholder="Product ID">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Branch ID</label>
+                        <input type="text" class="form-control" placeholder="Branch ID">
+                      </div>
+                      </div>
+
+                <div class="col-md-6">
+                  <!-- 2nd column content -->
+                      <div class="form-group">
+                        <label>Stock Count</label>
+                        <input type="text" class="form-control" placeholder="Stock Count">
+                      </div>
+
+                      <div class="form-group">
+                        <label>SKU</label>
+                        <input type="text" class="form-control" placeholder="SKU">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Note</label>
+                        <input type="text" class="form-control" placeholder="Note">
+                      </div>
+                </div>
+            </form>
+          </div>
+
+        </div>
+  
+        <div class="box-footer">
+          <!-- Buttons -->
+           <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+
+    <!-- /.content -->
+  </div>
+</section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
