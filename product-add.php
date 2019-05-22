@@ -128,6 +128,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <div class="col-md-6">
                   <!-- 1st column content -->
                       <div class="form-group">
+                        <label>Product ID</label>
+                        <input type="text" class="form-control" placeholder="Product ID">
+                      </div>
+
+                      <div class="form-group">
                         <label>Product Name</label>
                         <input type="text" class="form-control" placeholder="Product Name">
                       </div>
@@ -138,22 +143,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       </div>
 
                       <div class="form-group">
-                        <label>Product ID</label>
-                        <input type="text" class="form-control" placeholder="Product ID">
-                      </div>
-
-                      <div class="form-group">
                         <label>Branch ID</label>
                         <input type="text" class="form-control" placeholder="Branch ID">
                       </div>
-                      </div>
-
-                <div class="col-md-6">
-                  <!-- 2nd column content -->
                       <div class="form-group">
                         <label>Stock Count</label>
                         <input type="text" class="form-control" placeholder="Stock Count">
                       </div>
+
+                  </div>
+
+                <div class="col-md-6">
+                  <!-- 2nd column content -->
+                      
 
                       <div class="form-group">
                         <label>SKU</label>
