@@ -115,10 +115,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <div class="box-header with-border">
           <h3 class="box-title">Product Information</h3>
 
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-          </div>
+
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -143,19 +140,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       </div>
 
                       <div class="form-group">
+                        <label>Model</label>
+                        <input type="text" class="form-control" placeholder="Model No.">
+                      </div>
+
+                      <div class="form-group">
                         <label>Branch ID</label>
                         <input type="text" class="form-control" placeholder="Branch ID">
                       </div>
+
                       <div class="form-group">
-                        <label>Stock Count</label>
-                        <input type="text" class="form-control" placeholder="Stock Count">
+                        <label>Note</label>
+                        <input type="text" class="form-control" placeholder="Note">
                       </div>
+
+                      
 
                   </div>
 
                 <div class="col-md-6">
                   <!-- 2nd column content -->
                       
+                      <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="text" class="form-control" placeholder="Stock Count">
+                      </div>
 
                       <div class="form-group">
                         <label>SKU</label>
@@ -163,9 +172,33 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       </div>
 
                       <div class="form-group">
-                        <label>Note</label>
-                        <input type="text" class="form-control" placeholder="Note">
+                        <label>Supplier</label>
+                        <select class="form-control select2" style="width: 100%;">
+                          <option selected="selected">Main Branch</option>
+                          <option>populate</option>
+                          <option>to ng names</option>
+                          <option>of</option>
+                          <option>suppliers</option>
+                          <option>from</option>
+                          <option>database</option>
+                        </select>
                       </div>
+
+                      <div class="form-group">
+                        <label>Supplier Price</label>
+                        <input type="text" class="form-control" placeholder="Cost Price">
+                      </div>
+
+                      
+
+                      <div class="form-group">
+                        <label>Retail Price</label>
+                        <input type="text" class="form-control" placeholder="Retail Price">
+                      </div>
+
+                      
+
+                      
                 </div>
             </form>
           </div>
@@ -174,7 +207,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   
         <div class="box-footer">
           <!-- Buttons -->
-           <button type="submit" class="btn btn-primary">Save</button>
+           <button type="submit" class="btn btn-primary pull-right">Save</button>
         </div>
       </div>
 
