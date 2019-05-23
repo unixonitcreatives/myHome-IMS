@@ -41,7 +41,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -218,7 +218,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     <!-- Main content -->
     <section class="content">
-      <div class="box box-primary">
+      <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Product Information</h3>
 
@@ -232,55 +232,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <div class="col-md-6">
                   <!-- 1st column content -->
                       <div class="form-group">
-                        <label>Product ID</label>
-                        <input type="text" class="form-control" placeholder="Product ID">
-                      </div>
-
-                      <div class="form-group">
-                        <label>Product Name</label>
-                        <input type="text" class="form-control" placeholder="Product Name">
-                      </div>
-
-                      <div class="form-group">
-                        <label>Product Description</label>
-                        <input type="text" class="form-control" placeholder="Product Description">
-                      </div>
-
-                      <div class="form-group">
-                        <label>Model</label>
-                        <input type="text" class="form-control" placeholder="Model No.">
-                      </div>
-
-                      <div class="form-group">
-                        <label>Branch ID</label>
-                        <input type="text" class="form-control" placeholder="Branch ID">
-                      </div>
-
-                      <div class="form-group">
-                        <label>Note</label>
-                        <input type="text" class="form-control" placeholder="Note">
-                      </div>
-
-
-
-                  </div>
-
-                <div class="col-md-6">
-                  <!-- 2nd column content -->
-
-                      <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="text" class="form-control" placeholder="Stock Count">
-                      </div>
-
-                      <div class="form-group">
-                        <label>SKU</label>
-                        <input type="text" class="form-control" placeholder="SKU">
+                        <label>Purchase Order No.</label>
+                        <input type="text" class="form-control" placeholder="Purchase Order No.">
                       </div>
 
                       <div class="form-group">
                         <label>Supplier</label>
-                        <select class="form-control select2" style="width: 100%;">
+                        <select class="form-control" style="width: 100%;">
                           <option selected="selected">Main Branch</option>
                           <option>populate</option>
                           <option>to ng names</option>
@@ -292,29 +250,126 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       </div>
 
                       <div class="form-group">
-                        <label>Supplier Price</label>
-                        <input type="text" class="form-control" placeholder="Cost Price">
+                        <label>Address</label>
+                        <input type="text" class="form-control" placeholder="Address (auto-fill)" disabled>
                       </div>
 
+                      <div class="form-group">
+                        <label>Contact Person</label>
+                        <input type="text" class="form-control" placeholder="Contact Person (auto-fill or manual?)" disabled>
+                      </div>
+
+                  </div>
+
+                <div class="col-md-6">
+                  <!-- 2nd column content -->
+                      <div class="form-group">
+                        <label>Payment Date</label>
+                        <input type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                      </div>
 
 
                       <div class="form-group">
-                        <label>Retail Price</label>
-                        <input type="text" class="form-control" placeholder="Retail Price">
+                        <label>Payment Mode</label>
+                        <select class="form-control" style="width: 100%;">
+                          <option selected="selected">Cash</option>
+                          <option>Cheque</option>
+                          <option disabled="disabled">Card (Available Soon)</option>
+                          <option>Other</option>
+                        </select>
                       </div>
 
+                      <div class="form-group">
+                        <label>Payment Terms</label>
+                        <input type="text" class="form-control" placeholder="Payment Terms">
+                      </div>
 
-
+                      <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                      </div>
 
                 </div>
-            </form>
-          </div>
+
+                <div class="col-md-12">
+                  <!-- 2nd row content -->
+
+
+                                <form class="form-vertical">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="crud_table">
+                                            <tr>
+                                                <th width="18%">Product Name</th>
+                                                <th width="18%">Product Code</th>
+                                                <th width="18%">Quantity</th>
+                                                <th width="18%">Unit Price</th>
+                                                <th width="18%">Amount</th>
+                                                <th width="10%"></th>
+                                                
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="item_name" name="item_name[]" placeholder="Product Name">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="item_code" name="item_code[]" placeholder="Product Code">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="item_quantity" name="item_quantity[]" placeholder="Quantity">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="item_unit_price" name="item_unit_price[]" placeholder="Product Amount">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="item_amount" name="item_amount[]" value="0.00" readonly>
+                                                    </div>
+                                                </td>
+
+
+                                                <td></td>
+                                            </tr>
+
+
+                                            <tfoot>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td align="right">Grand Total Amount:</td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class= "totalPrice" id="totalPrice" name="total" value="0.00" readonly>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <div align="right">
+                                            <button type="button" name="add" id="add" class="btn btn-success btn-xs">Add Row</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                          </div>
+                        </form>
+
 
         </div>
 
         <div class="box-footer">
           <!-- Buttons -->
-           <button type="submit" class="btn btn-primary pull-right">Save</button>
+           <button type="submit" class="btn btn-success pull-right">Save</button>
         </div>
 
     </section>
@@ -332,17 +387,167 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <!-- SlimScroll -->
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="plugins/iCheck/icheck.min.js"></script>
 <!-- FastClick -->
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- Page script -->
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
+
+        <script>
+            $(document).ready(function(){
+                var count = 1;
+                $('#add').click(function(){
+                    count = count + 1;
+                    var html_code = "<tr id='row"+count+"'>";
+                    html_code += "<td><input tyep='text' id='item_name' name='item_name[]' placeholder='Product Name'> </td>";
+                    html_code += "<td><input tyep='text' id='item_code' name='item_code[]' placeholder='Product Code'></td>";
+                    html_code += "<td><input tyep='text' id='item_quantity' name='item_quantity[]' placeholder='Quantity'></td>";
+                    html_code += "<td><input tyep='text' id='item_unit_price' name='item_unit_price[]'class='totalPrice' placeholder='Product Amount'></td>";
+                    html_code += "<td><input tyep='text' id='item_amount' name='item_amount[]'class='totalPrice' value='0.00' readonly></td>";
+                    html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'>Delete Row</button></td>";   
+                    html_code += "</tr>";  
+                    $('#crud_table').append(html_code);
+                });
+                $(document).on('click', '.remove', function(){
+                    var delete_row = $(this).data("row");
+                    $('#' + delete_row).remove();
+                });
+                /*$('#save').click(function(){
+                    var item_name = [];
+                    var item_code = [];
+                    var item_desc = [];
+                    var item_price = [];
+                    $('.item_name').each(function(){
+                        item_name.push($(this).text());
+                    });
+                    $('.item_code').each(function(){
+                        item_code.push($(this).text());
+                    });
+                    $('.item_desc').each(function(){
+                        item_desc.push($(this).text());
+                    });
+                    $('.item_price').each(function(){
+                        item_price.push($(this).text());
+                    });
+                    $.ajax({
+                        url:"insert.php",
+                        method:"POST",
+                        data:{item_name:item_name,item_code:item_code, item_desc:item_desc, item_price:item_price},
+                        success:function(data){
+                            alert(data);
+                            $("td[contentEditable='true']").text("");
+                            for(var i=2; i<= count; i++)
+                            {
+                                $('tr#'+i+'').remove();
+                            }
+                        }
+                    });
+                });*/
+            });
+        </script>
+
+        <script>
+            function calculateSum() {
+                var t = 0,     
+                    e = 0,     
+                    p = 0;    
+                    $(".total_price").each(function() {
+                    isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
+                }), 
+                    e = t.toFixed(2),  
+                    $("#grandTotal").val(e)
+            }
+        </script>
 </body>
 </html>
