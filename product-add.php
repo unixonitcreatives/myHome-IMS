@@ -111,7 +111,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     <!-- Main content -->
     <section class="content">
-      <div class="box box-primary">
+      <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Product Information</h3>
 
@@ -207,7 +207,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   
         <div class="box-footer">
           <!-- Buttons -->
-           <button type="submit" class="btn btn-primary pull-right">Save</button>
+           <button type="submit" class="btn btn-success pull-right">Save</button>
         </div>
 
     </section>
