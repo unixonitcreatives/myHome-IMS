@@ -95,11 +95,11 @@ folder instead of downloading all of them to reduce the load. -->
                         <div class="pull-left info">
                             <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
                             <!-- Status -->
-                            <a href="#"><i class="fa fa-circle text-success"></i> 
+                            <a href="#"><i class="fa fa-circle text-success"></i>
                                 <?php
                                 function is_connected()
                                 {
-                                    $connected = @fsockopen("www.example.com", 80); 
+                                    $connected = @fsockopen("www.example.com", 80);
                                     //website, port  (try 80 or 443)
                                     if ($connected){
                                         $is_conn = true; //action when connected
