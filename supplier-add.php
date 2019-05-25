@@ -1,4 +1,7 @@
 <?php
+
+//for push
+
 // Initialize the session
 session_start();
 
