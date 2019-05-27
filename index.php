@@ -6,8 +6,11 @@ session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
+
+
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -39,6 +42,7 @@ folder instead of downloading all of them to reduce the load. -->
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     </head>
+
     <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
     <!-- the fixed layout is not compatible with sidebar-mini -->
     <body class="hold-transition skin-green fixed sidebar-mini">
@@ -96,24 +100,29 @@ folder instead of downloading all of them to reduce the load. -->
                             <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
                             <!-- Status -->
                             <a href="#"><i class="fa fa-circle text-success"></i>
+                                
                                 <?php
-                                function is_connected()
-                                {
-                                    $connected = @fsockopen("www.example.com", 80);
-                                    //website, port  (try 80 or 443)
-                                    if ($connected){
-                                        $is_conn = true; //action when connected
-                                        echo "Online";
-                                        fclose($connected);
-                                    }else{
-
-                                        $is_conn = false; //action in connection failure
-                                        echo "Offline";
+                                    switch (connection_status())
+                                    {
+                                    case CONNECTION_NORMAL:
+                                      $txt = 'Online';
+                                      break;
+                                    case CONNECTION_ABORTED:
+                                      $txt = 'Connection aborted';
+                                      break;
+                                    case CONNECTION_TIMEOUT:
+                                      $txt = 'Connection timed out';
+                                      break;
+                                    case (CONNECTION_ABORTED & CONNECTION_TIMEOUT):
+                                      $txt = 'Connection aborted and timed out';
+                                      break;
+                                    default:
+                                      $txt = 'Unknown, please contact support';
+                                      break;
                                     }
-                                    return $is_conn;
 
-                                }
-                                ?>
+                                    echo $txt;
+                                    ?>
 
 
 
@@ -266,6 +275,7 @@ immediately after the control sidebar -->
         <script src="dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="dist/js/demo.js"></script>
+
 
 
     </body>
