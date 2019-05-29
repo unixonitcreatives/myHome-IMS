@@ -7,6 +7,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+require_once 'config.php';
+
+$alertMessage="";
+//Checking the values are existing in the database or not
+$query = "Select * from categories order by id";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if(isset($_GET['alert'])){
+    if($_GET['alert'] == 'deletesuccess'){
+    $alertMessage = "<div class='alert alert-danger' role='alert'>Data deleted successfully.</div>"; }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +54,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -217,7 +230,51 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </section>
 
     <!-- Main content -->
+    <?php echo $alertMessage; ?>
+        <!-- Main content -->
+        <table class='table table-bordered table-striped'>
+          <thead>
+          <tr>
+            <th>Category Name</th>
+            <th>Action</th>
+            </tr>
+              </thead>
+                <tbody>
+          <?php
+                             // Include config file
+                             require_once "config.php";
 
+                             // Attempt select query execution
+                             $query = "SELECT * FROM categories";
+                             if($result = mysqli_query($link, $query)){
+                                 if(mysqli_num_rows($result) > 0){
+
+                                         while($row = mysqli_fetch_array($result)){
+                                             echo "<tr>";
+                                                 echo "<td>" . $row['category'] . "</td>";
+                                                 echo "<td>";
+                                                     echo "<a href='category-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                                     echo " &nbsp; <a href='category-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                                 echo "</td>";
+                                             echo "</tr>";
+                                         }
+
+                                     // Free result set
+                                     mysqli_free_result($result);
+                                 } else{
+                                     echo "<p class='lead'><em>No records were found.</em></p>";
+                                 }
+                             } else{
+                                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                             }
+
+                             // Close connection
+                             mysqli_close($link);
+                             ?>
+                            </tbody>
+                          </table>
+        <!-- /.content -->
+      </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

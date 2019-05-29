@@ -1,15 +1,94 @@
 <?php
-
-//for push
-//push again
 // Initialize the session
 session_start();
+
 
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+// Define variables and initialize with empty values
+$supplier_name=$supplier_contact_person=$supplier_email=$supplier_number=$supplier_address=$alertMessage="";
+
+require_once "config.php";
+
+//If the form is submitted or not.
+//If the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Assigning posted values to variables.
+    $supplier_name = test_input($_POST['supplier_name']);
+    $supplier_contact_person = test_input($_POST['supplier_contact_person']);
+    $supplier_email = test_input($_POST['supplier_email']);
+    $supplier_number = test_input($_POST['supplier_number']);
+    $supplier_address = test_input($_POST['supplier_address']);
+
+    // Validate supplier name
+    
+    if(empty($supplier_name)){
+        $alertMessage = "Please enter a supplier name.";
+    }
+
+    // Validate supplier contact person
+  
+    if(empty($supplier_contact_person)){
+        $alertMessage = "Please enter a supplier contact person.";
+    }
+
+    // Validate supplier email
+  
+    if(empty($supplier_email)){
+        $alertMessage = "Please enter a supplier email.";
+    }
+
+    // Validate supplier contact number
+  
+    if(empty($supplier_number)){
+        $alertMessage = "Please enter a supplier contact number.";
+    }
+
+    // Validate supplier contact number
+  
+    if(empty($supplier_address)){
+        $alertMessage = "Please enter a supplier address.";
+    }
+    // Check input errors before inserting in database
+    if(empty($alertMessage)){
+
+    //Checking the values are existing in the database or not
+    $query = "INSERT INTO suppliers (supplier_name, supplier_contact_person, supplier_email, supplier_number, supplier_address, created_at) VALUES ('$supplier_name', '$supplier_contact_person', '$supplier_email', '$supplier_number', '$supplier_address', CURRENT_TIMESTAMP)";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    if($result){
+         $alertMessage = "<div class='alert alert-success' role='alert'>
+  New Supplier Successfully Added in Database.
+</div>";
+    }else{
+        $alertMessage = "<div class='alert alert-danger' role='alert'>
+  Error Adding data in Database.
+</div>";}
+
+// remove all session variables
+//session_unset();
+// destroy the session
+//session_destroy();
+
+// Close connection
+mysqli_close($link);
+
+    }
+  }
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +123,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -222,38 +301,41 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- Main content -->
     <section class="content">
     <div class="col-md-6">
+      <?php echo $alertMessage; ?>
           <!-- general form elements -->
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Supplier's Information</h3>
             </div>
+
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
               <div class="box-body">
                 <div class="form-group">
                   <label>Suppliers</label>
-                  <input type="text" class="form-control" placeholder="Suppliers">
+                  <input type="text" class="form-control" placeholder="Suppliers" name="supplier_name" required>
                 </div>
 
                 <div class="form-group">
                   <label>Contact Person</label>
-                  <input type="text" class="form-control" placeholder="Contact Person">
+                  <input type="text" class="form-control" placeholder="Contact Person" name="supplier_contact_person" required>
                 </div>
 
                 <div class="form-group">
                   <label>Phone</label>
-                  <input type="text" class="form-control" placeholder="Phone">
+                  <input type="number" class="form-control" placeholder="Phone" name="supplier_number" required>
                 </div>
 
                 <div class="form-group">
                   <label>Email</label>
-                  <input type="text" class="form-control" placeholder="Email">
+                  <input type="email" class="form-control" placeholder="Email" name="supplier_email" required>
                 </div>
 
                 <div class="form-group">
                   <label>Address</label>
-                  <input type="text" class="form-control" placeholder="Address">
+                  <input type="text" class="form-control" placeholder="Address" name="supplier_address" required>
                 </div>
               </div>
               <!-- /.box-body -->

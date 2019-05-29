@@ -7,6 +7,61 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+require_once "config.php";
+
+$customers_lname=$customers_fname=$customers_contact=$customers_email=$customers_address=$alertMessage="";
+//If the form is submitted or not.
+//If the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Assigning posted values to variables.
+    $customers_name = test_input($_POST['customer_name']);
+    $customers_contact = test_input($_POST['customer_contact']);
+    $customers_email = test_input($_POST['customer_email']);
+    $customers_address = test_input($_POST['customer_address']);
+
+    // Validate category
+    if(empty($customers_name)){
+        $alertMessage = "Please enter a fullname.";
+    }
+    if(empty($customers_contact)){
+        $alertMessage = "Please enter a contact number.";
+    }
+    if(empty($customers_email)){
+        $alertMessage = "Please enter a email address.";
+    }
+    if(empty($customers_address)){
+        $alertMessage = "Please enter a address.";
+    }
+
+
+    // Check input errors before inserting in database
+    if(empty($alertMessage)){
+    //Checking the values are existing in the database or not
+    $query = "INSERT INTO customers (customer_name,customer_contact,customer_email,customer_address, created_at) VALUES ('$customers_name','$customers_contact','$customers_email','$customers_address', CURRENT_TIMESTAMP)";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    if($result){
+         $alertMessage = "<div class='alert alert-success' role='alert'>
+  New customer successfully sdded in database.
+</div>";
+    }else {
+        $alertMessage = "<div class='alert alert-danger' role='alert'>
+  Error Adding data in Database.
+</div>";
+    }
+    }
+  }
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+// Close connection
+mysqli_close($link);
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +96,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -220,50 +275,39 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <section class="content">
     <div class="col-md-6">
           <!-- general form elements -->
-          <div class="box box-primary">
+          <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Customer's Information</h3>
             </div>
             <!-- /.box-header -->
+            <?php echo $alertMessage; ?>
             <!-- form start -->
-            <form role="form">
+            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
                 <div class="form-group">
                   <label>Customer Name</label>
-                  <input type="text" class="form-control" placeholder="Name">
+                  <input type="text" class="form-control" placeholder="Fullname" name="customer_name" required>
                 </div>
 
                 <div class="form-group">
                   <label>Phone</label>
-                  <input type="text" class="form-control" placeholder="Phone">
+                  <input type="number" class="form-control" placeholder="Phone" name="customer_contact" required>
                 </div>
-
-                <div class="form-group">
-                <label>Date of Birth</label>
-
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
-                </div>
-                <!-- /.input group -->
-              </div>
 
                 <div class="form-group">
                   <label>Email</label>
-                  <input type="text" class="form-control" placeholder="Email">
+                  <input type="email" class="form-control" placeholder="Email" name="customer_email" required>
                 </div>
 
                 <div class="form-group">
                   <label>Address</label>
-                  <input type="text" class="form-control" placeholder="Address">
+                  <input type="text" class="form-control" placeholder="Address" name="customer_address" required>
                 </div>
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-success">Save</button>
               </div>
             </form>
           </div>

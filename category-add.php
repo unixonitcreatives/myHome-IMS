@@ -7,6 +7,58 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+// Define variables and initialize with empty values
+$category=$alertMessage="";
+
+require_once "config.php";
+
+//If the form is submitted or not.
+//If the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+  //Assigning posted values to variables.
+  $category = test_input($_POST['category']);
+
+    // Validate category
+
+    if(empty($category)){
+        $alertMessage = "Please enter a category.";
+    }
+
+
+    // Check input errors before inserting in database
+    if(empty($alertMessage)){
+
+      //Checking the values are existing in the database or not
+    $query = "INSERT INTO categories (category) VALUES ('$category')";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    if($result){
+         $alertMessage = "<div class='alert alert-success' role='alert'>
+  New categoryr successfully added in database.
+</div>";
+    }else{
+        $alertMessage = "<div class='alert alert-danger' role='alert'>
+  Error Adding data in Database.
+</div>";}
+
+// remove all session variables
+//session_unset();
+// destroy the session
+//session_destroy();
+
+// Close connection
+mysqli_close($link);
+
+    }
+  }
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +93,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -224,13 +276,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <div class="box-header with-border">
               <h3 class="box-title">Product Category</h3>
             </div>
+            <?php echo $alertMessage; ?>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
                 <div class="form-group">
                   <label>Category Name</label>
-                  <input type="text" class="form-control" placeholder="Category e.g: Food, Clothes, Appliances">
+                  <input type="text" class="form-control" placeholder="Category e.g: Chairs, Tables, Cabinets" name="category" required>
                 </div>
               <!-- /.box-body -->
 

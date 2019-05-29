@@ -7,6 +7,38 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+require_once "config.php";
+
+$branchName=$branchAddress=$alertMessage="";
+//If the form is submitted or not.
+//If the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Assigning posted values to variables.
+    $branchName = test_input($_POST['branch_name']);
+    $branchAddress = test_input($_POST['branch_address']);
+    //Checking the values are existing in the database or not
+    $query = "INSERT INTO branches (branch_name, branch_address, created_at) VALUES ('$branchName', '$branchAddress', CURRENT_TIMESTAMP)";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    if($result){
+         $alertMessage = "<div class='alert alert-success' role='alert'>
+  New branch successfully added in Database.
+</div>";
+    }else {
+        $alertMessage = "<div class='alert alert-danger' role='alert'>
+  Error Adding data in Database.
+</div>";
+    }
+}
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+// Close connection
+mysqli_close($link);
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +73,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -225,32 +257,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
               <h3 class="box-title">Branch's Information</h3>
             </div>
             <!-- /.box-header -->
+            <?php echo $alertMessage; ?>
             <!-- form start -->
-            <form role="form">
+            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
                 <div class="form-group">
                   <label>Branch Name</label>
-                  <input type="text" class="form-control" placeholder="Branch">
-                </div>
-
-                <div class="form-group">
-                  <label>Branch ID</label>
-                  <input type="text" class="form-control" placeholder="Branch ID">
-                </div>
-
-                <div class="form-group">
-                  <label>Phone</label>
-                  <input type="text" class="form-control" placeholder="Phone">
-                </div>
-
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="text" class="form-control" placeholder="Email">
+                  <input type="text" class="form-control" placeholder="Branch Name" name="branch_name" required>
                 </div>
 
                 <div class="form-group">
                   <label>Address</label>
-                  <input type="text" class="form-control" placeholder="Address">
+                  <input type="text" class="form-control" placeholder="Address" name="branch_address" required>
                 </div>
               </div>
               <!-- /.box-body -->
