@@ -316,6 +316,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           <!-- Buttons -->
            <button type="submit" class="btn btn-success pull-right">Save</button>
         </div>
+      </div>
 
     </section>
     <!-- /.content -->
