@@ -12,7 +12,7 @@ require_once "config.php";
 
 $alertMessage="";
 //Checking the values are existing in the database or not
-$query = "Select * from supplier order by id";
+$query = "Select * from suppliers order by id";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if(isset($_GET['alert'])){
     if($_GET['alert'] == 'deletesuccess'){
@@ -295,7 +295,7 @@ if(isset($_GET['alert'])){
                          require_once "config.php";
 
                          // Attempt select query execution
-                         $query = "SELECT * FROM supplier";
+                         $query = "SELECT * FROM suppliers";
                          if($result = mysqli_query($link, $query)){
                              if(mysqli_num_rows($result) > 0){
 
