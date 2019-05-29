@@ -12,7 +12,7 @@ require_once "config.php";
 
 $alertMessage="";
 //Checking the values are existing in the database or not
-$query = "Select * from suppliers order by id";
+$query = "Select * from supplier order by id";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if(isset($_GET['alert'])){
     if($_GET['alert'] == 'deletesuccess'){
@@ -219,6 +219,7 @@ if(isset($_GET['alert'])){
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+
       <h1>
         MANAGE SUPPLIER
         <small>You can view existing supplier's information inside your database</small>
@@ -229,7 +230,55 @@ if(isset($_GET['alert'])){
     </section>
 <?php echo $alertMessage; ?>
     <!-- Main content -->
-    <table class='table table-bordered table-striped'>
+
+    <div class="box-body">
+    <!-- Search Area -->
+    <section class="content">
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Search for Supplier Information</h3>
+
+
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+
+            <form role="form">
+                <div class="col-md-5">
+                  <!-- 1st column content -->
+                      <div class="form-group">
+                        <label>Search:</label>
+                        <input type="text" class="form-control" placeholder="Search">
+                      </div>
+                  </div>
+
+                <div class="col-md-5">
+                  <!-- 2nd column content -->
+                      <div class="form-group">
+                        <label>Search Options</label>
+                        <select class="form-control select2" style="width: 100%;">
+                          <option selected="selected">Supplier Name</option>
+                          <option>Contact Person</option>
+                          <option>Contact No.</option>
+                          <option>Email</option>
+                          <option>Address</option>
+                          <option>Created_by</option>
+                        </select>
+                      </div>
+
+                </div>
+
+                <div class="col-md-2">
+                  <!-- 3rd column content -->
+                  <div class="form-group">
+                    <br>
+                    <button type="submit" class="btn btn-success">Check</button>
+                  </div>
+                </div>
+            </form>
+          </div>
+          <table id="example2" class='table table-bordered table-striped'>
       <thead>
       <tr>
         <th>Supplier Name</th>
@@ -241,12 +290,12 @@ if(isset($_GET['alert'])){
         </tr>
           </thead>
             <tbody>
-      <?php
+                        <?php
                          // Include config file
                          require_once "config.php";
 
                          // Attempt select query execution
-                         $query = "SELECT * FROM suppliers";
+                         $query = "SELECT * FROM supplier";
                          if($result = mysqli_query($link, $query)){
                              if(mysqli_num_rows($result) > 0){
 
@@ -278,11 +327,20 @@ if(isset($_GET['alert'])){
                          ?>
                         </tbody>
                       </table>
+        </div>
+      </div>
+
+
+    </section>
+    <!-- .Search Area end -->
+
+    
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
+</div>
+</section>        
 
-  <footer class="main-footer">
+<footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
 
@@ -304,5 +362,25 @@ if(isset($_GET['alert'])){
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  })
+ </script> 
 </body>
 </html>
