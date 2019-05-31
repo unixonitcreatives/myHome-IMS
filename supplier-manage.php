@@ -41,6 +41,8 @@ if(isset($_GET['alert'])){
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
 
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -245,8 +247,8 @@ if(isset($_GET['alert'])){
           <div class="row">
 
             <form role="form">
-                <div class="col-md-5">
-                  <!-- 1st column content -->
+                <!-- <div class="col-md-5">
+                  <!-- 1st column content
                       <div class="form-group">
                         <label>Search:</label>
                         <input type="text" class="form-control" placeholder="Search">
@@ -254,7 +256,7 @@ if(isset($_GET['alert'])){
                   </div>
 
                 <div class="col-md-5">
-                  <!-- 2nd column content -->
+                  <!-- 2nd column content
                       <div class="form-group">
                         <label>Search Options</label>
                         <select class="form-control select2" style="width: 100%;">
@@ -270,22 +272,22 @@ if(isset($_GET['alert'])){
                 </div>
 
                 <div class="col-md-2">
-                  <!-- 3rd column content -->
+                  <!-- 3rd column content
                   <div class="form-group">
                     <br>
                     <button type="submit" class="btn btn-success">Check</button>
                   </div>
                 </div>
-            </form>
+            </form> -->
           </div>
-          <table id="example2" class='table table-bordered table-striped'>
+          <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
       <thead>
       <tr>
-        <th>Supplier Name</th>
-        <th>Contact Person</th>
-        <th>Email</th>
-        <th>Contact Number</th>
-        <th>Address</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier Name</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Contact Person</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Email</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Contact Number</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Address</th>
         <th>Action</th>
         </tr>
           </thead>
@@ -334,11 +336,11 @@ if(isset($_GET['alert'])){
     </section>
     <!-- .Search Area end -->
 
-    
+
     <!-- /.content -->
   </div>
 </div>
-</section>        
+</section>
 
 <footer class="main-footer">
       <?php include('template/footer.php'); ?>
@@ -378,9 +380,9 @@ if(isset($_GET['alert'])){
       'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : true
+      'autoWidth'   : false
     })
   })
- </script> 
+ </script>
 </body>
 </html>

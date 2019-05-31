@@ -28,6 +28,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -306,7 +307,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                 <th width="18%">Unit Price</th>
                                                 <th width="18%">Amount</th>
                                                 <th width="10%"></th>
-                                                
+
                                             </tr>
 
                                             <tr>
@@ -495,8 +496,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     html_code += "<td><input tyep='text' id='item_quantity' name='item_quantity[]' placeholder='Quantity'></td>";
                     html_code += "<td><input tyep='text' id='item_unit_price' name='item_unit_price[]'class='totalPrice' placeholder='Product Amount'></td>";
                     html_code += "<td><input tyep='text' id='item_amount' name='item_amount[]'class='totalPrice' value='0.00' readonly></td>";
-                    html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'>Delete Row</button></td>";   
-                    html_code += "</tr>";  
+                    html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'>Delete Row</button></td>";
+                    html_code += "</tr>";
                     $('#crud_table').append(html_code);
                 });
                 $(document).on('click', '.remove', function(){
@@ -539,13 +540,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         <script>
             function calculateSum() {
-                var t = 0,     
-                    e = 0,     
-                    p = 0;    
+                var t = 0,
+                    e = 0,
+                    p = 0;
                     $(".total_price").each(function() {
                     isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
-                }), 
-                    e = t.toFixed(2),  
+                }),
+                    e = t.toFixed(2),
                     $("#grandTotal").val(e)
             }
         </script>

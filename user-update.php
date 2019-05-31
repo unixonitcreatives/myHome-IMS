@@ -8,16 +8,84 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+// Define variables and initialize with empty values
+$username=$time_created=$alertMessage=$password=$usertype="";
+
 require_once "config.php";
 
-$alertMessage="";
-//Checking the values are existing in the database or not
-$query = "Select * from users order by id";
+
+$users_id = $_GET['id'];
+$query = "SELECT * from users WHERE id='$users_id'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
-if(isset($_GET['alert'])){
-    if($_GET['alert'] == 'deletesuccess'){
-    $alertMessage = "<div class='alert alert-danger' role='alert'>Data deleted successfully.</div>"; }
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)){
+        $username               =   $row['username'];
+        $password               =   $row['password'];
+        $usertype               =   $row['userType'];
+    }
+}else {
+    $alertMessage="<div class='alert alert-danger' role='alert'>Theres Nothing to see Here.</div>";
 }
+
+//If the form is submitted or not.
+//If the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Assigning posted values to variables.
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+    $usertype = test_input($_POST['userType']);
+
+    // Validate username
+
+    if(empty($username)){
+        $alertMessage = "Please enter a username.";
+    }
+
+    // Validate password
+
+    if(empty($password)){
+        $alertMessage = "Please enter a password.";
+    }
+
+    // Validate usertype
+
+    if(empty($usertype)){
+        $alertMessage = "Please enter a usertype.";
+    }
+
+
+    // Check input errors before inserting in database
+    if(empty($alertMessage)){
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    //Checking the values are existing in the database or not
+    $query = "UPDATE users SET username='$username', password='$hash', userType='$usertype' WHERE id='$users_id'";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+    if($result){
+        $alertMessage = "<div class='alert alert-success' role='alert'>
+  User data successfully updated in database.
+</div>";
+    }else {
+        $alertMessage = "<div class='alert alert-success' role='alert'>
+  Error updating record.
+</div>";}
+
+// remove all session variables
+//session_unset();
+// destroy the session
+//session_destroy();
+
+// Close connection
+mysqli_close($link);
+}
+    }
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +93,7 @@ if(isset($_GET['alert'])){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Manage Users</title>
+  <title>MyHome | Add Users</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -220,7 +288,7 @@ if(isset($_GET['alert'])){
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        MANAGE USERS
+        ADD USER
         <small></small>
       </h1>
       <ol class="breadcrumb">
@@ -229,52 +297,57 @@ if(isset($_GET['alert'])){
     </section>
 
     <!-- Main content -->
-    <?php echo $alertMessage; ?>
-    <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-      <thead>
-      <tr>
-        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Username</th>
-        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">User Type</th>
-        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">User Created</th>
-        <th>Action</th>
-        </tr>
-          </thead>
-            <tbody>
-      <?php
-                         // Include config file
-                         require_once 'config.php';
+<section class="content">
+    <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Branch's Information</h3>
+            </div>
+            <!-- /.box-header -->
+            <?php echo $alertMessage; ?>
+            <!-- form start -->
+              <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" placeholder="Username" name="username" value="<?php echo $username; ?>">
+                </div>
 
-                         // Attempt select query execution
-                         $query = "SELECT * FROM users";
-                         if($result = mysqli_query($link, $query)){
-                             if(mysqli_num_rows($result) > 0){
+                <div class="form-group">
+                <label>User Type</label>
+                <select class="form-control select2" style="width: 100%;" name="userType">
+                  <option value="<?php echo $usertype; ?>"><?php echo $usertype; ?></option>
+                  <option>Administrator</option>
+                  <option>Finance Officer</option>
+                  <option>Information Officer</option>
+                  <option>Accounts Officer</option>
+                  <option>Warehouse Officer</option>
+                  <option>Cashier</option>
+                  <option>Super Admin</option>
+                </select>
+              </div>
 
-                                     while($row = mysqli_fetch_array($result)){
-                                         echo "<tr>";
-                                             echo "<td>" . $row['username'] . "</td>";
-                                             echo "<td>" . $row['userType'] . "</td>";
-                                             echo "<td>" . $row['time_created'] . "</td>";
-                                             echo "<td>";
-                                                 echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                                 echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                                             echo "</td>";
-                                         echo "</tr>";
-                                     }
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Password" name="password" value="<?php echo $password; ?>">
+                </div>
 
-                                 // Free result set
-                                 mysqli_free_result($result);
-                             } else{
-                                 echo "<p class='lead'><em>No records were found.</em></p>";
-                             }
-                         } else{
-                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                         }
+              </div>
+              <!-- /.box-body -->
 
-                         // Close connection
-                         mysqli_close($link);
-                         ?>
-                        </tbody>
-                      </table>
+              <div class="box-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+
+
+        </div>
+    <!-- /.content -->
+  </div>
+</section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
