@@ -7,6 +7,74 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+// Define variables and initialize with empty values
+$username=$password=$usertype=$alertMessage="";
+
+require_once "config.php";
+
+//If the form is submitted or not.
+//If the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Assigning posted values to variables.
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+    $usertype = test_input($_POST['userType']);
+
+    // Validate username
+
+    if(empty($username)){
+        $alertMessage = "Please enter a username.";
+    }
+
+    // Validate password
+
+    if(empty($password)){
+        $alertMessage = "Please enter a password.";
+    }
+
+    // Validate user type
+
+    if(empty($usertype)){
+        $alertMessage = "Please enter a user type.";
+    }
+
+
+    // Check input errors before inserting in database
+    if(empty($alertMessage)){
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    //Checking the values are existing in the database or not
+    $query = "INSERT INTO users (username, password, userType, time_created) VALUES ('$username', '$hash', '$usertype', CURRENT_TIMESTAMP)";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    if($result){
+         $alertMessage = "<div class='alert alert-success' role='alert'>
+  Newuser successfully added in database.
+</div>";
+    }else{
+        $alertMessage = "<div class='alert alert-danger' role='alert'>
+  Error Adding data in Database.
+</div>";}
+
+// remove all session variables
+//session_unset();
+// destroy the session
+//session_destroy();
+
+// Close connection
+mysqli_close($link);
+
+    }
+  }
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -227,22 +295,23 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <?php echo $alertMessage; ?>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
               <div class="box-body">
                 <div class="form-group">
                   <label>Username</label>
-                  <input type="text" class="form-control" placeholder="Username">
+                  <input type="text" class="form-control" placeholder="Username" name="username" required>
                 </div>
 
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password">
+                  <input type="password" class="form-control" placeholder="Password" name="password" required>
                 </div>
 
                 <div class="form-group">
                 <label>User Type</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Administrator</option>
+                <select class="form-control select2" style="width: 100%;" name="userType" required>
+                  <option>Administrator</option>
                   <option>Finance Officer</option>
                   <option>Information Officer</option>
                   <option>Accounts Officer</option>

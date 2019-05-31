@@ -22,13 +22,10 @@ if (mysqli_num_rows($result) > 0) {
         $username               =   $row['username'];
         $password               =   $row['password'];
         $usertype               =   $row['userType'];
-        $time_created           =   $row['time_created'];
     }
 }else {
     $alertMessage="<div class='alert alert-danger' role='alert'>Theres Nothing to see Here.</div>";
 }
-
-
 
 //If the form is submitted or not.
 //If the form is submitted
@@ -59,8 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Check input errors before inserting in database
     if(empty($alertMessage)){
+    $hash = password_hash($password, PASSWORD_DEFAULT);
     //Checking the values are existing in the database or not
-    $query = "UPDATE users SET username='$username', password='$password', userType='$userType' WHERE id='$users_id'";
+    $query = "UPDATE users SET username='$username', password='$hash', userType='$usertype' WHERE id='$users_id'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
     if($result){
         $alertMessage = "<div class='alert alert-success' role='alert'>
@@ -307,18 +305,20 @@ function test_input($data) {
               <h3 class="box-title">Branch's Information</h3>
             </div>
             <!-- /.box-header -->
+            <?php echo $alertMessage; ?>
             <!-- form start -->
-            <form role="form">
+              <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
               <div class="box-body">
                 <div class="form-group">
                   <label>Username</label>
-                  <input type="text" class="form-control" placeholder="Username" name="user" value="<?php echo $username; ?>">
+                  <input type="text" class="form-control" placeholder="Username" name="username" value="<?php echo $username; ?>">
                 </div>
 
                 <div class="form-group">
                 <label>User Type</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Administrator</option>
+                <select class="form-control select2" style="width: 100%;" name="userType">
+                  <option value="<?php echo $usertype; ?>"><?php echo $usertype; ?></option>
+                  <option>Administrator</option>
                   <option>Finance Officer</option>
                   <option>Information Officer</option>
                   <option>Accounts Officer</option>
@@ -332,9 +332,6 @@ function test_input($data) {
                   <label>Password</label>
                   <input type="password" class="form-control" placeholder="Password" name="password" value="<?php echo $password; ?>">
                 </div>
-
-  
-
 
               </div>
               <!-- /.box-body -->

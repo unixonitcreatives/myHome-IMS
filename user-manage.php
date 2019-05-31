@@ -7,6 +7,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+require_once "config.php";
+
+$alertMessage="";
+//Checking the values are existing in the database or not
+$query = "Select * from users order by id";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if(isset($_GET['alert'])){
+    if($_GET['alert'] == 'deletesuccess'){
+    $alertMessage = "<div class='alert alert-danger' role='alert'>Data deleted successfully.</div>"; }
+}
 ?>
 
 <!DOCTYPE html>
@@ -218,10 +229,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </section>
 
     <!-- Main content -->
+    <?php echo $alertMessage; ?>
     <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
       <thead>
       <tr>
         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Username</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">User Type</th>
         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">User Created</th>
         <th>Action</th>
         </tr>
@@ -239,6 +252,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                      while($row = mysqli_fetch_array($result)){
                                          echo "<tr>";
                                              echo "<td>" . $row['username'] . "</td>";
+                                             echo "<td>" . $row['userType'] . "</td>";
                                              echo "<td>" . $row['time_created'] . "</td>";
                                              echo "<td>";
                                                  echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
