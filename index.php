@@ -31,6 +31,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <!-- AdminLTE Skins. Choose a skin from the css/skins
 folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -100,7 +101,7 @@ folder instead of downloading all of them to reduce the load. -->
                             <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
                             <!-- Status -->
                             <a href="#"><i class="fa fa-circle text-success"></i>
-                                
+
                                 <?php
                                     switch (connection_status())
                                     {

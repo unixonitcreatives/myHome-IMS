@@ -28,6 +28,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -220,9 +221,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <section class="content">
     <div class="col-md-6">
           <!-- general form elements -->
-          <div class="box box-primary">
+          <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Branch's Information</h3>
+              <h3 class="box-title">Register new user</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -231,6 +232,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <div class="form-group">
                   <label>Username</label>
                   <input type="text" class="form-control" placeholder="Username">
+                </div>
+
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Password">
                 </div>
 
                 <div class="form-group">
@@ -246,21 +252,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </select>
               </div>
 
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password">
-                </div>
-
-                <div class="form-group">
-                  <label>Confirm Password</label>
-                  <input type="password" class="form-control" placeholder="Confirm Password">
-                </div>
-
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-success">Save</button>
               </div>
             </form>
           </div>

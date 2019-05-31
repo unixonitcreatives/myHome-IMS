@@ -25,31 +25,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $supplier_address = test_input($_POST['supplier_address']);
 
     // Validate supplier name
-    
+
     if(empty($supplier_name)){
         $alertMessage = "Please enter a supplier name.";
     }
 
     // Validate supplier contact person
-  
+
     if(empty($supplier_contact_person)){
         $alertMessage = "Please enter a supplier contact person.";
     }
 
     // Validate supplier email
-  
+
     if(empty($supplier_email)){
         $alertMessage = "Please enter a supplier email.";
     }
 
     // Validate supplier contact number
-  
+
     if(empty($supplier_number)){
         $alertMessage = "Please enter a supplier contact number.";
     }
 
     // Validate supplier contact number
-  
+
     if(empty($supplier_address)){
         $alertMessage = "Please enter a supplier address.";
     }
@@ -110,6 +110,7 @@ function test_input($data) {
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

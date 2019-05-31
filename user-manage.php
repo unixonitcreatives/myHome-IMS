@@ -42,7 +42,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -218,7 +218,49 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </section>
 
     <!-- Main content -->
+    <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+      <thead>
+      <tr>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Username</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">User Created</th>
+        <th>Action</th>
+        </tr>
+          </thead>
+            <tbody>
+      <?php
+                         // Include config file
+                         require_once 'config.php';
 
+                         // Attempt select query execution
+                         $query = "SELECT * FROM users";
+                         if($result = mysqli_query($link, $query)){
+                             if(mysqli_num_rows($result) > 0){
+
+                                     while($row = mysqli_fetch_array($result)){
+                                         echo "<tr>";
+                                             echo "<td>" . $row['username'] . "</td>";
+                                             echo "<td>" . $row['time_created'] . "</td>";
+                                             echo "<td>";
+                                                 echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                                 echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                             echo "</td>";
+                                         echo "</tr>";
+                                     }
+
+                                 // Free result set
+                                 mysqli_free_result($result);
+                             } else{
+                                 echo "<p class='lead'><em>No records were found.</em></p>";
+                             }
+                         } else{
+                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                         }
+
+                         // Close connection
+                         mysqli_close($link);
+                         ?>
+                        </tbody>
+                      </table>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

@@ -9,37 +9,66 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 // Define variables and initialize with empty values
-$category=$alertMessage="";
+$username=$time_created=$alertMessage=$password=$usertype="";
 
 require_once "config.php";
+
+
+$users_id = $_GET['id'];
+$query = "SELECT * from users WHERE id='$users_id'";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)){
+        $username               =   $row['username'];
+        $password               =   $row['password'];
+        $usertype               =   $row['userType'];
+        $time_created           =   $row['time_created'];
+    }
+}else {
+    $alertMessage="<div class='alert alert-danger' role='alert'>Theres Nothing to see Here.</div>";
+}
+
+
 
 //If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-  //Assigning posted values to variables.
-  $category = test_input($_POST['category']);
+    //Assigning posted values to variables.
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+    $usertype = test_input($_POST['userType']);
 
-    // Validate category
+    // Validate username
 
-    if(empty($category)){
-        $alertMessage = "Please enter a category.";
+    if(empty($username)){
+        $alertMessage = "Please enter a username.";
+    }
+
+    // Validate password
+
+    if(empty($password)){
+        $alertMessage = "Please enter a password.";
+    }
+
+    // Validate usertype
+
+    if(empty($usertype)){
+        $alertMessage = "Please enter a usertype.";
     }
 
 
     // Check input errors before inserting in database
     if(empty($alertMessage)){
-
-      //Checking the values are existing in the database or not
-    $query = "INSERT INTO categories (category) VALUES ('$category')";
+    //Checking the values are existing in the database or not
+    $query = "UPDATE users SET username='$username', password='$password', userType='$userType' WHERE id='$users_id'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
-
     if($result){
-         $alertMessage = "<div class='alert alert-success' role='alert'>
-  New categoryr successfully added in database.
+        $alertMessage = "<div class='alert alert-success' role='alert'>
+  User data successfully updated in database.
 </div>";
-    }else{
-        $alertMessage = "<div class='alert alert-danger' role='alert'>
-  Error Adding data in Database.
+    }else {
+        $alertMessage = "<div class='alert alert-success' role='alert'>
+  Error updating record.
 </div>";}
 
 // remove all session variables
@@ -49,9 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 // Close connection
 mysqli_close($link);
-
+}
     }
-  }
 
 function test_input($data) {
     $data = trim($data);
@@ -59,6 +87,7 @@ function test_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +95,7 @@ function test_input($data) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Add Categories</title>
+  <title>MyHome | Add Users</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -261,8 +290,8 @@ function test_input($data) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        ADD CATEGORY
-        <small>Add new category to help you categorize your existing products in the database</small>
+        ADD USER
+        <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
@@ -275,17 +304,39 @@ function test_input($data) {
           <!-- general form elements -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Product Category</h3>
+              <h3 class="box-title">Branch's Information</h3>
             </div>
-            <?php echo $alertMessage; ?>
             <!-- /.box-header -->
             <!-- form start -->
-            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <form role="form">
               <div class="box-body">
                 <div class="form-group">
-                  <label>Category Name</label>
-                  <input type="text" class="form-control" placeholder="Category e.g: Chairs, Tables, Cabinets" name="category" required>
+                  <label>Username</label>
+                  <input type="text" class="form-control" placeholder="Username" name="user" value="<?php echo $username; ?>">
                 </div>
+
+                <div class="form-group">
+                <label>User Type</label>
+                <select class="form-control select2" style="width: 100%;">
+                  <option selected="selected">Administrator</option>
+                  <option>Finance Officer</option>
+                  <option>Information Officer</option>
+                  <option>Accounts Officer</option>
+                  <option>Warehouse Officer</option>
+                  <option>Cashier</option>
+                  <option>Super Admin</option>
+                </select>
+              </div>
+
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Password" name="password" value="<?php echo $password; ?>">
+                </div>
+
+  
+
+
+              </div>
               <!-- /.box-body -->
 
               <div class="box-footer">

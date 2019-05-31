@@ -38,6 +38,7 @@ if(isset($_GET['alert'])){
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
@@ -230,11 +231,11 @@ if(isset($_GET['alert'])){
     </section>
 <?php echo $alertMessage; ?>
     <!-- Main content -->
-    <table class='table table-bordered table-striped'>
+    <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
       <thead>
       <tr>
-        <th>Branch Name</th>
-        <th>Branch Address</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch Name</th>
+        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch Address</th>
         <th>Action</th>
         </tr>
           </thead>
