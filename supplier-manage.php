@@ -246,8 +246,8 @@ if(isset($_GET['alert'])){
         <div class="box-body">
           <div class="row">
 
-            <form role="form">
-                <!-- <div class="col-md-5">
+          <!--  <form role="form">
+                 <div class="col-md-5">
                   <!-- 1st column content
                       <div class="form-group">
                         <label>Search:</label>
@@ -383,6 +383,18 @@ if(isset($_GET['alert'])){
       'autoWidth'   : false
     })
   })
+ </script>
+ <!-- Alert animation -->
+ <script type="text/javascript">
+ $(document).ready(function () {
+
+   window.setTimeout(function() {
+     $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+       $(this).remove();
+     });
+   }, 1000);
+
+ });
  </script>
 </body>
 </html>
