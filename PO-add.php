@@ -550,5 +550,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     $("#grandTotal").val(e)
             }
         </script>
+
+        <!-- Alert animation -->
+        <script type="text/javascript">
+        $(document).ready(function () {
+
+          window.setTimeout(function() {
+            $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+              $(this).remove();
+            });
+          }, 1000);
+
+        });
+        </script>
 </body>
 </html>

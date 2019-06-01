@@ -399,5 +399,17 @@ function test_input($data) {
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- Alert animation -->
+<script type="text/javascript">
+$(document).ready(function () {
+
+  window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+      $(this).remove();
+    });
+  }, 1000);
+
+});
+</script>
 </body>
 </html>
