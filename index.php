@@ -6,9 +6,8 @@ session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
-
-
 }
+                         
 ?>
 
 
@@ -255,21 +254,43 @@ folder instead of downloading all of them to reduce the load. -->
 
 
       <!-- =========================================================== -->
-
       <!-- Small boxes (Stat box) -->
+      
+
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>
+                  <?php
+                         // Include config file
+                         require_once "config.php";
 
-              <p>New Orders</p>
+                         // Attempt select query execution
+                        $query = "SELECT COUNT(*) FROM suppliers";
+                        if($result = mysqli_query($link, $query)){
+                        if(mysqli_num_rows($result) > 0){
+                            $supp_count = mysqli_fetch_array($result);
+                            echo $supp_count[0];
+                            mysqli_free_result($result);
+                          } else{
+                            echo "0";
+                          }
+                         }
+                         else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+                        ?>
+
+              </h3>
+
+              <p>Supplier Count</p>
             </div>
             <div class="icon">
-              <i class="fa fa-shopping-cart"></i>
+              <i class="fa fa-cube"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="supplier-manage.php" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -279,14 +300,36 @@ folder instead of downloading all of them to reduce the load. -->
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>
 
-              <p>Bounce Rate</p>
+                <?php
+                         // Include config file
+                         require_once "config.php";
+
+                         // Attempt select query execution
+                        $query = "SELECT COUNT(*) FROM products";
+                        if($result = mysqli_query($link, $query)){
+                        if(mysqli_num_rows($result) > 0){
+                            $prod_count = mysqli_fetch_array($result);
+                            echo $prod_count[0];
+                            mysqli_free_result($result);
+                          } else{
+                            echo "0";
+                          }
+                         }
+                         else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+                        ?>
+                
+                        </h3>
+
+              <p>Product Count</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fa fa-shopping-cart"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="product-manage.php" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -296,14 +339,37 @@ folder instead of downloading all of them to reduce the load. -->
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+                
+              <h3> 
+                         <?php
+                         // Include config file
+                         require_once "config.php";
 
-              <p>User Registrations</p>
+                         // Attempt select query execution
+                        $query = "SELECT COUNT(*) FROM customers";
+                        if($result = mysqli_query($link, $query)){
+                        if(mysqli_num_rows($result) > 0){
+                            $cust_count = mysqli_fetch_array($result);
+                            echo $cust_count[0];
+                            mysqli_free_result($result);
+                          } else{
+                            echo "0";
+                          }
+                         }
+                         else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+                        ?>
+
+
+              </h3>
+              <p>Customer Count</p>
+                        
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="customer-manage.php" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -313,17 +379,41 @@ folder instead of downloading all of them to reduce the load. -->
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>
+                  <?php
+                         // Include config file
+                         require_once "config.php";
 
-              <p>Unique Visitors</p>
+                         // Attempt select query execution
+                        $query = "SELECT COUNT(*) FROM customers";
+                        if($result = mysqli_query($link, $query)){
+                        if(mysqli_num_rows($result) > 0){
+                            $cust_count = mysqli_fetch_array($result);
+                            echo $cust_count[0];
+                            mysqli_free_result($result);
+                          } else{
+                            echo "0";
+                          }
+                         }
+                         else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+                        ?>
+
+              </h3>
+
+              <p>Incoming Items</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="fa fa-truck"></i>
             </div>
             <a href="#" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
+
+
           </div>
+        
         </div>
         <!-- ./col -->
       </div>
