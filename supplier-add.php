@@ -330,7 +330,7 @@ function test_input($data) {
 
                 <div class="form-group">
                 <label>Phone</label>
-                  <input type="text" class="form-control" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                  <input type="text" class="form-control" placeholder="Phone" name="supplier_number" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                 </div>
 
                 <div class="form-group">

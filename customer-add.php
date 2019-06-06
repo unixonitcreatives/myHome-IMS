@@ -294,8 +294,8 @@ mysqli_close($link);
                 </div>
 
                 <div class="form-group">
-                  <label>Phone</label>
-                  <input type="number" class="form-control" placeholder="Phone" name="customer_contact" required>
+                <label>Phone</label>
+                  <input type="text" class="form-control" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                 </div>
 
                 <div class="form-group">
@@ -365,6 +365,29 @@ mysqli_close($link);
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- Page script -->
+
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+
+<!-- Alert animation -->
+<script type="text/javascript">
+$(document).ready(function () {
+
+  window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+      $(this).remove();
+    });
+  }, 1000);
+
+});
+</script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -431,19 +454,6 @@ mysqli_close($link);
       showInputs: false
     })
   })
-</script>
-
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
-
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
-
-});
 </script>
 </body>
 </html>
