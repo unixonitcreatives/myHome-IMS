@@ -268,7 +268,10 @@ if(isset($_GET['alert'])){
                               echo "<td>" . $row['customer_email'] . "</td>";
                               echo "<td>" . $row['customer_address'] . "</td>";
                               echo "<td>";
-                              echo "<a href='customer-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+
+                              echo "<a href='customer-view.php?id=". $row['id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
+
+                              echo " &nbsp; <a href='customer-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                               echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                               echo "</td>";
                               echo "</tr>";
@@ -306,7 +309,26 @@ if(isset($_GET['alert'])){
           </div>
         </div>
       </section>
-
+      <div class="modal fade" id="modal-default">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Customer Information</h4>
+              </div>
+              <div class="modal-body">
+                <p>Infos&hellip;</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
       <footer class="main-footer">
         <?php include('template/footer.php'); ?>
       </footer>

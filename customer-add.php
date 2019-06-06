@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if($result){
          $alertMessage = "<div class='alert alert-success' role='alert'>
-  New customer successfully sdded in database.
+  New customer successfully added in database.
 </div>";
     }else {
         $alertMessage = "<div class='alert alert-danger' role='alert'>
