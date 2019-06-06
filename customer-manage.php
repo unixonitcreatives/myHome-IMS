@@ -274,7 +274,7 @@ if(isset($_GET['alert'])){
                               echo "<a href='customer-view.php?id=". $row['id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
 
                               echo " &nbsp; <a href='customer-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                               echo "</td>";
                               echo "</tr>";
                             }
@@ -331,6 +331,7 @@ if(isset($_GET['alert'])){
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+
       <footer class="main-footer">
         <?php include('template/footer.php'); ?>
       </footer>
@@ -340,6 +341,20 @@ if(isset($_GET['alert'])){
       <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
+
+
+
+
+      <footer class="main-footer">
+        <?php include('template/footer.php'); ?>
+      </footer>
+
+      <!-- Add the sidebar's background. This div must be placed
+      immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
 
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -385,5 +400,32 @@ if(isset($_GET['alert'])){
 
  });
  </script>
+
+                                              <script>
+                                                $(".remove").click(function(){
+                                                    var id = $(this).parents("tr").attr("id");
+
+                                                    if(confirm('Are you sure to remove this record ?'))
+                                                    {
+                                                        $.ajax({
+                                                           url: 'customer-delete.php',
+                                                           type: 'POST',
+                                                           data: {id: id},
+
+                                                           error: function(data) {
+                                                              $("#"+id).remove();
+                                                              alert('Record removed successfully');
+                                                           },
+
+                                                           success: function(data) {
+                                                                $("#"+id).remove();
+                                                                alert("Record removed successfully");  
+                                                           }
+                                                           
+                                                        });
+                                                    }
+                                                });
+
+                                            </script>
   </body>
   </html>

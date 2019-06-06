@@ -284,7 +284,7 @@ if(isset($_GET['alert'])){
 
                                              echo " &nbsp; <a href='supplier-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                                                 
-                                             echo " &nbsp; <a href='supplier-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                             echo " &nbsp; <a href='supplier-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              
                                              echo "</td>";
                                          echo "</tr>";
@@ -391,6 +391,33 @@ if(isset($_GET['alert'])){
    }, 1000);
 
  });
- </script>
+</script>
+
+                                               <script>
+                                                $(".remove").click(function(){
+                                                    var id = $(this).parents("tr").attr("id");
+
+                                                    if(confirm('Are you sure to remove this record ?'))
+                                                    {
+                                                        $.ajax({
+                                                           url: 'supplier-delete.php',
+                                                           type: 'POST',
+                                                           data: {id: id},
+
+                                                           error: function(data) {
+                                                              $("#"+id).remove();
+                                                              alert('Record removed successfully');
+                                                           },
+
+                                                           success: function(data) {
+                                                                $("#"+id).remove();
+                                                                alert("Record removed successfully");  
+                                                           }
+                                                           
+                                                        });
+                                                    }
+                                                });
+
+                                            </script>
 </body>
 </html>

@@ -295,7 +295,7 @@ mysqli_close($link);
 
                 <div class="form-group">
                 <label>Phone</label>
-                  <input type="text" class="form-control" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                  <input type="text" class="form-control" placeholder="Phone" name="customer_contact" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                 </div>
 
                 <div class="form-group">
