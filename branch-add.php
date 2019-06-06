@@ -229,6 +229,8 @@ mysqli_close($link);
 
                              <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
                              </li>
+                             <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        </li>
                          </ul>
     </section>
     <!-- /.sidebar -->
@@ -244,6 +246,7 @@ mysqli_close($link);
         ADD BRANCH
         <small>You can add new company's branch information here</small>
       </h1>
+      
       <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
       </ol>
@@ -256,6 +259,7 @@ mysqli_close($link);
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Branch's Information</h3>
+              <br><a href="branch-manage.php" class="text-center">View Branches</a>
             </div>
             <!-- /.box-header -->
             <?php echo $alertMessage; ?>

@@ -281,6 +281,7 @@ mysqli_close($link);
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Customer's Information</h3>
+              <br><a href="customer-manage.php" class="text-center">View Customers</a>
             </div>
             <!-- /.box-header -->
             <?php echo $alertMessage; ?>

@@ -247,6 +247,8 @@ mysqli_close($link);
 
                              <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
                              </li>
+                             <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        </li>
                          </ul>
     </section>
     <!-- /.sidebar -->
@@ -259,7 +261,7 @@ mysqli_close($link);
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        ADD CATEGORY
+        UPDATE CATEGORY
         <small>Add new category to help you categorize your existing products in the database</small>
       </h1>
       <ol class="breadcrumb">

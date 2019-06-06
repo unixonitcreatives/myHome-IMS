@@ -210,6 +210,8 @@ if(isset($_GET['alert'])){
 
             <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
             </li>
+            <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        </li>
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -239,6 +241,7 @@ if(isset($_GET['alert'])){
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Search for Category Information</h3>
+                <br><a href="category-add.php" class="text-center">+ Add New Category</a>
 
                 <div class="box-body">
                   <div class="row">

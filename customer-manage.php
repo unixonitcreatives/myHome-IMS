@@ -238,7 +238,7 @@ if(isset($_GET['alert'])){
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Search for Category Information</h3>
-
+                <br><a href="customer-add.php" class="text-center">+ Add New Customer</a>
                 <div class="box-body">
                   <div class="row">
                     <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">

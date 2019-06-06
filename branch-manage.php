@@ -210,6 +210,8 @@ if(isset($_GET['alert'])){
 
             <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
             </li>
+            <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        </li>
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -225,6 +227,7 @@ if(isset($_GET['alert'])){
             MANAGE BRANCH
             <small>You can manage your company's branches here</small>
           </h1>
+          
           <ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
           </ol>
@@ -239,6 +242,7 @@ if(isset($_GET['alert'])){
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Search for Category Information</h3>
+                <br><a href="branch-add.php" class="text-center">+ Add New Branch</a>
 
                 <div class="box-body">
                   <div class="row">
@@ -314,30 +318,49 @@ if(isset($_GET['alert'])){
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery 3 -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="bower_components/fastclick/lib/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
+<!-- jQuery 3 -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
 
-    <!-- Alert animation -->
-    <script type="text/javascript">
-    $(document).ready(function () {
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-      window.setTimeout(function() {
-        $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-          $(this).remove();
-        });
-      }, 1000);
 
-    });
-    </script>
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+ </script>
+ <!-- Alert animation -->
+ <script type="text/javascript">
+ $(document).ready(function () {
+
+   window.setTimeout(function() {
+     $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+       $(this).remove();
+     });
+   }, 1000);
+
+ });
+ </script>
   </body>
   </html>
