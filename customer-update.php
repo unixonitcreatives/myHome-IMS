@@ -269,6 +269,8 @@ mysqli_close($link);
 
                              <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
                              </li>
+                             <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        </li>
                          </ul>
     </section>
     <!-- /.sidebar -->
@@ -281,7 +283,7 @@ mysqli_close($link);
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        ADD CUSTOMER
+        UPDATE CUSTOMER
         <small></small>
       </h1>
       <ol class="breadcrumb">
@@ -296,6 +298,7 @@ mysqli_close($link);
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Customer's Information</h3>
+              <br><a href="customer-manage.php" class="text-center">View Customers</a>
             </div>
             <!-- /.box-header -->
             <?php echo $alertMessage; ?>

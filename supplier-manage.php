@@ -249,40 +249,6 @@ if(isset($_GET['alert'])){
         <!-- /.box-header -->
         <div class="box-body">
           <div class="row">
-
-          <!--  <form role="form">
-                 <div class="col-md-5">
-                  <!-- 1st column content
-                      <div class="form-group">
-                        <label>Search:</label>
-                        <input type="text" class="form-control" placeholder="Search">
-                      </div>
-                  </div>
-
-                <div class="col-md-5">
-                  <!-- 2nd column content
-                      <div class="form-group">
-                        <label>Search Options</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Supplier Name</option>
-                          <option>Contact Person</option>
-                          <option>Contact No.</option>
-                          <option>Email</option>
-                          <option>Address</option>
-                          <option>Created_by</option>
-                        </select>
-                      </div>
-
-                </div>
-
-                <div class="col-md-2">
-                  <!-- 3rd column content
-                  <div class="form-group">
-                    <br>
-                    <button type="submit" class="btn btn-success">Check</button>
-                  </div>
-                </div>
-            </form> -->
           </div>
           <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
       <thead>

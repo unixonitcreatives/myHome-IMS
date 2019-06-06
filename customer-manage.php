@@ -210,6 +210,8 @@ if(isset($_GET['alert'])){
 
             <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
             </li>
+            <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        </li>
           </ul>
         </section>
         <!-- /.sidebar -->

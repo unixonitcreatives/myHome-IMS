@@ -295,6 +295,8 @@ function test_input($data) {
 
                              <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
                              </li>
+                             <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        </li>
                          </ul>
     </section>
     <!-- /.sidebar -->
@@ -307,7 +309,7 @@ function test_input($data) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        ADD SUPPLIER
+        UPDATE SUPPLIER
         <small>Add supplier's information to your database</small>
       </h1>
       <ol class="breadcrumb">
@@ -323,6 +325,7 @@ function test_input($data) {
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Supplier's Information</h3>
+              <br><a href="supplier-manage.php" class="text-center">View Supplier</a>
             </div>
 
             <!-- /.box-header -->
@@ -354,17 +357,17 @@ function test_input($data) {
                   <label>Address</label>
                   <input type="text" class="form-control" placeholder="Address" name="supplier_address" value="<?php echo $supplier_address; ?>" required>
                 </div>
-              </div>
-
-              <div class="form-group">
+                <div class="form-group">
                 <label>Created at</label>
                 <input type="text" class="form-control" placeholder="date" name="date" value="<?php echo $created_at; ?>" disabled>
               </div>
-            </div>
-              <!-- /.box-body -->
+              </div>
 
+              
+            
+              <!-- /.box-body -->
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Save</button>
+                  <button type="submit" class="btn btn-success">Save</button>
               </div>
             </form>
           </div>

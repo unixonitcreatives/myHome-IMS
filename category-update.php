@@ -276,6 +276,8 @@ mysqli_close($link);
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Product Category</h3>
+              <br><a href="category-manage.php" class="text-center">View Categories</a>
+
             </div>
             <?php echo $alertMessage; ?>
             <!-- /.box-header -->
@@ -287,7 +289,7 @@ mysqli_close($link);
                   <input type="text" class="form-control" placeholder="Category e.g: Chairs, Tables, Cabinets" name="category" value="<?php echo $category; ?>"required>
                 </div>
               <!-- /.box-body -->
-
+             </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-success">Save</button>
               </div>
