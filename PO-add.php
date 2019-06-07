@@ -7,6 +7,74 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+// Define variables and initialize with empty values
+$username=$password=$usertype=$alertMessage="";
+
+require_once "config.php";
+
+//If the form is submitted or not.
+//If the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    //Assigning posted values to variables.
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+    $usertype = test_input($_POST['userType']);
+
+    // Validate username
+
+    if(empty($username)){
+        $alertMessage = "Please enter a username.";
+    }
+
+    // Validate password
+
+    if(empty($password)){
+        $alertMessage = "Please enter a password.";
+    }
+
+    // Validate user type
+
+    if(empty($usertype)){
+        $alertMessage = "Please enter a user type.";
+    }
+
+
+    // Check input errors before inserting in database
+    if(empty($alertMessage)){
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    //Checking the values are existing in the database or not
+    $query = "INSERT INTO users (username, password, userType, time_created) VALUES ('$username', '$hash', '$usertype', CURRENT_TIMESTAMP)";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    if($result){
+         $alertMessage = "<div class='alert alert-success' role='alert'>
+  Newuser successfully added in database.
+</div>";
+    }else{
+        $alertMessage = "<div class='alert alert-danger' role='alert'>
+  Error Adding data in Database.
+</div>";}
+
+// remove all session variables
+//session_unset();
+// destroy the session
+//session_destroy();
+
+// Close connection
+mysqli_close($link);
+
+    }
+}
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -221,7 +289,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <section class="content">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Product Information</h3>
+          <h3 class="box-title">Purchase Order #: </h3>
 
 
         </div>
@@ -229,35 +297,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <div class="box-body">
           <div class="row">
 
-            <form role="form">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="col-md-6">
                   <!-- 1st column content -->
-                      <div class="form-group">
-                        <label>Purchase Order No.</label>
-                        <input type="text" class="form-control" placeholder="Purchase Order No.">
-                      </div>
 
                       <div class="form-group">
                         <label>Supplier</label>
-                        <select class="form-control" style="width: 100%;">
-                          <option selected="selected">Main Branch</option>
-                          <option>populate</option>
-                          <option>to ng names</option>
-                          <option>of</option>
-                          <option>suppliers</option>
-                          <option>from</option>
-                          <option>database</option>
+                        <select class="form-control" style="width: 100%;" name='supplier'>
+                          <option>--SELECT SUPPLIER--</option>
+                          <?php
+                                      $query = "select supplier_name from suppliers";
+                                      $result = mysqli_query($link, $query);
+
+                                      $suppliers = $_POST['supplier_name'];
+
+                                      while ($row = mysqli_fetch_assoc($result)) { ?>
+                                      <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
+                                      <?php } ?>
                         </select>
-                      </div>
-
-                      <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control" placeholder="Address (auto-fill)" disabled>
-                      </div>
-
-                      <div class="form-group">
-                        <label>Contact Person</label>
-                        <input type="text" class="form-control" placeholder="Contact Person (auto-fill or manual?)" disabled>
                       </div>
 
                   </div>
@@ -296,7 +353,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                   <!-- 2nd row content -->
 
 
-                                <form class="form-vertical">
 
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="crud_table">
@@ -333,7 +389,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                 </td>
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="text" id="item_amount" name="item_amount[]" value="0.00" readonly>
+                                                        <input type="number" id="item_amount" name="item_amount[]" value="0.00" readonly>
                                                     </div>
                                                 </td>
 
@@ -360,7 +416,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             <button type="button" name="add" id="add" class="btn btn-success btn-xs">Add Row</button>
                                         </div>
                                     </div>
-                                </form>
                             </div>
                           </div>
                         </form>
