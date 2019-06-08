@@ -10,7 +10,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 // Define variables and initialize with empty values
 $inv_num=
-$po_date=
 $po_supplier_name=
 $po_qty=
 $po_unit=
@@ -28,11 +27,20 @@ require_once "config.php";
 //If the form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-  if(isset($_POST['po_supplier_name'])){
+    $po_supplier_name =$_POST['supplier_name'];
+
+    /* $item_name = $_POST['item_name'][$x];
+    $item_code = $_POST['item_code'][$x];
+    $item_desc = $_POST['item_description'][$x];
+    $item_price = $_POST['item_price'][$x];*/
+    $query = "INSERT INTO po_transactions (inv_date, supplier_name) VALUES ( CURRENT_TIMESTAMP, '$po_supplier_name')";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+  if(isset($_POST['po_qty'])){
     //Assigning posted values to variables.
 
-    foreach ($_POST['po_supplier_name'] as $row => $value){
-      $po_supplier_name   = $_POST['po_supplier_name'][$row];
+    foreach ($_POST['po_qty'] as $row => $value){
+      $po_trans_id        = $_POST['po_transactions.po_trans_id'][$row];
       $po_qty             = $_POST['po_qty'][$row];
       $po_unit            = $_POST['po_unit'][$row];
       $po_description     = $_POST['po_description'][$row];
@@ -77,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($alertMessage)){*/
 
-      $query = "INSERT INTO request_po (po_date,po_supplier_name,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,paymentTerms,user) VALUES (CURRENT_TIMESTAMP,'".$po_supplier_name."','".$po_qty."','".$po_unit."','".$po_description."','".$po_unit_price."','".$po_total_amount."','".$totalPrice."','".$payment_terms."','".$user."')";
+      $query = "INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,paymentTerms,user) VALUES ('".$po_trans_id."','".$po_qty."','".$po_unit."','".$po_description."','".$po_unit_price."','".$po_total_amount."','".$totalPrice."','".$payment_terms."','".$user."')";
       $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
   }
 
@@ -330,7 +338,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                       $query = "select supplier_name from suppliers";
                       $result = mysqli_query($link, $query);
 
-                      $po_supplier_name = $_POST['po_supplier_name'];
+                      //$po_supplier_name = $_POST['supplier_name'];
 
                       while ($row = mysqli_fetch_assoc($result)) { ?>
                         <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
