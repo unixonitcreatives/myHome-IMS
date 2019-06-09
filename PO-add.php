@@ -19,6 +19,8 @@ $po_total_amount=
 $totalPrice=
 $remarks=
 $user=
+$paymentTerms=
+$transID=
 $alertMessage="";
 
 require_once "config.php";
@@ -26,29 +28,27 @@ require_once "config.php";
 //If the form is submitted or not.
 //If the form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $po_supplier_name =$_POST['po_supplier'];
+    $paymentTerms =$_POST['paymentTerms'];
 
-    $po_supplier_name =$_POST['supplier_name'];
-
-    /* $item_name = $_POST['item_name'][$x];
-    $item_code = $_POST['item_code'][$x];
-    $item_desc = $_POST['item_description'][$x];
-    $item_price = $_POST['item_price'][$x];*/
-    $query = "INSERT INTO po_transactions (inv_date, supplier_name) VALUES ( CURRENT_TIMESTAMP, '$po_supplier_name')";
+    $query = "INSERT INTO po_transactions (inv_date, supplier_name, paymentTerms) VALUES ( CURRENT_TIMESTAMP, '$po_supplier_name', '$paymentTerms')";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-  if(isset($_POST['po_qty'])){
+  if($result){//isset($_POST['po_qty'])
     //Assigning posted values to variables.
+    $po_trans_id        = "SELECT LAST_INSERT_ID()";
+    $po_qty             = $_POST['po_qty'];
+    $po_unit            = $_POST['po_unit'];
+    $po_description     = $_POST['po_description'];
+    $po_unit_price      = $_POST['po_unit_price'];
+    $po_total_amount    = $_POST['po_total_amount'];
+    $payment_terms      = $_POST['paymentTerms'];
+    $user               = $_SESSION["username"];
 
-    foreach ($_POST['po_qty'] as $row => $value){
-      $po_trans_id        = $_POST['po_transactions.po_trans_id'][$row];
-      $po_qty             = $_POST['po_qty'][$row];
-      $po_unit            = $_POST['po_unit'][$row];
-      $po_description     = $_POST['po_description'][$row];
-      $po_unit_price      = $_POST['po_unit_price'][$row];
-      $po_total_amount    = $_POST['po_total_amount'][$row];
-      $payment_terms      = $_POST['paymentTerms'][$row];
-      $user               = $_SESSION["username"][$row];
-
+     $i = array($po_trans_id,$po_qty,$po_unit,$po_description,$po_unit_price,$po_total_amount,$payment_terms,$user);
+     $j = 0;
+    //foreach ($_POST['po_qty'] as $row => $value)
+    for($j=0; $j>$i; $j++){
 
       /*$query ="INSERT INTO item (item_name, item_code, item_description, item_price)
       VALUES('".$item_name."', '".$item_code."', '".$item_desc."', '".$item_price."')";
@@ -85,13 +85,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($alertMessage)){*/
 
-      $query = "INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,paymentTerms,user) VALUES ('".$po_trans_id."','".$po_qty."','".$po_unit."','".$po_description."','".$po_unit_price."','".$po_total_amount."','".$totalPrice."','".$payment_terms."','".$user."')";
+      $query = "INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,paymentTerms,user) VALUES (.$po_trans_id[$j]. "," .$po_qty[$j]. "," .$po_unit[$j]. "," .$po_description[$j]. "," .$po_unit_price[$j]. "," .$po_total_amount[$j]. "," .$totalPrice[$j]. "," .$payment_terms[$j]. "," .$user[$j].);
       $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
   }
 
       if($result){
         $alertMessage = "<div class='alert alert-success' role='alert'>
-        Newuser successfully added in database.
+        New user successfully added in database.
         </div>";
       }else{
         $alertMessage = "<div class='alert alert-danger' role='alert'>
@@ -101,9 +101,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         //mysqli_close($link);
 
-
-    }
 }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -325,20 +325,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <!-- /.box-header -->
           <div class="box-body">
             <div class="row">
-                                <?php echo $alertMessage; ?>
+            <?php echo $alertMessage; ?>
               <form class="form-vertical" enctype="multipart/form-data" method="post" accept-charset="utf-8" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="col-md-6">
                   <!-- 1st column content -->
 
                   <div class="form-group">
                     <label>Supplier</label>
-                    <select class="form-control" style="width: 100%;" name='po_supplier[]'>
+                    <select class="form-control" style="width: 100%;" name='po_supplier'>
                       <option>--SELECT SUPPLIER--</option>
                       <?php
                       $query = "select supplier_name from suppliers";
                       $result = mysqli_query($link, $query);
 
-                      //$po_supplier_name = $_POST['supplier_name'];
+                      $po_supplier_name = $_POST['supplier_name'];
 
                       while ($row = mysqli_fetch_assoc($result)) { ?>
                         <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
@@ -379,7 +379,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="form-group">
           <label>Payment Terms</label>
-          <input type="number" class="form-control" placeholder="Payment Terms (i.e 30 days)" name="paymentTerms[]">
+          <input type="number" class="form-control" placeholder="Payment Terms (i.e 30 days)" name="paymentTerms">
         </div>
       </div>
 
