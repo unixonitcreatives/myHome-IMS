@@ -35,20 +35,45 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 
-if ($result) {
-  $j = 0;
-  $count = sizeof($_POST['po_qty']);
+    if ($result) {
 
-  // Use insert_id property
-  $po_trans_id = $link->insert_id;
-  $user  = $_SESSION["username"];
+    $j = 0;
 
-  for ($j = 0; $j < $count; $j++) {
+    $count = count($_POST['po_qty']);
 
-     $query = "INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,user) VALUES ('".$po_trans_id."', '".$_POST['po_qty'][$j]."', '".$_POST['po_unit'][$j]."', '".$_POST['po_description'][$j]."', '".$_POST['po_unit_price'][$j]."', '".$_POST['po_total_amount'][$j]."' , '".$_POST['totalPrice'][$j]."' , '".$user."')";
-     $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
+    // Use insert_id property
 
-  }
+    $po_trans_id = $link->insert_id;
+
+    $user = $_SESSION["username"];
+
+    $stmt = $link->prepare("INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,user) VALUES (? , ?, ?, ?, ?, ?, ?, ?)");
+
+    for ($j = 0; $j < $count; $j++) {
+
+    $stmt->bind_param('ssssssss',
+
+    $po_trans_id,
+
+    $_POST['po_qty'][$j],
+
+    $_POST['po_unit'][$j],
+
+    $_POST['po_description'][$j],
+
+    $_POST['po_unit_price'][$j],
+
+    $_POST['po_total_amount'][$j],
+
+    $_POST['totalPrice'][$j],
+
+    $user
+
+    );
+
+    $stmt->execute();
+
+    }
 
 
 
