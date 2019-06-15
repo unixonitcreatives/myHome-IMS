@@ -23,6 +23,7 @@ $paymentTerms=
 $transID=
 $alertMessage="";
 
+
 require_once "config.php";
 
 //If the form is submitted or not.
@@ -35,48 +36,56 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 
-    if ($result) {
+    //get the last inserted id in po transaction table
+    $po_trans_id = $link->insert_id;
+
+    //get username
+    $user = $_SESSION["username"];
+
+    if(isset($_POST['po_qty'])){
+
+      foreach ($_POST['po_qty'] as $row => $value){
+        $po_trans_id;
+        $po_qty = $_POST['po_qty'][$row];
+        $po_unit = $_POST['po_unit'][$row];
+        $po_description = $_POST['po_description'][$row];
+        $po_unit_price = $_POST['po_unit_price'][$row];
+        $po_total_amount = $_POST['po_total_amount'][$row];
+        $user;
+            $query ="INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,user)
+   VALUES('".$po_trans_id."','".$po_qty."', '".$po_unit."', '".$po_description."', '".$po_unit_price."', '".$po_total_amount."', '".$user."')";
+            $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
+        }
+
+  /*  if ($result) {
 
     $j = 0;
 
     $count = count($_POST['po_qty']);
 
-    // Use insert_id property
-
+    //get the last inserted id in po transaction table
     $po_trans_id = $link->insert_id;
 
+    //get username
     $user = $_SESSION["username"];
 
     $stmt = $link->prepare("INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,user) VALUES (? , ?, ?, ?, ?, ?, ?, ?)");
 
     for ($j = 0; $j < $count; $j++) {
 
-    $stmt->bind_param('ssssssss',
-
+    $stmt->bind_param('isssssss',
     $po_trans_id,
-
     $_POST['po_qty'][$j],
-
     $_POST['po_unit'][$j],
-
     $_POST['po_description'][$j],
-
     $_POST['po_unit_price'][$j],
-
     $_POST['po_total_amount'][$j],
-
     $_POST['totalPrice'][$j],
+    $user );
 
-    $user
+    $stmt->execute();
 
-
-    );
-
-$stmt->execute();
-
-    }
-
-
+  }*/
 
       if($result){
         $alertMessage = "<div class='alert alert-success' role='alert'>
@@ -424,7 +433,7 @@ $stmt->execute();
                 <td align="right">Grand Total Amount:</td>
                 <td>
                   <div class="form-group">
-                    <input type="number" class= "totalPrice" id="totalPrice" name="totalPrice[]" value="0" readonly>
+                    <input type="number" class= "totalPrice" id="totalPrice" name="totalPrice[]" value="0.00" readonly>
                   </div>
                 </td>
               </tr>
