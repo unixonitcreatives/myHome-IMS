@@ -235,7 +235,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <div class="col-md-6">
                   <!-- 1st column content -->
                       <div class="form-group">
-                        <label>Supplier</label>
+                        <label>Supplier</label> <a href="">+add new supplier</a>
                         <select class="form-control select2" style="width: 100%;">
                       <?php
                       require_once "config.php";
@@ -251,7 +251,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       </div>
 
                       <div class="form-group">
-                        <label>Category</label>
+                        <label>Category</label> <a href="">+add new category</a>
                         <select class="form-control select2" style="width: 100%;">
                       <?php
                       require_once "config.php";
@@ -267,7 +267,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       </div>
 
                       <div class="form-group">
-                        <label>Branch</label>
+                        <label>Branch</label> <a href="">+add new branch</a>
                         <select class="form-control select2" style="width: 100%;">
                       <?php
                       require_once "config.php";
