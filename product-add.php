@@ -284,13 +284,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       <div class="form-group">
                         <label>Supplier</label>
                         <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Main Branch</option>
-                          <option>populate</option>
-                          <option>to ng names</option>
-                          <option>of</option>
-                          <option>suppliers</option>
-                          <option>from</option>
-                          <option>database</option>
+                      <option>--SELECT SUPPLIER--</option>
+                      <?php
+                      require_once "config.php";
+                      $query = "select supplier_name from suppliers order by supplier_name";
+                      $result = mysqli_query($link, $query);
+
+                      $po_supplier_name = $_POST['supplier_name'];
+
+                      while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
+                      <?php } ?>
                         </select>
                       </div>
 
