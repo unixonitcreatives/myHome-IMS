@@ -344,7 +344,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </select>
                   </div>
 
-                  <!--  <div class="form-group">
+                  <div class="form-group">
+                    <label>Payment Terms</label>
+                    <input type="number" class="form-control" placeholder="Payment Terms (i.e 30 days)" name="paymentTerms">
+                  </div>
+
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="example" list="exampleList">
+                  <datalist id="exampleList">
+                    <option value="A">  
+                    <option value="B">
+                  </datalist>
+                  </div>
+                  <!--
+                  <div class="form-group">
                   <label>Address</label>
                   <input type="text" class="form-control" placeholder="Address (auto-fill)" disabled>
                 </div>
@@ -352,20 +365,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="form-group">
                 <label>Contact Person</label>
                 <input type="text" class="form-control" placeholder="Contact Person (auto-fill or manual?)" disabled>
-              </div> -->
-
+              </div>
+              -->
             </div>
 
             <div class="col-md-6">
               <!-- 2nd column content -->
-
-              <!-- <div class="form-group">
+              <!--
+              <div class="form-group">
               <label>Date</label>
               <input type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask disabled>
-            </div> -->
+            </div>
 
 
-            <!--<div class="form-group">
+            <div class="form-group">
             <label>Payment Mode</label>
             <select class="form-control" style="width: 100%;" name='paymentTerms[]'>
             <option selected="selected">Cash</option>
@@ -373,12 +386,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <option disabled="disabled">Card (Available Soon)</option>
             <option>Other</option>
           </select>
-        </div>-->
-
-        <div class="form-group">
-          <label>Payment Terms</label>
-          <input type="number" class="form-control" placeholder="Payment Terms (i.e 30 days)" name="paymentTerms">
         </div>
+      -->
+
+        
       </div>
 
       <div class="col-md-12">

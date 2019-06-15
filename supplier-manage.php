@@ -376,7 +376,7 @@ if(isset($_GET['alert'])){
       'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : false
+      'autoWidth'   : true
     })
   })
  </script>
