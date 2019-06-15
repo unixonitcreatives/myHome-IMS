@@ -255,8 +255,20 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       </div>
 
                       <div class="form-group">
-                        <label>Branch ID</label>
-                        <input type="text" class="form-control" placeholder="Branch ID">
+                        <label>BRANCH</label>
+                        <select class="form-control select2" style="width: 100%;">
+                      <option>--SELECT BRANCH--</option>
+                      <?php
+                      require_once "config.php";
+                      $query = "select branch_name from branches order by branch_name";
+                      $result = mysqli_query($link, $query);
+
+                      $po_supplier_name = $_POST['supplier_name'];
+
+                      while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <option value="<?php echo $row['branch_name']; ?>"><?php echo $row['branch_name']; ?></option>
+                      <?php } ?>
+                        </select>
                       </div>
 
                       <div class="form-group">
