@@ -23,6 +23,7 @@ $paymentTerms=
 $transID=
 $alertMessage="";
 
+
 require_once "config.php";
 
 //If the form is submitted or not.
@@ -34,60 +35,57 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $query = "INSERT INTO po_transactions (inv_date, supplier_name, paymentTerms) VALUES ( CURRENT_TIMESTAMP, '$po_supplier_name', '$paymentTerms')";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-  if($result){//isset($_POST['po_qty'])
-    //Assigning posted values to variables.
-    $po_trans_id        = "SELECT LAST_INSERT_ID()";
-    $po_qty             = $_POST['po_qty'];
-    $po_unit            = $_POST['po_unit'];
-    $po_description     = $_POST['po_description'];
-    $po_unit_price      = $_POST['po_unit_price'];
-    $po_total_amount    = $_POST['po_total_amount'];
-    $payment_terms      = $_POST['paymentTerms'];
-    $user               = $_SESSION["username"];
 
-     $i = array($po_trans_id,$po_qty,$po_unit,$po_description,$po_unit_price,$po_total_amount,$payment_terms,$user);
-     $j = 0;
-    //foreach ($_POST['po_qty'] as $row => $value)
-    for($j=0; $j>$i; $j++){
+    //get the last inserted id in po transaction table
+    $po_trans_id = $link->insert_id;
 
-      /*$query ="INSERT INTO item (item_name, item_code, item_description, item_price)
-      VALUES('".$item_name."', '".$item_code."', '".$item_desc."', '".$item_price."')";
-      $result = mysqli_multi_query($conn, $query) or die(mysqli_error($conn));
-    }
+    //get username
+    $user = $_SESSION["username"];
 
-    // Validation
+    if(isset($_POST['po_qty'])){
 
-    if(empty($po_supplier_name)){
-      $alertMessage = "Please enter supplier name.";
-    }
+      foreach ($_POST['po_qty'] as $row => $value){
+        $po_trans_id;
+        $po_qty = $_POST['po_qty'][$row];
+        $po_unit = $_POST['po_unit'][$row];
+        $po_description = $_POST['po_description'][$row];
+        $po_unit_price = $_POST['po_unit_price'][$row];
+        $po_total_amount = $_POST['po_total_amount'][$row];
+        $user;
+            $query ="INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,user)
+   VALUES('".$po_trans_id."','".$po_qty."', '".$po_unit."', '".$po_description."', '".$po_unit_price."', '".$po_total_amount."', '".$user."')";
+            $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
+        }
 
-    if(empty($po_qty)){
-      $alertMessage = "Please enter qty.";
-    }
+  /*  if ($result) {
 
-    if(empty($po_unit)){
-      $alertMessage = "Please enter product unit.";
-    }
+    $j = 0;
 
-    if(empty($po_description)){
-      $alertMessage = "Please enter product description.";
-    }
+    $count = count($_POST['po_qty']);
 
-    if(empty($po_unit_price)){
-      $alertMessage = "Please enter unit price.";
-    }
+    //get the last inserted id in po transaction table
+    $po_trans_id = $link->insert_id;
 
-    if(empty($payment_terms)){
-      $alertMessage = "Please enter payment terms.";
-    }
+    //get username
+    $user = $_SESSION["username"];
 
+    $stmt = $link->prepare("INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,user) VALUES (? , ?, ?, ?, ?, ?, ?, ?)");
 
-    // Check input errors before inserting in database
-    if(empty($alertMessage)){*/
+    for ($j = 0; $j < $count; $j++) {
 
-      $query = "INSERT INTO request_po (po_trans_id,po_qty,po_unit,po_description,po_unit_price,po_total_amount,totalPrice,paymentTerms,user) VALUES (.$po_trans_id[$j]. "," .$po_qty[$j]. "," .$po_unit[$j]. "," .$po_description[$j]. "," .$po_unit_price[$j]. "," .$po_total_amount[$j]. "," .$totalPrice[$j]. "," .$payment_terms[$j]. "," .$user[$j].);
-      $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
-  }
+    $stmt->bind_param('isssssss',
+    $po_trans_id,
+    $_POST['po_qty'][$j],
+    $_POST['po_unit'][$j],
+    $_POST['po_description'][$j],
+    $_POST['po_unit_price'][$j],
+    $_POST['po_total_amount'][$j],
+    $_POST['totalPrice'][$j],
+    $user );
+
+    $stmt->execute();
+
+  }*/
 
       if($result){
         $alertMessage = "<div class='alert alert-success' role='alert'>
@@ -419,7 +417,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               </td>
               <td>
                 <div class="form-group">
-                  <input type="number" id="po_total_amount" name="po_total_amount[]" value="0.00" readonly>
+                  <input type="number" id="po_total_amount" name="po_total_amount[]" value="0" readonly>
                 </div>
               </td>
 
@@ -435,7 +433,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <td align="right">Grand Total Amount:</td>
                 <td>
                   <div class="form-group">
-                    <input type="text" class= "totalPrice" id="totalPrice" name="totalPrice[]" value="0.00" readonly>
+                    <input type="number" class= "totalPrice" id="totalPrice" name="totalPrice[]" value="0.00" readonly>
                   </div>
                 </td>
               </tr>
@@ -576,7 +574,7 @@ $(document).ready(function(){
     html_code += "<td><input type='number' id='po_unit' name='po_unit[]' placeholder='Product Unit'></td>";
     html_code += "<td><input type='text' id='po_description' name='po_description[]' placeholder='Product Description'></td>";
     html_code += "<td><input type='number' id='po_unit_price' name='po_unit_price[]' placeholder='Product Unit Price'></td>";
-    html_code += "<td><input type='number' id='po_total_amount' name='po_total_amount[]' value='0.00' readonly></td>";
+    html_code += "<td><input type='number' id='po_total_amount' name='po_total_amount[]' value='0' readonly></td>";
     html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'>Delete Row</button></td>";
     html_code += "</tr>";
     $('#crud_table').append(html_code);
