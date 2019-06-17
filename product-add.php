@@ -235,13 +235,51 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <div class="col-md-6">
                   <!-- 1st column content -->
                       <div class="form-group">
-                        <label>Product ID</label>
-                        <input type="text" class="form-control" placeholder="Product ID">
+                        <label>Supplier</label> <a href="supplier-add.php">+add new</a>
+                        <select class="form-control select2" style="width: 100%;">
+                      <?php
+                      require_once "config.php";
+                      $query = "select supplier_name from suppliers order by supplier_name";
+                      $result = mysqli_query($link, $query);
+
+                      $supplier_name = $_POST['supplier_name'];
+
+                      while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
+                      <?php } ?>
+                        </select>
                       </div>
 
                       <div class="form-group">
-                        <label>Product Name</label>
-                        <input type="text" class="form-control" placeholder="Product Name">
+                        <label>Category</label> <a href="category-add.php">+add new</a>
+                        <select class="form-control select2" style="width: 100%;">
+                      <?php
+                      require_once "config.php";
+                      $query = "select category from categories order by category";
+                      $result = mysqli_query($link, $query);
+
+                      $category_name = $_POST['category'];
+
+                      while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <option value="<?php echo $row['category']; ?>"><?php echo $row['category']; ?></option>
+                      <?php } ?>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Branch</label> <a href="branch-add.php">+add new</a>
+                        <select class="form-control select2" style="width: 100%;">
+                      <?php
+                      require_once "config.php";
+                      $query = "select branch_name from branches order by branch_name";
+                      $result = mysqli_query($link, $query);
+
+                      $branch_name = $_POST['supplier_name'];
+
+                      while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <option value="<?php echo $row['branch_name']; ?>"><?php echo $row['branch_name']; ?></option>
+                      <?php } ?>
+                        </select>
                       </div>
 
                       <div class="form-group">
@@ -254,44 +292,28 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <input type="text" class="form-control" placeholder="Model No.">
                       </div>
 
-                      <div class="form-group">
-                        <label>Branch ID</label>
-                        <input type="text" class="form-control" placeholder="Branch ID">
-                      </div>
+                      
 
-                      <div class="form-group">
-                        <label>Note</label>
-                        <input type="text" class="form-control" placeholder="Note">
-                      </div>
+                      
 
 
 
                   </div>
 
                 <div class="col-md-6">
-                  <!-- 2nd column content -->
+                      <div class="form-group">
+                        <label>PO Number</label>
+                        <input type="text" class="form-control" placeholder="PO Number">
+                      </div>
 
                       <div class="form-group">
                         <label>Quantity</label>
-                        <input type="text" class="form-control" placeholder="Stock Count">
+                        <input type="text" class="form-control" placeholder="Quantity">
                       </div>
 
                       <div class="form-group">
-                        <label>SKU</label>
-                        <input type="text" class="form-control" placeholder="SKU">
-                      </div>
-
-                      <div class="form-group">
-                        <label>Supplier</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Main Branch</option>
-                          <option>populate</option>
-                          <option>to ng names</option>
-                          <option>of</option>
-                          <option>suppliers</option>
-                          <option>from</option>
-                          <option>database</option>
-                        </select>
+                        <label>Retail Price</label>
+                        <input type="text" class="form-control" placeholder="Retail Price">
                       </div>
 
                       <div class="form-group">
@@ -299,12 +321,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <input type="text" class="form-control" placeholder="Cost Price">
                       </div>
 
-
-
                       <div class="form-group">
-                        <label>Retail Price</label>
-                        <input type="text" class="form-control" placeholder="Retail Price">
+                        <label>Date Arrival</label>
+                        <input type="text" class="form-control" placeholder="Date Arrival">
                       </div>
+
+
+
+                      
 
 
 

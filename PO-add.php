@@ -23,6 +23,7 @@ $paymentTerms=
 $transID=
 $alertMessage="";
 
+
 require_once "config.php";
 
 //If the form is submitted or not.

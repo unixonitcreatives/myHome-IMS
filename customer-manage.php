@@ -342,20 +342,6 @@ if(isset($_GET['alert'])){
     </div>
     <!-- ./wrapper -->
 
-
-
-
-      <footer class="main-footer">
-        <?php include('template/footer.php'); ?>
-      </footer>
-
-      <!-- Add the sidebar's background. This div must be placed
-      immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
-    </div>
-    <!-- ./wrapper -->
-
-
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
