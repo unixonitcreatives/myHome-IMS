@@ -419,9 +419,9 @@ if(isset($_GET['alert'])){
 
                                                            success: function(data) {
                                                                 $("#"+id).remove();
-                                                                alert("Record removed successfully");  
+                                                                alert("Record removed successfully");
                                                            }
-                                                           
+
                                                         });
                                                     }
                                                 });

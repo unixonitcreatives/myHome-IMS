@@ -7,6 +7,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+require_once "config.php";
+
+$alertMessage="";
+//Checking the values are existing in the database or not
+$query = "Select * from po_transactions order by inv_date asc";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if(isset($_GET['alert'])){
+  if($_GET['alert'] == 'deletesuccess'){
+    $alertMessage = "<div class='alert alert-danger' role='alert'>Data deleted successfully.</div>"; }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -218,7 +229,85 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </section>
 
     <!-- Main content -->
+    <?php echo $alertMessage; ?>
+    <!-- Main content -->
+    <!-- Main content -->
+    <div class="box-body">
+      <!-- Search Area -->
+      <section class="content">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">ACTIONS NOT FUNCTIONING YET</h3>
+            <br><a href="customer-add.php" class="text-center">+ Add New Customer</a>
+            <div class="box-body">
+              <div class="row">
+                <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                  <thead>
+                    <tr>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Terms</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Total Price</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    // Include config file
+                    require_once 'config.php';
 
+                    // Attempt select query execution
+                    $query = "SELECT * FROM po_transactions order by inv_date asc";
+                    if($result = mysqli_query($link, $query)){
+                      if(mysqli_num_rows($result) > 0){
+
+                        while($row = mysqli_fetch_array($result)){
+                          echo "<tr>";
+                          echo "<td>" . $row['inv_date'] . "</td>";
+                          echo "<td>" . $row['paymentTerms'] . "</td>";
+                          echo "<td>" . $row['supplier_name'] . "</td>";
+                          echo "<td>" . $row['totalPrice'] . "</td>";
+                          echo "<td>";
+
+                          echo "<a href='customer-view.php?id=". $row['po_trans_id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
+
+                          echo " &nbsp; <a href='PO-update.php?id=". $row['po_trans_id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                          echo " &nbsp; <a href='PO-delete.php?id=". $row['po_trans_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                          echo "</td>";
+                          echo "</tr>";
+                        }
+
+                        // Free result set
+                        mysqli_free_result($result);
+                      } else{
+                        echo "<p class='lead'><em>No records were found.</em></p>";
+                      }
+                    } else{
+                      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
+
+                    // Close connection
+                    mysqli_close($link);
+                    ?>
+                  </tbody>
+                </table>
+                <!-- /.content -->
+              </div>
+              <!-- /.content-wrapper -->
+              <!-- /.content-wrapper -->
+              <!-- /.box-header -->
+            </div>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+
+        </section>
+        <!-- .Search Area end -->
+
+
+        <!-- /.content -->
+      </div>
+    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
