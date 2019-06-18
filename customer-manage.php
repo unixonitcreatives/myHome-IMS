@@ -405,9 +405,9 @@ $(".remove").click(function(){
 
                                                            success: function(data) {
                                                                 $("#"+id).remove();
-                                                                alert("Record removed successfully");  
+                                                                alert("Record removed successfully");
                                                            }
-                                                           
+
                                                         });
                                                     }
                                                 });
