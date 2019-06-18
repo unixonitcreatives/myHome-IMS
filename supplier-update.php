@@ -335,12 +335,12 @@ function test_input($data) {
               <div class="box-body">
                 <div class="form-group">
                   <label>Suppliers</label>
-                  <input type="text" class="form-control" placeholder="Suppliers" name="supplier_name" value="<?php echo $supplier_name; ?>" required>
+                  <input type="text" class="form-control" placeholder="Suppliers" name="supplier_name" oninput="upperCaseF(this)" value="<?php echo $supplier_name; ?>" required>
                 </div>
 
                 <div class="form-group">
                   <label>Contact Person</label>
-                  <input type="text" class="form-control" placeholder="Contact Person" name="supplier_contact_person" value="<?php echo $supplier_contact_person; ?>" required>
+                  <input type="text" class="form-control" placeholder="Contact Person" name="supplier_contact_person" oninput="upperCaseF(this)" value="<?php echo $supplier_contact_person; ?>" required>
                 </div>
 
                 <div class="form-group">
@@ -355,7 +355,7 @@ function test_input($data) {
 
                 <div class="form-group">
                   <label>Address</label>
-                  <input type="text" class="form-control" placeholder="Address" name="supplier_address" value="<?php echo $supplier_address; ?>" required>
+                  <input type="text" class="form-control" placeholder="Address" name="supplier_address" oninput="upperCaseF(this)" value="<?php echo $supplier_address; ?>" required>
                 </div>
                 <div class="form-group">
                 <label>Created at</label>
@@ -509,6 +509,15 @@ $(document).ready(function () {
       showInputs: false
     })
   })
+</script>
+
+<script>
+  //uppercase text box
+  function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+}
 </script>
 </body>
 </html>

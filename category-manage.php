@@ -233,19 +233,21 @@ if(isset($_GET['alert'])){
         </section>
 
         <!-- Main content -->
-        <?php echo $alertMessage; ?>
+        
         <!-- Main content -->
         <div class="box-body">
+
           <!-- Search Area -->
           <section class="content">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Search for Category Information</h3>
+
                 <br><a href="category-add.php" class="text-center">+ Add New Category</a>
 
                 <div class="box-body">
                   <div class="row">
-
+                    <?php //echo $alertMessage; ?>
                     <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
@@ -268,7 +270,7 @@ if(isset($_GET['alert'])){
                               echo "<td>" . $row['category'] . "</td>";
                               echo "<td>";
                               echo "<a href='category-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='category-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                              echo " &nbsp; <a href='category-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                               echo "</td>";
                               echo "</tr>";
                             }
@@ -358,5 +360,32 @@ if(isset($_GET['alert'])){
 
     });
     </script>
+
+                                               <script>
+                                                $(".remove").click(function(){
+                                                    var id = $(this).parents("tr").attr("id");
+
+                                                    if(confirm('Are you sure to remove this record?'))
+                                                    {
+                                                        $.ajax({
+                                                           url: 'category-delete.php',
+                                                           type: 'POST',
+                                                           data: {id: id},
+
+                                                           error: function(data) {
+                                                              $("#"+id).remove();
+                                                              alert('Record removed succesfully');
+                                                           },
+
+                                                           success: function(data) {
+                                                                $("#"+id).remove();
+                                                                alert("Record removed successfully");  
+                                                           }
+                                                           
+                                                        });
+                                                    }
+                                                });
+
+                                            </script>
   </body>
   </html>

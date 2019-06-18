@@ -237,13 +237,14 @@ if(isset($_GET['alert'])){
       <section class="content">
         <div class="box box-success">
           <div class="box-header with-border">
-            <h3 class="box-title">ACTIONS NOT FUNCTIONING YET</h3>
-            <br><a href="customer-add.php" class="text-center">+ Add New Customer</a>
+            <h3 class="box-title">Manage Purchase Order</h3>
+            <br><a href="PO-add.php" class="text-center">+ Add New PO</a>
             <div class="box-body">
               <div class="row">
                 <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                   <thead>
                     <tr>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO-ID</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Terms</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier</th>
@@ -257,12 +258,13 @@ if(isset($_GET['alert'])){
                     require_once 'config.php';
 
                     // Attempt select query execution
-                    $query = "SELECT * FROM po_transactions order by inv_date asc";
+                    $query = "SELECT * FROM po_transactions order by po_trans_id asc";
                     if($result = mysqli_query($link, $query)){
                       if(mysqli_num_rows($result) > 0){
 
                         while($row = mysqli_fetch_array($result)){
                           echo "<tr>";
+                          echo "<td>" . $row['po_trans_id'] . "</td>";
                           echo "<td>" . $row['inv_date'] . "</td>";
                           echo "<td>" . $row['paymentTerms'] . "</td>";
                           echo "<td>" . $row['supplier_name'] . "</td>";
@@ -270,6 +272,11 @@ if(isset($_GET['alert'])){
                           echo "<td>";
 
                           echo "<a href='customer-view.php?id=". $row['po_trans_id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
+
+                          echo " &nbsp; <a href='customer-view.php?id=". $row['po_trans_id'] ."' title='Convert to PDF' data-toggle='tooltip' data-target='#modal-default'><span class='glyphicon glyphicon-book'></span></a>";
+
+                          echo " &nbsp; <a href='customer-view.php?id=". $row['po_trans_id'] ."' title='Print' data-toggle='tooltip' data-target='#modal-default'><span class='glyphicon glyphicon-print'></span></a>";
+
 
                           echo " &nbsp; <a href='PO-update.php?id=". $row['po_trans_id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           echo " &nbsp; <a href='PO-delete.php?id=". $row['po_trans_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
@@ -335,17 +342,37 @@ if(isset($_GET['alert'])){
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
 
-});
-</script>
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+ </script>
+ <!-- Alert animation -->
+ <script type="text/javascript">
+ $(document).ready(function () {
+
+   window.setTimeout(function() {
+     $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+       $(this).remove();
+     });
+   }, 1000);
+
+ });
+ </script>
+
 </body>
 </html>

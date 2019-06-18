@@ -34,11 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
-         $alertMessage = "<div class='alert alert-success' role='alert'>
-  New categoryr successfully added in database.
-</div>";
+         $alertMessage = 
+         "<div class='callout alert-success'>
+         New categoryr successfully added in database.
+         </div>";
+
     }else{
-        $alertMessage = "<div class='alert alert-danger' role='alert'>
+        $alertMessage = "<div class='alert alert-danger fade in' role='alert'>
   Error Adding data in Database.
 </div>";}
 
@@ -279,15 +281,16 @@ function test_input($data) {
             <div class="box-header with-border">
               <h3 class="box-title">Product Category</h3>
               <br><a href="category-manage.php" class="text-center">View Categories</a>
+              <?php echo $alertMessage; ?>
             </div>
-            <?php echo $alertMessage; ?>
+            
             <!-- /.box-header -->
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
                 <div class="form-group">
                   <label>Category Name</label>
-                  <input type="text" class="form-control" placeholder="Category e.g: Chairs, Tables, Cabinets" name="category" required>
+                  <input type="text" class="form-control" placeholder="Category e.g: Chairs, Tables, Cabinets" oninput="upperCaseF(this)" name="category" required>
                 </div>
               <!-- /.box-body -->
 
@@ -310,6 +313,7 @@ function test_input($data) {
   <footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
+
 
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
@@ -341,6 +345,15 @@ $(document).ready(function () {
   }, 1000);
 
 });
+</script>
+
+<script>
+  //uppercase text box
+  function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+}
 </script>
 </body>
 </html>

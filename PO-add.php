@@ -307,7 +307,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <select class="form-control" style="width: 100%;" name='po_supplier'>
                           <option>--SELECT SUPPLIER--</option>
                           <?php
-                          $query = "select supplier_name from suppliers";
+                          $query = "select supplier_name from suppliers order by supplier_name";
                           $result = mysqli_query($link, $query);
 
                           $po_supplier_name = $_POST['supplier_name'];
@@ -371,31 +371,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <tr>
                   <td>
                     <div class="form-group">
-                      <input type="number" id="po_qty" name="po_qty[]" placeholder="Product Qty">
+                      <input type="number" class="form-control" id="po_qty" name="po_qty[]" placeholder="Product Qty">
                     </div>
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="number" id="po_unit" name="po_unit[]" placeholder="Product Unit">
+                      <input type="text" class="form-control" id="po_unit" name="po_unit[]" placeholder="Product Unit">
                     </div>
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="text" id="po_description" name="po_description[]" placeholder="Product Description">
+                      <input type="text" class="form-control" id="po_description" name="po_description[]" placeholder="Product Description">
                     </div>
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="number" id="po_unit_price" name="po_unit_price[]" placeholder="Product Unit Price">
+                      <input type="number" class="form-control" id="po_unit_price" name="po_unit_price[]" placeholder="Product Unit Price">
                     </div>
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="number" id="po_total_amount" name="po_total_amount[]" placeholder= "0.00" readonly>
+                      <input type="number" class="form-control" id="po_total_amount" name="po_total_amount[]" placeholder= "0.00" readonly>
                     </div>
                   </td>
 
-                  <td></td>
+                  <td>
+                    <div align="right">
+                          <button type="button" name="add" id="add" class="btn btn-success pull-left">Add Row</button>
+                        </div>
+                  </td>
                 </tr>
 
 
@@ -404,15 +408,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <td align="right" colspan="4">Grand Total Amount:</td>
                     <td>
                       <div class="form-group">
-                        <input type="number" class="totalPrice" id="totalPrice" name="totalPrice" placeholder="0.00" readonly>
+                        <input type="number" class="form-control" id="totalPrice" name="totalPrice" placeholder="0.00" readonly>
                       </div>
+                    </td>
+                    <td>
+                        
                     </td>
                   </tr>
                 </tfoot>
               </table>
-              <div align="right">
-                <button type="button" name="add" id="add" class="btn btn-success btn-xs">Add Row</button>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -542,12 +547,12 @@ $(document).ready(function(){
   $('#add').click(function(){
     count = count + 1;
     var html_code = "<tr id='row"+count+"'>";
-    html_code += "<td><input type='number' id='po_qty' name='po_qty[]' placeholder='Product Qty'></td>";
-    html_code += "<td><input type='number' id='po_unit' name='po_unit[]' placeholder='Product Unit'></td>";
-    html_code += "<td><input type='text' id='po_description' name='po_description[]' placeholder='Product Description'></td>";
-    html_code += "<td><input type='number' id='po_unit_price' name='po_unit_price[]' placeholder='Product Unit Price'></td>";
-    html_code += "<td><input type='number' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
-    html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'>Delete Row</button></td>";
+    html_code += "<td><input type='number' class='form-control' id='po_qty' name='po_qty[]' placeholder='Product Qty'></td>";
+    html_code += "<td><input type='text' class='form-control' id='po_unit' name='po_unit[]' placeholder='Product Unit'></td>";
+    html_code += "<td><input type='text' class='form-control' id='po_description' name='po_description[]' placeholder='Product Description'></td>";
+    html_code += "<td><input type='number' class='form-control' id='po_unit_price' name='po_unit_price[]' placeholder='Product Unit Price'></td>";
+    html_code += "<td><input type='number' class='form-control' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
+    html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-s remove'>-</button></td>";
     html_code += "</tr>";
     $('#crud_table').append(html_code);
   });

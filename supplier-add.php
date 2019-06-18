@@ -320,27 +320,27 @@ function test_input($data) {
               <div class="box-body">
                 <div class="form-group">
                   <label>Suppliers</label>
-                  <input type="text" class="form-control" placeholder="Suppliers" name="supplier_name" required>
+                  <input type="text" class="form-control" placeholder="SUPPLIERS" name="supplier_name" oninput="upperCaseF(this)" required>
                 </div>
 
                 <div class="form-group">
                   <label>Contact Person</label>
-                  <input type="text" class="form-control" placeholder="Contact Person" name="supplier_contact_person" required>
+                  <input type="text" class="form-control" placeholder="CONTACT PERSON" name="supplier_contact_person" oninput="upperCaseF(this)" required>
                 </div>
 
                 <div class="form-group">
                 <label>Phone</label>
-                  <input type="text" class="form-control" placeholder="Phone" name="supplier_number" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                  <input type="text" class="form-control" placeholder="PHONE" name="supplier_number" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                 </div>
 
                 <div class="form-group">
                   <label>Email</label>
-                  <input type="email" class="form-control" placeholder="Email" name="supplier_email" required>
+                  <input type="email" class="form-control" placeholder="EMAIL" name="supplier_email" required>
                 </div>
 
                 <div class="form-group">
                   <label>Address</label>
-                  <input type="text" class="form-control" placeholder="Address" name="supplier_address" required>
+                  <input type="text" class="form-control" placeholder="ADDRESS" name="supplier_address" onkeydown="upperCaseF(this)" required>
                 </div>
               </div>
               <!-- /.box-body -->
@@ -491,5 +491,15 @@ $(document).ready(function () {
     })
   })
 </script>
+
+<script>
+  //uppercase text box
+  function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+}
+</script>
+
 </body>
 </html>
