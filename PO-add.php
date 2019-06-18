@@ -391,7 +391,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="number" class="form-control" id="po_total_amount" name="po_total_amount[]" placeholder= "0.00" readonly>
+                      <input type="number" class="po_total_amount" id="po_total_amount" name="po_total_amount[]" placeholder= "0.00" readonly>
                     </div>
                   </td>
 
@@ -412,12 +412,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                       </div>
                     </td>
                     <td>
-                        
+
                     </td>
                   </tr>
                 </tfoot>
               </table>
-              
+
             </div>
           </div>
         </div>
@@ -551,7 +551,7 @@ $(document).ready(function(){
     html_code += "<td><input type='text' class='form-control' id='po_unit' name='po_unit[]' placeholder='Product Unit'></td>";
     html_code += "<td><input type='text' class='form-control' id='po_description' name='po_description[]' placeholder='Product Description'></td>";
     html_code += "<td><input type='number' class='form-control' id='po_unit_price' name='po_unit_price[]' placeholder='Product Unit Price'></td>";
-    html_code += "<td><input type='number' class='form-control' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
+    html_code += "<td><input type='number' class='po_total_amount' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
     html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-s remove'>-</button></td>";
     html_code += "</tr>";
     $('#crud_table').append(html_code);
@@ -594,7 +594,7 @@ function calc_total()
 {
   total=0;
 
-  $('#po_total_amount').each(function() {
+  $('.po_total_amount').each(function() {
     total += parseInt($(this).val());
   });
 
