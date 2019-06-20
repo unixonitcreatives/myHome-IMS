@@ -271,7 +271,7 @@ if(isset($_GET['alert'])){
                           echo "<td>" . $row['totalPrice'] . "</td>";
                           echo "<td>";
 
-                          echo "<a href='customer-view.php?id=". $row['po_trans_id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                          echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."'><span class='glyphicon glyphicon-eye-open'></span></a>";
 
                           echo " &nbsp; <a href='customer-view.php?id=". $row['po_trans_id'] ."' title='Convert to PDF' data-toggle='tooltip' data-target='#modal-default'><span class='glyphicon glyphicon-book'></span></a>";
 
