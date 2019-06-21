@@ -393,7 +393,7 @@ if (mysqli_num_rows($result) > 0) {
       <div class="row no-print">
         <div class="col-xs-12">
           <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button>
-          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+          <button type="button" class="btn btn-success pull-right"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
           <button type="button" class="btn btn-danger" style="margin-right: 5px;">
             <i class="fa fa-trash"></i> Void Purchase Order
           </button>
