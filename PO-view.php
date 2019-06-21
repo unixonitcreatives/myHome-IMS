@@ -20,6 +20,7 @@ $users_id = $_GET['id'];
 $query = "SELECT request_po.po_trans_id, suppliers.supplier_address,po_transactions.supplier_name, suppliers.supplier_address, request_po.po_qty, request_po.po_unit, request_po.po_unit_price, request_po.po_description, request_po.po_unit_price, request_po.po_total_amount,po_transactions.inv_date, po_transactions.paymentTerms, po_transactions.totalPrice, request_po.user from suppliers " .
            "INNER JOIN po_transactions ON suppliers.supplier_name = po_transactions.supplier_name ".
            "INNER JOIN request_po ON po_transactions.po_trans_id = request_po.po_trans_id WHERE po_transactions.po_trans_id = $users_id";
+
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)){
@@ -304,9 +305,11 @@ if (mysqli_num_rows($result) > 0) {
           <table class="table table-striped">
           <thead>
           <tr>
-            <th width="15%">Quantity</th>
-            <th width="15%">Unit</th>
+            
+            <th width="10%">No.</th>
             <th width="40%">Product Description</th>
+            <th width="10%">Quantity</th>
+            <th width="10%">Unit</th>
             <th width="15%">Unit Price</th>
             <th width="15%">Total Amount</th>
           </tr>
@@ -314,23 +317,36 @@ if (mysqli_num_rows($result) > 0) {
 
         <tbody>
           <?php
-                $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+               $result = mysqli_query($link, $query) or die(mysqli_error($link));
                if (mysqli_num_rows($result) > 0) {
                while ($row = mysqli_fetch_assoc($result)){
+
                 $totalPrice  =  $row['totalPrice'];
 
                 echo "<tr>";
                 //echo "<td>" .$row['po_trans_id'] . "</td>";
-                echo "<td>" .$po_qty. "</td>";
-                echo "<td>" .$po_unit. "</td>";
-                echo "<td>" .$po_description. "</td>";
-                echo "<td>₱ " . number_format($po_unit_price,2) . "</td>";
-                echo "<td>₱ " . number_format($po_total_amount,2) . "</td>";
+                echo "<td>". $num_rows = mysqli_num_rows($result)."</td>";
+                echo "<td>" . $row['po_description'] . "</td>";
+                echo "<td>" .$row['po_qty'] . "</td>";
+                echo "<td>" . $row['po_unit'] . "</td>";
+                echo "<td>₱ " . number_format($row['po_unit_price'],2) . "</td>";
+                echo "<td>₱ " . number_format($row['po_total_amount'],2) . "</td>";
+                
                 echo "</tr>";
 
-              }}
-        ?>
+              }
+              // Free result set
+              mysqli_free_result($result);
+            } else{
+          echo "<p class='lead'><em>No records were found.</em></p>";
+        }
 
+        ?>
+        <tr>
+              <td>No of Items : </td>
+              <td><?php echo $num_rows = mysqli_num_rows($result); ?> </td>
+            </tr>
         </tbody>
 
       </table>
