@@ -323,7 +323,6 @@ if (mysqli_num_rows($result) > 0) {
                 echo "<td>₱ " . number_format($po_total_amount,2) . "</td>";
                 echo "</tr>";
 
-
         ?>
 
         </tbody>
