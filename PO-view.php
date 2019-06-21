@@ -30,16 +30,11 @@ if (mysqli_num_rows($result) > 0) {
       $po_unit_price      = $row['po_unit_price'];
       $po_total_amount    = $row['po_total_amount'];
       $supplier_address   = $row['supplier_address'];
+      }
+?>
 
 
-    }
-
-
-
-    ?>
-
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -275,7 +270,8 @@ if (mysqli_num_rows($result) > 0) {
           To
           <address>
             <strong>MyHome Interior Furniture Co.</strong><br>
-            Unit 13-16 #30th Real St. Las Pinas Commercial Complex Alabang-Zapote Road, Las Piñas<br>
+            Unit 13-16 #30th Real St. Las Pinas Commercial Complex <br>
+            Alabang-Zapote Road, Las Piñas<br>
             Phone: (555) 539-1037<br>
             Email: hello.world@example.com
           </address>
@@ -313,21 +309,27 @@ if (mysqli_num_rows($result) > 0) {
 
         <tbody>
           <?php
-            echo "<tr>";
+                if (mysqli_num_rows($result) > 0) {
+              while ($row = mysqli_fetch_assoc($result)){
+                  $totalPrice  =  $row['totalPrice'];
+                echo "<tr>";
                 //echo "<td>" .$row['po_trans_id'] . "</td>";
-                echo "<td>" .$po_qty. " pcs</td>";
-                echo "<td>" .$po_unit_price. "</td>";
-                echo "<td>" .$po_description. "</td>";
+                echo "<td>" .$row['po_qty'] . "</td>";
+                echo "<td>" . $row['po_unit'] . "</td>";
+                echo "<td>" . $row['po_description'] . "</td>";
                 echo "<td>₱ " . number_format($po_unit_price,2) . "</td>";
                 echo "<td>₱ " . number_format($po_total_amount,2) . "</td>";
             echo "</tr>";
 
-
+          }
           // Free result set
           mysqli_free_result($result);
         } else{
           echo "<p class='lead'><em>No records were found.</em></p>";
-        }?>
+        }
+
+        ?>
+          
         </tbody>
 
       </table>
@@ -353,8 +355,8 @@ if (mysqli_num_rows($result) > 0) {
         <div class="col-xs-6">
           <p class="lead">Amount Due 2/22/2014</p>
 
-          <div class="table-responsive">
-            <table class="table">
+          <div>
+            <table class="table-responsive">
               <!--
               <tr>
                 <th style="width:50%">Subtotal:</th>
@@ -373,11 +375,11 @@ if (mysqli_num_rows($result) > 0) {
               </tr>
               -->
               <tr>
-                <th>Total:</th>
-                <td>₱ <?php
+                <td width="20%"><h3>Total:</h3></th>
+                <td width="80%"><h3>₱ <?php
                 echo number_format($totalPrice,2,'.',',');
 
-                ?></td>
+                ?></h3></td>
               </tr>
             </table>
           </div>
