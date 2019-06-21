@@ -275,8 +275,7 @@ if (mysqli_num_rows($result) > 0) {
           To
           <address>
             <strong>MyHome Interior Furniture Co.</strong><br>
-            15 Address Here Ave. <br>
-            Las Piñas City, PH 1234<br>
+            Unit 13-16 #30th Real St. Las Pinas Commercial Complex Alabang-Zapote Road, Las Piñas<br>
             Phone: (555) 539-1037<br>
             Email: hello.world@example.com
           </address>

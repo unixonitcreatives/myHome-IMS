@@ -273,7 +273,7 @@ if(isset($_GET['alert'])){
                           echo "<td> <span class='label label-warning'>Pending</span> </td>";
                           echo "<td>";
 
-                          echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."'><span class='glyphicon glyphicon-share'></span></a>";
+                          echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
                           //echo " &nbsp; <a href='PO-delete.php?id=". $row['po_trans_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                           echo "</td>";
                           echo "</tr>";
