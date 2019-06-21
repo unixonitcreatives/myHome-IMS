@@ -273,9 +273,9 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
           <?php 
           echo $users_id;
           ?>
-          </b><br>
+          </b>
           <br>
-          <b>Order ID:</b> 4F3S8J<br>
+          <b>Status:</b> <strong class="text-warning"> Pending</strong><br>
           <b>Payment Due:</b> 2/22/2014<br>
           <b>Account:</b> 968-34567
         </div>
@@ -350,6 +350,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
                 echo number_format($totalPrice,2,'.',',');
                 ?></td>
               </tr>
+              <!--
               <tr>
                 <th>Tax (9.3%)</th>
                 <td>Kailangan paba ito?</td>
@@ -358,6 +359,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
                 <th>Shipping:</th>
                 <td>Kailangan paba ito?</td>
               </tr>
+              -->
               <tr>
                 <th>Total:</th>
                 <td>₱ <?php 
