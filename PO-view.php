@@ -346,7 +346,8 @@ if (mysqli_num_rows($result) > 0) {
         <tr>
               <td>No of Items : </td>
               <td><?php echo $num_rows = mysqli_num_rows($result); ?> </td>
-            </tr>
+        </tr>
+
         </tbody>
 
       </table>
@@ -392,11 +393,9 @@ if (mysqli_num_rows($result) > 0) {
               </tr>
               -->
               <tr>
-                <td width="20%"><h3>Total:</h3></th>
-                <td width="80%"><h3>₱ <?php
-                echo number_format($totalPrice,2,'.',',');
-
-                ?></h3></td>
+                <td width="20%"><h3>Grand Total: &nbsp;</h3></th>
+                <td width="80%"><h3> ₱ <?php
+                echo number_format($totalPrice,2,'.',',');?></h3></td>
               </tr>
             </table>
           </div>
