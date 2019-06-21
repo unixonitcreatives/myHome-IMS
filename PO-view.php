@@ -335,16 +335,12 @@ if (mysqli_num_rows($result) > 0) {
                 
                 echo "</tr>";
 
-<<<<<<< HEAD
-=======
               }
               // Free result set
               mysqli_free_result($result);
             } else{
           echo "<p class='lead'><em>No records were found.</em></p>";
         }
-
->>>>>>> bbb0736a12e72da217d532c93d6b4b589689a284
         ?>
         <tr>
               <td>No of Items : </td>
