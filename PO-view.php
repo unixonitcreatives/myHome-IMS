@@ -32,7 +32,10 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Manage PO</title>
+  <title>MyHome | Purchase Order #
+          <?php 
+          echo $users_id;
+          ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -227,12 +230,13 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
-          <h2 class="page-header">
+          <h2 class="header">
             <div class="col-xs-3">
             <img class="img-responsive" src="dist/img/logo-01.png">
+            <br>
             </div>
             <small class="pull-right">
-              <script> document.write(new Date().toLocaleDateString()); </script>
+              
             </small>
 
           </h2>
@@ -276,6 +280,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
           </b>
           <br>
           <b>Status:</b> <span class="label label-warning">Pending</span><br>
+          <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
           <b>Payment Due:</b> 2/22/2014<br>
           <b>Account:</b> 968-34567
         </div>
@@ -289,11 +294,11 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
           <table class="table table-striped">
           <thead>
           <tr>
-            <th width="20%">Quantity</th>
-            <th width="20%">Unit</th>
-            <th width="20%">Product Description</th>
-            <th width="20%">Unit Price</th>
-            <th width="20%">Total Amount</th>
+            <th width="15%">Quantity</th>
+            <th width="15%">Unit</th>
+            <th width="40%">Product Description</th>
+            <th width="15%">Unit Price</th>
+            <th width="15%">Total Amount</th>
           </tr>
           </thead>
 
@@ -377,11 +382,10 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
       <!-- this row will not appear when printing -->
       <div class="row no-print">
         <div class="col-xs-12">
-            <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button>
-          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-          </button>
-          <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-            <i class="fa fa-download"></i> Generate PDF
+          <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button>
+          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+          <button type="button" class="btn btn-danger" style="margin-right: 5px;">
+            <i class="fa fa-trash"></i> Void Purchase Order
           </button>
         </div>
       </div>
