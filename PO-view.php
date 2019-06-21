@@ -275,7 +275,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
           ?>
           </b>
           <br>
-          <b>Status:</b> <strong class="text-warning"> Pending</strong><br>
+          <b>Status:</b> <span class="label label-warning">Pending</span><br>
           <b>Payment Due:</b> 2/22/2014<br>
           <b>Account:</b> 968-34567
         </div>

@@ -270,7 +270,7 @@ if(isset($_GET['alert'])){
                           echo "<td>" . $row['paymentTerms'] . "</td>";
                           echo "<td>" . $row['supplier_name'] . "</td>";
                           echo "<td>₱ " . number_format($row['totalPrice'],2) . "</td>";
-                          echo "<td></td>";
+                          echo "<td>< <span class='label label-warning'>Pending</span> /td>";
                           echo "<td>";
 
                           echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."'><span class='glyphicon glyphicon-eye-open'></span></a>";
