@@ -314,6 +314,11 @@ if (mysqli_num_rows($result) > 0) {
 
         <tbody>
           <?php
+                $result = mysqli_query($link, $query) or die(mysqli_error($link));
+               if (mysqli_num_rows($result) > 0) {
+               while ($row = mysqli_fetch_assoc($result)){
+                $totalPrice  =  $row['totalPrice'];
+
                 echo "<tr>";
                 //echo "<td>" .$row['po_trans_id'] . "</td>";
                 echo "<td>" .$po_qty. "</td>";
@@ -323,7 +328,7 @@ if (mysqli_num_rows($result) > 0) {
                 echo "<td>₱ " . number_format($po_total_amount,2) . "</td>";
                 echo "</tr>";
 
-
+              }}
         ?>
 
         </tbody>
