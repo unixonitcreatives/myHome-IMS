@@ -306,10 +306,10 @@ if (mysqli_num_rows($result) > 0) {
           <thead>
           <tr>
             
-            <th width="10%">No.</th>
+            
             <th width="40%">Product Description</th>
-            <th width="10%">Quantity</th>
-            <th width="10%">Unit</th>
+            <th width="15%">Quantity</th>
+            <th width="15%">Unit</th>
             <th width="15%">Unit Price</th>
             <th width="15%">Total Amount</th>
           </tr>
@@ -326,7 +326,7 @@ if (mysqli_num_rows($result) > 0) {
 
                 echo "<tr>";
                 //echo "<td>" .$row['po_trans_id'] . "</td>";
-                echo "<td>". $num_rows = mysqli_num_rows($result)."</td>";
+                
                 echo "<td>" . $row['po_description'] . "</td>";
                 echo "<td>" .$row['po_qty'] . "</td>";
                 echo "<td>" . $row['po_unit'] . "</td>";
