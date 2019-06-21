@@ -43,7 +43,10 @@ if (mysqli_num_rows($result) > 0) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Manage PO</title>
+  <title>MyHome | Purchase Order #
+          <?php 
+          echo $users_id;
+          ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -238,12 +241,13 @@ if (mysqli_num_rows($result) > 0) {
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
-          <h2 class="page-header">
+          <h2 class="header">
             <div class="col-xs-3">
             <img class="img-responsive" src="dist/img/logo-01.png">
+            <br>
             </div>
             <small class="pull-right">
-              <script> document.write(new Date().toLocaleDateString()); </script>
+              
             </small>
 
           </h2>
@@ -285,9 +289,10 @@ if (mysqli_num_rows($result) > 0) {
           <?php
           echo $users_id;
           ?>
-          </b><br>
+          </b>
           <br>
-          <b>Order ID:</b> 4F3S8J<br>
+          <b>Status:</b> <span class="label label-warning">Pending</span><br>
+          <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
           <b>Payment Due:</b> 2/22/2014<br>
           <b>Account:</b> 968-34567
         </div>
@@ -301,11 +306,11 @@ if (mysqli_num_rows($result) > 0) {
           <table class="table table-striped">
           <thead>
           <tr>
-            <th width="20%">Quantity</th>
-            <th width="20%">Unit</th>
-            <th width="20%">Product Description</th>
-            <th width="20%">Unit Price</th>
-            <th width="20%">Total Amount</th>
+            <th width="15%">Quantity</th>
+            <th width="15%">Unit</th>
+            <th width="40%">Product Description</th>
+            <th width="15%">Unit Price</th>
+            <th width="15%">Total Amount</th>
           </tr>
           </thead>
 
@@ -359,6 +364,7 @@ if (mysqli_num_rows($result) > 0) {
                 echo number_format($totalPrice,2,'.',',');
                 ?></td>
               </tr>
+              <!--
               <tr>
                 <th>Tax (9.3%)</th>
                 <td>Kailangan paba ito?</td>
@@ -367,6 +373,7 @@ if (mysqli_num_rows($result) > 0) {
                 <th>Shipping:</th>
                 <td>Kailangan paba ito?</td>
               </tr>
+              -->
               <tr>
                 <th>Total:</th>
                 <td>₱ <?php
@@ -384,11 +391,10 @@ if (mysqli_num_rows($result) > 0) {
       <!-- this row will not appear when printing -->
       <div class="row no-print">
         <div class="col-xs-12">
-          <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-          </button>
-          <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-            <i class="fa fa-download"></i> Generate PDF
+          <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button>
+          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+          <button type="button" class="btn btn-danger" style="margin-right: 5px;">
+            <i class="fa fa-trash"></i> Void Purchase Order
           </button>
         </div>
       </div>
@@ -459,6 +465,10 @@ if (mysqli_num_rows($result) > 0) {
 
  });
  </script>
-
+<script>
+function Print() {
+  window.print();
+}
+</script>
 </body>
 </html>

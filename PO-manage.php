@@ -249,6 +249,7 @@ if(isset($_GET['alert'])){
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Terms</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Total Price</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -268,12 +269,12 @@ if(isset($_GET['alert'])){
                           echo "<td>" . $row['inv_date'] . "</td>";
                           echo "<td>" . $row['paymentTerms'] . "</td>";
                           echo "<td>" . $row['supplier_name'] . "</td>";
-                          echo "<td>" . $row['totalPrice'] . "</td>";
+                          echo "<td>₱ " . number_format($row['totalPrice'],2) . "</td>";
+                          echo "<td> <span class='label label-warning'>Pending</span> </td>";
                           echo "<td>";
 
-                          echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                          echo " &nbsp; <a href='PO-update.php?id=". $row['po_trans_id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                          echo " &nbsp; <a href='PO-delete.php?id=". $row['po_trans_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                          echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."'><span class='glyphicon glyphicon-share'></span></a>";
+                          //echo " &nbsp; <a href='PO-delete.php?id=". $row['po_trans_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                           echo "</td>";
                           echo "</tr>";
                         }
