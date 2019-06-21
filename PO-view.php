@@ -245,9 +245,8 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
           From
           <address>
             <strong>
-            <?php
-            //$query2 = "SELECT supplier_name from po_transactions where po_trans_id = $user_id";
-            //echo $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
+            <?php 
+            //dito bro, company name nung supplier sa PO na to
             ?>
 
             </strong><br>
