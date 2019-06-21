@@ -71,8 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   Customers data successfully updated in database.
 </div>";
 //logs query
-    $customer = $_GET['name'];
-    $logsquery = "INSERT INTO logs (user,description) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Updated customer $customer to $customers_name')";
+    $cust = $_GET['name'];
+    $logsquery = "INSERT INTO logs (user,description) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Updated customer ".$cust." to $customers_name')";
     $logsresult = mysqli_query($link, $logsquery) or die(mysqli_error($link));
 
     }else {

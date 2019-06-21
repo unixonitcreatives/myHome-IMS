@@ -2,10 +2,10 @@
 session_start();
 require_once 'config.php';
 $users_id = $_GET['id'];
-$customer = $_GET['name'];
+$cust = $_GET['name'];
 
 //logs query
-$logsquery = "INSERT INTO logs (user,description) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Deleted customer $customer')";
+$logsquery = "INSERT INTO logs (user,description) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Deleted customer $cust')";
 $logsresult = mysqli_query($link, $logsquery) or die(mysqli_error($link));
 
 
