@@ -44,7 +44,7 @@ if (mysqli_num_rows($result) > 0) {
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>MyHome | Purchase Order #
-          <?php 
+          <?php
           echo $users_id;
           ?></title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -247,7 +247,7 @@ if (mysqli_num_rows($result) > 0) {
             <br>
             </div>
             <small class="pull-right">
-              
+
             </small>
 
           </h2>
