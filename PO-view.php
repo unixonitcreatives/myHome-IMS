@@ -244,7 +244,13 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
         <div class="col-sm-4 invoice-col">
           From
           <address>
-            <strong>Supplier Company Name</strong><br>
+            <strong>
+            <?php
+            //$query2 = "SELECT supplier_name from po_transactions where po_trans_id = $user_id";
+            //echo $result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
+            ?>
+
+            </strong><br>
             15 Address Here Ave. <br>
             Las Piñas City, PH 1234<br>
             Phone: (804) 123-5432<br>
@@ -266,7 +272,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
         <div class="col-sm-4 invoice-col">
           <b>Purchase Order #
           <?php 
-          // BRO PA OUTPUT NAMAN NG PO Number dito sa line na to
+          echo $users_id;
           ?>
           </b><br>
           <br>

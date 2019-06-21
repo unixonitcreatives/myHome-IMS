@@ -272,12 +272,6 @@ if(isset($_GET['alert'])){
                           echo "<td>";
 
                           echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."'><span class='glyphicon glyphicon-eye-open'></span></a>";
-
-                          echo " &nbsp; <a href='customer-view.php?id=". $row['po_trans_id'] ."' title='Convert to PDF' data-toggle='tooltip' data-target='#modal-default'><span class='glyphicon glyphicon-book'></span></a>";
-
-                          echo " &nbsp; <a href='customer-view.php?id=". $row['po_trans_id'] ."' title='Print' data-toggle='tooltip' data-target='#modal-default'><span class='glyphicon glyphicon-print'></span></a>";
-
-
                           echo " &nbsp; <a href='PO-update.php?id=". $row['po_trans_id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           echo " &nbsp; <a href='PO-delete.php?id=". $row['po_trans_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                           echo "</td>";
