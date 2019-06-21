@@ -20,11 +20,11 @@ $query = "SELECT * from customers WHERE id='$users_id'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)){
-        $customers_name  =  $row['customer_name'];
+        $customers_name     =  $row['customer_name'];
         $customers_contact  =  $row['customer_contact'];
-        $customers_email  =  $row['customer_email'];
+        $customers_email    =  $row['customer_email'];
         $customers_address  =  $row['customer_address'];
-        $created_at  =  $row['created_at'];
+        $created_at         =  $row['created_at'];
 
     }
 }else {
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $query = "UPDATE customers SET customer_name='$customers_name', customer_contact='$customers_contact',  customer_email='$customers_email', customer_address='$customers_address' WHERE id='$users_id'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-    
+
 
     if($result){
         $alertMessage = "<div class='alert alert-success' role='alert'>
@@ -491,6 +491,6 @@ $(document).ready(function () {
   })
 </script>
 
-                                              
+
 </body>
 </html>

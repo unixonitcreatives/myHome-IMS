@@ -30,7 +30,12 @@ if (mysqli_num_rows($result) > 0) {
       $po_unit_price      = $row['po_unit_price'];
       $po_total_amount    = $row['po_total_amount'];
       $supplier_address   = $row['supplier_address'];
-      }
+      $po_unit            = $row['po_unit'];
+    }
+    } else{
+    echo "<p class='lead'><em>No records were found.</em></p>";
+    }
+
 ?>
 
 
@@ -309,27 +314,18 @@ if (mysqli_num_rows($result) > 0) {
 
         <tbody>
           <?php
-                if (mysqli_num_rows($result) > 0) {
-              while ($row = mysqli_fetch_assoc($result)){
-                  $totalPrice  =  $row['totalPrice'];
                 echo "<tr>";
                 //echo "<td>" .$row['po_trans_id'] . "</td>";
-                echo "<td>" .$row['po_qty'] . "</td>";
-                echo "<td>" . $row['po_unit'] . "</td>";
-                echo "<td>" . $row['po_description'] . "</td>";
+                echo "<td>" .$po_qty. "</td>";
+                echo "<td>" .$po_unit. "</td>";
+                echo "<td>" .$po_description. "</td>";
                 echo "<td>₱ " . number_format($po_unit_price,2) . "</td>";
                 echo "<td>₱ " . number_format($po_total_amount,2) . "</td>";
-            echo "</tr>";
+                echo "</tr>";
 
-          }
-          // Free result set
-          mysqli_free_result($result);
-        } else{
-          echo "<p class='lead'><em>No records were found.</em></p>";
-        }
 
         ?>
-          
+
         </tbody>
 
       </table>
