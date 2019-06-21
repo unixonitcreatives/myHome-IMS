@@ -32,7 +32,10 @@ if (mysqli_num_rows($result) > 0) {
       $po_total_amount    = $row['po_total_amount'];
       $supplier_address   = $row['supplier_address'];
       $po_unit            = $row['po_unit'];
+
     }
+
+    $num_rows = mysqli_num_rows($result);
     } else{
     echo "<p class='lead'><em>No records were found.</em></p>";
     }
@@ -305,7 +308,7 @@ if (mysqli_num_rows($result) > 0) {
           <table class="table table-striped">
           <thead>
           <tr>
-            
+
             <th width="10%">No.</th>
             <th width="40%">Product Description</th>
             <th width="10%">Quantity</th>
@@ -332,11 +335,10 @@ if (mysqli_num_rows($result) > 0) {
                 echo "<td>" . $row['po_unit'] . "</td>";
                 echo "<td>₱ " . number_format($row['po_unit_price'],2) . "</td>";
                 echo "<td>₱ " . number_format($row['po_total_amount'],2) . "</td>";
-                
+
                 echo "</tr>";
 
-<<<<<<< HEAD
-=======
+
               }
               // Free result set
               mysqli_free_result($result);
@@ -344,11 +346,10 @@ if (mysqli_num_rows($result) > 0) {
           echo "<p class='lead'><em>No records were found.</em></p>";
         }
 
->>>>>>> bbb0736a12e72da217d532c93d6b4b589689a284
         ?>
         <tr>
               <td>No of Items : </td>
-              <td><?php echo $num_rows = mysqli_num_rows($result); ?> </td>
+              <td><?php echo $num_rows; ?> </td>
         </tr>
 
         </tbody>
