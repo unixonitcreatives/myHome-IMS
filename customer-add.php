@@ -11,6 +11,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 require_once "config.php";
 
 $customers_lname=$customers_fname=$customers_contact=$customers_email=$customers_address=$alertMessage="";
+
+
 //If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -39,9 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($alertMessage)){
     //Checking the values are existing in the database or not
     $query = "INSERT INTO customers (customer_name,customer_contact,customer_email,customer_address, created_at) VALUES ('$customers_name','$customers_contact','$customers_email','$customers_address', CURRENT_TIMESTAMP)";
-    
+
     //logs query
-    $logsquery = "INSERT INTO logs (user,description,created_at) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Added customer $customers_name',CURRENT_TIMESTAMP)";
+    $logsquery = "INSERT INTO logs (user,description,created_at) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Added customer $customers_name', CURRENT_TIMESTAMP)";
     $logsresult = mysqli_query($link, $logsquery) or die(mysqli_error($link));
 
 
@@ -53,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   New customer successfully added in database.
 </div>";
 
-  
+
 
     }else {
         $alertMessage = "<div class='alert alert-danger' role='alert'>
