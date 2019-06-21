@@ -273,8 +273,8 @@ if(isset($_GET['alert'])){
 
                               echo "<a href='customer-view.php?id=". $row['id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
 
-                              echo " &nbsp; <a href='customer-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                              echo " &nbsp; <a href='customer-update.php?id=". $row['id'] ."&name=". $row['customer_name']."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."&name=". $row['customer_name']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                               echo "</td>";
                               echo "</tr>";
                             }
@@ -401,6 +401,7 @@ $(".remove").click(function(){
                                                            error: function(data) {
                                                               $("#"+id).remove();
                                                               alert('Record removed successfully');
+
                                                            },
 
                                                            success: function(data) {
