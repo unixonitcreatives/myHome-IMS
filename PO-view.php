@@ -287,16 +287,17 @@ if (mysqli_num_rows($result) > 0) {
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
+          <h3>
           <b>Purchase Order #
           <?php
           echo $users_id;
           ?>
           </b>
           <br>
-          <b>Status:</b> <span class="label label-warning">Pending</span><br>
+          <b>Status:</b> <span class="text-yellow">Pending</span><br>
           <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
-          <b>Payment Due:</b> 2/22/2014<br>
-          <b>Account:</b> 968-34567
+
+        </h3>
         </div>
         <!-- /.col -->
       </div>
@@ -308,13 +309,6 @@ if (mysqli_num_rows($result) > 0) {
           <table class="table table-striped">
           <thead>
           <tr>
-<<<<<<< HEAD
-
-            <th width="10%">No.</th>
-=======
-            
-            
->>>>>>> 2d300c9209b65c7b07c58effad5be8b98878ef5a
             <th width="40%">Product Description</th>
             <th width="15%">Quantity</th>
             <th width="15%">Unit</th>
@@ -334,7 +328,6 @@ if (mysqli_num_rows($result) > 0) {
 
                 echo "<tr>";
                 //echo "<td>" .$row['po_trans_id'] . "</td>";
-                
                 echo "<td>" . $row['po_description'] . "</td>";
                 echo "<td>" .$row['po_qty'] . "</td>";
                 echo "<td>" . $row['po_unit'] . "</td>";
@@ -343,20 +336,14 @@ if (mysqli_num_rows($result) > 0) {
 
                 echo "</tr>";
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 2d300c9209b65c7b07c58effad5be8b98878ef5a
               }
               // Free result set
               mysqli_free_result($result);
             } else{
           echo "<p class='lead'><em>No records were found.</em></p>";
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 2d300c9209b65c7b07c58effad5be8b98878ef5a
         ?>
         <tr>
               <td>No of Items : </td>
