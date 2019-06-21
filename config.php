@@ -7,7 +7,7 @@ define('DB_PASSWORD', 'cQZ2tArDGK');
 define('DB_NAME', 'xAcmiyzWOF');
 
 /* Attempt to connect to MySQL database */
-$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("POTA" . mysqli_connect_error());
+$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Something Went Wrong" . mysqli_connect_error());
 
 // Check connection
 if($link === false){

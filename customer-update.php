@@ -14,6 +14,8 @@ require_once "config.php";
 
 
 $users_id = $_GET['id'];
+
+
 $query = "SELECT * from customers WHERE id='$users_id'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
@@ -55,13 +57,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($alertMessage)){
 
+
+
+
     //Checking the values are existing in the database or not
     $query = "UPDATE customers SET customer_name='$customers_name', customer_contact='$customers_contact',  customer_email='$customers_email', customer_address='$customers_address' WHERE id='$users_id'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    
+
     if($result){
         $alertMessage = "<div class='alert alert-success' role='alert'>
   Customers data successfully updated in database.
 </div>";
+//logs query
+    $cust = $_GET['name'];
+    $logsquery = "INSERT INTO logs (user,description) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Updated customer ".$cust." to $customers_name')";
+    $logsresult = mysqli_query($link, $logsquery) or die(mysqli_error($link));
+
     }else {
         $alertMessage = "<div class='alert alert-success' role='alert'>
   Error updating record.

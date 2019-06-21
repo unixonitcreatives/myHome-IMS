@@ -43,7 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $query = "INSERT INTO customers (customer_name,customer_contact,customer_email,customer_address, created_at) VALUES ('$customers_name','$customers_contact','$customers_email','$customers_address', CURRENT_TIMESTAMP)";
 
     //logs query
+<<<<<<< HEAD
     $logsquery = "INSERT INTO logs (user,description,created_at) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Added customer $customers_name', CURRENT_TIMESTAMP)";
+=======
+    $logsquery = "INSERT INTO logs (user,description) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Added customer $customers_name')";
+>>>>>>> 5ad2d47fe8e0fdc6b176b812832760211691c86c
     $logsresult = mysqli_query($link, $logsquery) or die(mysqli_error($link));
 
 
