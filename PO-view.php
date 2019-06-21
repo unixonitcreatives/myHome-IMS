@@ -17,10 +17,21 @@ require_once "config.php";
 
 $users_id = $_GET['id'];
 
-$query = "SELECT request_po.po_trans_id,po_transactions.supplier_name, suppliers.supplier_address, request_po.po_qty, request_po.po_unit, request_po.po_unit_price, request_po.po_description, request_po.po_unit_price, request_po.po_total_amount,po_transactions.inv_date, po_transactions.paymentTerms, po_transactions.totalPrice, request_po.user from suppliers " .
+$query = "SELECT request_po.po_trans_id, po_transactions.supplier_name, suppliers.supplier_address, request_po.po_qty, request_po.po_unit, request_po.po_unit_price, request_po.po_description, request_po.po_unit_price, request_po.po_total_amount,po_transactions.inv_date, po_transactions.paymentTerms, po_transactions.totalPrice, request_po.user from suppliers " .
            "INNER JOIN po_transactions ON suppliers.supplier_name = po_transactions.supplier_name ".
            "INNER JOIN request_po ON po_transactions.po_trans_id = request_po.po_trans_id WHERE po_transactions.po_trans_id = $users_id";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)){
+      $po_supplier_name   = $row['supplier_name'];
+      $totalPrice         = $row['totalPrice'];
+      $po_qty             = $row['po_qty'];
+      $po_description     = $row['po_description'];
+      $po_unit_price      = $row['po_unit_price'];
+      $po_total_amount    = $row['po_total_amount'];
+
+
+    }
 
 
 
@@ -245,8 +256,9 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
           From
           <address>
             <strong>
-            <?php 
+            <?php
             //dito bro, company name nung supplier sa PO na to
+            echo $po_supplier_name;
             ?>
 
             </strong><br>
@@ -270,7 +282,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
           <b>Purchase Order #
-          <?php 
+          <?php
           echo $users_id;
           ?>
           </b><br>
@@ -299,19 +311,16 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
         <tbody>
           <?php
-          if (mysqli_num_rows($result) > 0) {
-              while ($row = mysqli_fetch_assoc($result)){
-                  $totalPrice  =  $row['totalPrice'];
             echo "<tr>";
                 //echo "<td>" .$row['po_trans_id'] . "</td>";
-                echo "<td>" .$row['po_qty'] . " pcs</td>";
-                echo "<td>" . $row['po_unit'] . "</td>";
-                echo "<td>" . $row['po_description'] . "</td>";
-                echo "<td>₱ " . number_format($row['po_unit_price'],2) . "</td>";
-                echo "<td>₱ " . number_format($row['po_total_amount'],2) . "</td>";
+                echo "<td>" .$po_qty. " pcs</td>";
+                echo "<td>" .$po_unit_price. "</td>";
+                echo "<td>" .$po_description. "</td>";
+                echo "<td>₱ " . number_format($po_unit_price,2) . "</td>";
+                echo "<td>₱ " . number_format($po_total_amount,2) . "</td>";
             echo "</tr>";
 
-          }
+
           // Free result set
           mysqli_free_result($result);
         } else{
@@ -346,7 +355,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
             <table class="table">
               <tr>
                 <th style="width:50%">Subtotal:</th>
-                <td>₱ <?php 
+                <td>₱ <?php
                 echo number_format($totalPrice,2,'.',',');
                 ?></td>
               </tr>
@@ -360,9 +369,9 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
               </tr>
               <tr>
                 <th>Total:</th>
-                <td>₱ <?php 
+                <td>₱ <?php
                 echo number_format($totalPrice,2,'.',',');
-                
+
                 ?></td>
               </tr>
             </table>
@@ -453,4 +462,3 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 </body>
 </html>
-
