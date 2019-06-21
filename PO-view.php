@@ -349,13 +349,14 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
           <div class="table-responsive">
             <table class="table">
+              <!--
               <tr>
                 <th style="width:50%">Subtotal:</th>
                 <td>₱ <?php 
                 echo number_format($totalPrice,2,'.',',');
                 ?></td>
               </tr>
-              <!--
+              <
               <tr>
                 <th>Tax (9.3%)</th>
                 <td>Kailangan paba ito?</td>
@@ -402,7 +403,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 
 
-  <footer class="main-footer">
+  <footer class="main-footer no-print">
       <?php include('template/footer.php'); ?>
   </footer>
 

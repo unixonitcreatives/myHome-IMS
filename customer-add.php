@@ -39,12 +39,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($alertMessage)){
     //Checking the values are existing in the database or not
     $query = "INSERT INTO customers (customer_name,customer_contact,customer_email,customer_address, created_at) VALUES ('$customers_name','$customers_contact','$customers_email','$customers_address', CURRENT_TIMESTAMP)";
+    
+
+
+
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
          $alertMessage = "<div class='alert alert-success' role='alert'>
   New customer successfully added in database.
 </div>";
+
+  //logs query
+    $logsquery = "INSERT INTO customers (user,description,created_at) VALUES ('$customers_name','htmlspecialchars($_SESSION["username"])','Added new customer $customer_name',CURRENT_TIMESTAMP)";
+    $result = mysqli_query($link, $logsquery) or die(mysqli_error($link));
+
     }else {
         $alertMessage = "<div class='alert alert-danger' role='alert'>
   Error Adding data in Database.
