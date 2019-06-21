@@ -375,7 +375,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
       <!-- this row will not appear when printing -->
       <div class="row no-print">
         <div class="col-xs-12">
-          <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+            <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button>
           <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
           </button>
           <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
@@ -450,7 +450,11 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
  });
  </script>
-
+<script>
+function Print() {
+  window.print();
+}
+</script>
 </body>
 </html>
 
