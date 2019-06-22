@@ -468,7 +468,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
              header("Location: PO-manage.php");   
           }
 
-
       ?>
 
 
