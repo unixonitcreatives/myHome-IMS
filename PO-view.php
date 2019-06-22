@@ -40,6 +40,11 @@ if (mysqli_num_rows($result) > 0) {
       $showStatus = "<span class='text-success'>Approved</span>";
     }elseif ($row['po_status'] == 3){
       $showStatus = "<span class='text-danger'>Void</span>";
+<<<<<<< HEAD
+=======
+    }else {
+      $showStatus = "<span class='text-default'>Error</span>";
+>>>>>>> 6b8ade4a1e1ea33c9f2b20c5841587993e0a9f92
     }
 
 
@@ -309,13 +314,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
               <h3>
-                <b>Purchase Order #
+                <b>Purchase Order &nbsp;</b>#
                   <?php
                   echo $users_id;
                   ?>
-                </b>
+                
                 <br>
-                <b>Status:</b><?php echo $showStatus; ?><br>
+                <b>Status: &nbsp;</b><?php echo $showStatus; ?><br>
                 <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
 
               </h3>
