@@ -318,7 +318,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   <?php
                   echo $users_id;
                   ?>
-                
+
                 <br>
                 <b>Status: &nbsp;</b><?php echo $showStatus; ?><br>
                 <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
