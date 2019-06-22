@@ -306,13 +306,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
               <h3>
-                <b>Purchase Order #
+                <b>Purchase Order &nbsp;</b>#
                   <?php
                   echo $users_id;
                   ?>
-                </b>
+                
                 <br>
-                <b>Status:</b><?php echo $showStatus; ?><br>
+                <b>Status: &nbsp;</b><?php echo $showStatus; ?><br>
                 <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
 
               </h3>
