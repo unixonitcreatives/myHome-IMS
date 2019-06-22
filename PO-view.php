@@ -38,6 +38,10 @@ if (mysqli_num_rows($result) > 0) {
       $showStatus = "<span class='text-warning'>Pending</span>";
     }elseif ($row['po_status'] == 2){
       $showStatus = "<span class='text-success'>Approved</span>";
+    }elseif ($row['po_status'] == 3){
+      $showStatus = "<span class='text-danger'>Void</span>";
+    }else {
+      $showStatus = "<span class='text-default'>Error</span>";
     }
 
 
