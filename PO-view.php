@@ -38,6 +38,8 @@ if (mysqli_num_rows($result) > 0) {
       $showStatus = "<span class='text-warning'>Pending</span>";
     }elseif ($row['po_status'] == 2){
       $showStatus = "<span class='text-success'>Approved</span>";
+    }elseif ($row['po_status'] == 3){
+      $showStatus = "<span class='text-danger'>Void</span>";
     }
 
 
@@ -48,6 +50,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
   $query = "UPDATE po_transactions SET po_status = 2 WHERE po_trans_id='$users_id'";
   $approved = mysqli_query($link, $query) or die(mysqli_error($link));
 
@@ -435,7 +438,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
         <button type="submit" class="btn btn-success pull-right" name="approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
         <button type="submit" class="btn btn-danger" style="margin-right: 5px;" name="void">
-          <i class="fa fa-trash"></i> Void Purchase Order
+          <i class="fa fa-trash"></i>Void Purchase Order</a>
         </button>
         <form>
         </div>
@@ -444,9 +447,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <!-- /.content -->
     <div class="clearfix"></div>
   </div>
-
-
-
 
   <footer class="main-footer no-print">
     <?php include('template/footer.php'); ?>
