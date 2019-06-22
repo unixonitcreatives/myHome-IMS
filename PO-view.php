@@ -311,6 +311,9 @@ if (mysqli_num_rows($result) > 0) {
           <tr>
 
 
+
+            <th width="10%">No.</th>
+
             <th width="10%">No.</th>
 
             <th width="40%">Product Description</th>
