@@ -35,7 +35,7 @@ if (mysqli_num_rows($result) > 0) {
     $po_unit            = $row['po_unit'];
 
     if($row['po_status'] == 1){
-      $showStatus = "<span class='text-warning'>Pending</span>";
+      $showStatus = "<span class='text-yellow'>Pending</span>";
     }elseif ($row['po_status'] == 2){
       $showStatus = "<span class='text-success'>Approved</span>";
     }elseif ($row['po_status'] == 3){
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $showStatus = "<span class='label label-success'>Approved</span>";
   header("Location: PO-manage.php");
-
+ 
 
 }
 
@@ -440,11 +440,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button>
 
       <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-        <button type="submit" class="btn btn-success pull-right" name="approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
-        <button type="submit" class="btn btn-danger" style="margin-right: 5px;" name="void">
-          <i class="fa fa-trash"></i>Void Purchase Order</a>
-        </button>
-        <form>
+      <button type="submit" class="btn btn-success pull-right" name="Approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
+      </form>
+
+
+      <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
+      <button type="submit" class="btn btn-danger" name="Void"><i class="fa fa-trash"></i>Void Purchase Order</a></button>
+      </form>
+
+
+      <?php
+          if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Approved']))
+          {
+             $query = "UPDATE po_transactions SET po_status = 2 WHERE po_trans_id='$users_id'";
+             $approved = mysqli_query($link, $query) or die(mysqli_error($link));
+
+             $showStatus = "<span class='label label-success'>Approved</span>";
+             header("Location: PO-manage.php");   
+          }
+
+          elseif ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Void']))
+          {
+             $query = "UPDATE po_transactions SET po_status = 3 WHERE po_trans_id='$users_id'";
+             $approved = mysqli_query($link, $query) or die(mysqli_error($link));
+
+             $showStatus = "<span class='label label-success'>Approved</span>";
+             header("Location: PO-manage.php");   
+          }
+
+      ?>
+
+
         </div>
       </div>
     </section>
