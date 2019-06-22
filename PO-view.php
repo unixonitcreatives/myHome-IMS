@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $showStatus = "<span class='label label-success'>Approved</span>";
   header("Location: PO-manage.php");
- 
+
 
 }
 
@@ -456,7 +456,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
              $approved = mysqli_query($link, $query) or die(mysqli_error($link));
 
              $showStatus = "<span class='label label-success'>Approved</span>";
-             header("Location: PO-manage.php");   
+             header("Location: PO-manage.php");
           }
 
           elseif ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Void']))
@@ -465,7 +465,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
              $approved = mysqli_query($link, $query) or die(mysqli_error($link));
 
              $showStatus = "<span class='label label-success'>Approved</span>";
-             header("Location: PO-manage.php");   
+             header("Location: PO-manage.php");
           }
 
       ?>
