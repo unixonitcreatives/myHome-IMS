@@ -10,7 +10,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 require_once "config.php";
 
-$alertMessage="";
+$alertMessage=$status="";
 //Checking the values are existing in the database or not
 $query = "Select * from po_transactions order by inv_date asc";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -274,18 +274,17 @@ if(isset($_GET['alert'])){
                           echo "<td>₱ " . number_format($row['totalPrice'],2) . "</td>";
 
                           // eto ung mag chcheck kung ano value nung 'po status' tapos papalitan nya color
-                          if($status == "Pending"){
+                          // STATUS: 1=PENDING; 2=APPROVED; 3=VOID
+                          if($status == 1){
                             echo "<td> <span class='label label-warning'>Pending</span> </td>";
-
-                          } elseif ($status == "Void") {
+                          } elseif ($status == 2) {
+                              echo "<td> <span class='label label-success'>Approved</span> </td>";
+                          } elseif ($status == 3) {
                             echo "<td> <span class='label label-danger'>Void</span> </td>";
-                          } elseif ($status == "Approved") {
-                            echo "<td> <span class='label label-success'>Approved</span> </td>";
                           } else {
                             echo "<td> <span class='label label-default'>Error</span> </td>";
                           }
                           //end here
-
 
                           //echo "<td> <span class='label label-warning'>Pending</span> </td>";
                           echo "<td>";

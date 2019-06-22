@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   $paymentTerms =$_POST['paymentTerms'];
   $totalPrice =$_POST['totalPrice'];
 
-  $query = "INSERT INTO po_transactions (inv_date, supplier_name, paymentTerms, totalPrice) VALUES ( CURRENT_TIMESTAMP, '$po_supplier_name', '$paymentTerms', '$totalPrice')";
+  $query = "INSERT INTO po_transactions (inv_date, supplier_name, paymentTerms, totalPrice, po_status) VALUES ( CURRENT_TIMESTAMP, '$po_supplier_name', '$paymentTerms', '$totalPrice', 1)";
   $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 
