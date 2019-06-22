@@ -309,7 +309,6 @@ if (mysqli_num_rows($result) > 0) {
           <thead>
           <tr>
 
-            <th width="10%">No.</th>
             <th width="40%">Product Description</th>
             <th width="15%">Quantity</th>
             <th width="15%">Unit</th>
