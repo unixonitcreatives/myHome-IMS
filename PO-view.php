@@ -308,13 +308,8 @@ if (mysqli_num_rows($result) > 0) {
           <table class="table table-striped">
           <thead>
           <tr>
-<<<<<<< HEAD
 
             <th width="10%">No.</th>
-=======
-
-
->>>>>>> 2d300c9209b65c7b07c58effad5be8b98878ef5a
             <th width="40%">Product Description</th>
             <th width="15%">Quantity</th>
             <th width="15%">Unit</th>
