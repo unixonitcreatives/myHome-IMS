@@ -287,16 +287,17 @@ if (mysqli_num_rows($result) > 0) {
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
+          <h3>
           <b>Purchase Order #
           <?php
           echo $users_id;
           ?>
           </b>
           <br>
-          <b>Status:</b> <span class="label label-warning">Pending</span><br>
+          <b>Status:</b> <span class="text-yellow">Pending</span><br>
           <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
-          <b>Payment Due:</b> 2/22/2014<br>
-          <b>Account:</b> 968-34567
+
+        </h3>
         </div>
         <!-- /.col -->
       </div>
@@ -309,6 +310,15 @@ if (mysqli_num_rows($result) > 0) {
           <thead>
           <tr>
 
+<<<<<<< HEAD
+=======
+
+
+            <th width="10%">No.</th>
+
+            <th width="10%">No.</th>
+
+>>>>>>> 851406ca2ba4ecc1702f701be1c889c3075fff3b
             <th width="40%">Product Description</th>
             <th width="15%">Quantity</th>
             <th width="15%">Unit</th>
@@ -336,6 +346,7 @@ if (mysqli_num_rows($result) > 0) {
                 echo "<td>₱ " . number_format($row['po_total_amount'],2) . "</td>";
 
                 echo "</tr>";
+
 
               }
               // Free result set
@@ -395,7 +406,7 @@ if (mysqli_num_rows($result) > 0) {
               </tr>
               -->
               <tr>
-                <td width="20%"><h3>Grand Total: &nbsp;</h3></th>
+                <td width="20%"><h3>Grand Total: &nbsp;</h3></td>
                 <td width="80%"><h3> ₱ <?php
                 echo number_format($totalPrice,2,'.',',');?></h3></td>
               </tr>
@@ -420,11 +431,6 @@ if (mysqli_num_rows($result) > 0) {
     <!-- /.content -->
     <div class="clearfix"></div>
   </div>
-
-
-
-
-
 
 
 
