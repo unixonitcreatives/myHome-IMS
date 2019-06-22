@@ -264,13 +264,30 @@ if(isset($_GET['alert'])){
                       if(mysqli_num_rows($result) > 0){
 
                         while($row = mysqli_fetch_array($result)){
+                          $status = $row['po_status']; //ung 'po status' yan dapat name sa dbase. etong line lang gagalawin mo
+
                           echo "<tr>";
                           echo "<td>" . $row['po_trans_id'] . "</td>";
                           echo "<td>" . $row['inv_date'] . "</td>";
                           echo "<td>" . $row['paymentTerms'] . "</td>";
                           echo "<td>" . $row['supplier_name'] . "</td>";
                           echo "<td>₱ " . number_format($row['totalPrice'],2) . "</td>";
-                          echo "<td> <span class='label label-warning'>Pending</span> </td>";
+
+                          // eto ung mag chcheck kung ano value nung 'po status' tapos papalitan nya color
+                          if($status == "Pending"){
+                            echo "<td> <span class='label label-warning'>Pending</span> </td>";
+
+                          } elseif ($status == "Void") {
+                            echo "<td> <span class='label label-danger'>Void</span> </td>";
+                          } elseif ($status == "Approved") {
+                            echo "<td> <span class='label label-success'>Approved</span> </td>";
+                          } else {
+                            echo "<td> <span class='label label-default'>Error</span> </td>";
+                          }
+                          //end here
+
+
+                          //echo "<td> <span class='label label-warning'>Pending</span> </td>";
                           echo "<td>";
 
                           echo "<a href='PO-view.php?id=". $row['po_trans_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
