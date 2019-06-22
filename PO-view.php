@@ -310,15 +310,6 @@ if (mysqli_num_rows($result) > 0) {
           <thead>
           <tr>
 
-<<<<<<< HEAD
-=======
-
-
-            <th width="10%">No.</th>
-
-            <th width="10%">No.</th>
-
->>>>>>> 851406ca2ba4ecc1702f701be1c889c3075fff3b
             <th width="40%">Product Description</th>
             <th width="15%">Quantity</th>
             <th width="15%">Unit</th>
