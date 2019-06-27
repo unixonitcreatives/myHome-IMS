@@ -12,9 +12,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 //Check user type ng logged in user
 if(strval($_SESSION["usertype"])=="Administrator"){
   //this area, wala na dapat codes, proceed lng sa page
+  echo "<script>alert('Test: Admin, Proceed');</script>";
 
 } else if(strval($_SESSION["usertype"])=="Cashier"){
-  echo "<script>alert('Cashier');</script>";
+  //this area, wala na dapat codes, proceed lng sa page
+  echo "<script>alert('Test: Cashier, Proceed');</script>";
 
 } else if(strval($_SESSION["usertype"])=="Guest"){
   echo "<script>alert('Your account type has no privelege to access this page, please contact administrator. Redirecting to dashboard.'); window.location='index.php';</script>";
@@ -23,7 +25,7 @@ if(strval($_SESSION["usertype"])=="Administrator"){
   //this area, kapag hindi ka Admin, Redirect ka sa index.php
   echo "<script>alert('Something went wrong, please contact support. Redirecting to dashboard.'); window.location='index.php';</script>";
   exit;
-  
+
 }
 
 // Define variables and initialize with empty values
