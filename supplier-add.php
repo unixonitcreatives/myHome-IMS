@@ -12,17 +12,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 //Check user type ng logged in user
 if(strval($_SESSION["usertype"])=="Administrator"){
   //this area, wala na dapat codes, proceed lng sa page
-  echo "<script>alert('Test: Admin, Proceed');</script>";
+  echo "<script>alert('Admin, Access Granted.');</script>";
 
 } else if(strval($_SESSION["usertype"])=="Cashier"){
   //this area, wala na dapat codes, proceed lng sa page
-  echo "<script>alert('Test: Cashier, Proceed');</script>";
+  echo "<script>alert('Cashier, Access Granted.');</script>";
 
 } else if(strval($_SESSION["usertype"])=="Guest"){
+  //this area, kapag hindi ka Admin, Redirect ka sa index.php
   echo "<script>alert('Your account type has no privelege to access this page, please contact administrator. Redirecting to dashboard.'); window.location='index.php';</script>";
 
 } else {
-  //this area, kapag hindi ka Admin, Redirect ka sa index.php
   echo "<script>alert('Something went wrong, please contact support. Redirecting to dashboard.'); window.location='index.php';</script>";
   exit;
 
