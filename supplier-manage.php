@@ -8,6 +8,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+//Check user type ng logged in user
+if(strval($_SESSION["usertype"])=="Administrator"){
+  //this area, wala na dapat codes, proceed lng sa page
+  echo "<script>alert('Test: Admin, Proceed');</script>";
+
+} else if(strval($_SESSION["usertype"])=="Cashier"){
+  //this area, wala na dapat codes, proceed lng sa page
+  echo "<script>alert('Test: Cashier, Proceed');</script>";
+
+} else if(strval($_SESSION["usertype"])=="Guest"){
+  echo "<script>alert('Your account type has no privelege to access this page, please contact administrator. Redirecting to dashboard.'); window.location='index.php';</script>";
+
+} else {
+  //this area, kapag hindi ka Admin, Redirect ka sa index.php
+  echo "<script>alert('Something went wrong, please contact support. Redirecting to dashboard.'); window.location='index.php';</script>";
+  exit;
+
+}
+
 require_once "config.php";
 
 $alertMessage="";
@@ -110,7 +129,7 @@ if(isset($_GET['alert'])){
              <div class="pull-left info">
                <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
                <!-- Status -->
-               <a href="#"><i class="fa fa-circle text-success"></i> Online
+               <a href="#"><i class="fa fa-circle text-success"></i> <?php echo htmlspecialchars($_SESSION["usertype"]);?>
                </a>
              </div>
            </div>

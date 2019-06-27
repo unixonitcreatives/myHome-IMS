@@ -179,7 +179,7 @@ function test_input($data) {
              <div class="pull-left info">
                <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
                <!-- Status -->
-               <a href="#"><i class="fa fa-circle text-success"></i> Online
+               <a href="#"><i class="fa fa-circle text-success"></i> <?php echo htmlspecialchars($_SESSION["usertype"]);?>
                </a>
              </div>
            </div>
