@@ -9,10 +9,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+if(strval($_SESSION["usertype"])=="Administrator"){
+  echo "<script>alert('You are a FUCKING Admin! FUCK YOU!')</script>";
+} else {
+  echo "<script>alert('You are not an Admin! FUCK YOU! going back to dashboard'); window.location='index.php';</script>";
+  //header("location: index.php");
+  exit;
+}
+
 // Define variables and initialize with empty values
 $supplier_name=$supplier_contact_person=$supplier_email=$supplier_number=$supplier_address=$alertMessage="";
 
-require_once "config.php";
 
 //If the form is submitted or not.
 //If the form is submitted
@@ -150,13 +157,13 @@ function test_input($data) {
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
             <a href="profile.php" class="icon-bar">
-              <span class="hidden-xs">Hello, <?php echo htmlspecialchars($_SESSION["username"]); ?></span>
+              <span class="hidden-xs">Hello, <?php echo htmlspecialchars($_SESSION["username"]);?></span>
             </a>
           </li>
 
           <li class="dropdown user user-menu">
             <a href="logout.php" class="icon-bar">
-              <span class="hidden-xs">Log out</span>
+              <span class="hidden-xs">Logout</span>
             </a>
           </li>
 
@@ -179,7 +186,7 @@ function test_input($data) {
              <div class="pull-left info">
                <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
                <!-- Status -->
-               <a href="#"><i class="fa fa-circle text-success"></i> Online
+               <a href="#"><i class="fa fa-circle text-success"></i> <?php echo htmlspecialchars($_SESSION["usertype"]);?>
                </a>
              </div>
            </div>
@@ -305,7 +312,9 @@ function test_input($data) {
     <!-- Main content -->
     <section class="content">
     <div class="col-md-6">
-      <?php echo $alertMessage; ?>
+      <?php echo $alertMessage; echo $mesahe;
+
+      ?>
           <!-- general form elements -->
           <div class="box box-success">
             <div class="box-header with-border">
@@ -351,6 +360,7 @@ function test_input($data) {
               </div>
             </form>
           </div>
+          
           <!-- /.box -->
 
 
