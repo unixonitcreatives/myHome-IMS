@@ -15,10 +15,15 @@ if(strval($_SESSION["usertype"])=="Administrator"){
 
 } else if(strval($_SESSION["usertype"])=="Cashier"){
   echo "<script>alert('Cashier');</script>";
+
+} else if(strval($_SESSION["usertype"])=="Guest"){
+  echo "<script>alert('Your account type has no privelege to access this page, please contact administrator. Redirecting to dashboard.'); window.location='index.php';</script>";
+
 } else {
   //this area, kapag hindi ka Admin, Redirect ka sa index.php
-  echo "<script>alert('Your account type has no privelege to access this page, please contact administrator. Redirecting to dashboard.'); window.location='index.php';</script>";
+  echo "<script>alert('Something went wrong, please contact support. Redirecting to dashboard.'); window.location='index.php';</script>";
   exit;
+  
 }
 
 // Define variables and initialize with empty values
