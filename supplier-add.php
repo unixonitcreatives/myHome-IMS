@@ -9,11 +9,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+//Check user type ng logged in user
 if(strval($_SESSION["usertype"])=="Administrator"){
-  echo "<script>alert('You are a FUCKING Admin! FUCK YOU!')</script>";
+  //this area, wala na dapat codes, proceed lng sa page
+
+} else if(strval($_SESSION["usertype"])=="Cashier"){
+  echo "<script>alert('Cashier');</script>";
 } else {
-  echo "<script>alert('You are not an Admin! FUCK YOU! going back to dashboard'); window.location='index.php';</script>";
-  //header("location: index.php");
+  //this area, kapag hindi ka Admin, Redirect ka sa index.php
+  echo "<script>alert('Your account type has no privelege to access this page, please contact administrator. Redirecting to dashboard.'); window.location='index.php';</script>";
   exit;
 }
 
