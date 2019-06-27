@@ -20,7 +20,8 @@ if(strval($_SESSION["usertype"])=="Administrator"){
 
 } else if(strval($_SESSION["usertype"])=="Guest"){
   //this area, kapag hindi ka Admin, Redirect ka sa index.php
-  echo "<script>alert('Your account type has no privelege to access this page, please contact administrator. Redirecting to dashboard.'); window.location='index.php';</script>";
+  $page = "Add Suppliers";
+  echo "<script>alert('Oops! user:". $_SESSION["username"] ."! Your account type has no privelege to access this page ($page). '); window.history.back();</script>";
 
 } else {
   echo "<script>alert('Something went wrong, please contact support. Redirecting to dashboard.'); window.location='index.php';</script>";

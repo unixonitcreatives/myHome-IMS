@@ -317,7 +317,7 @@ function test_input($data) {
                   <option>Accounts Officer</option>
                   <option>Warehouse Officer</option>
                   <option>Cashier</option>
-                  <option>Super Admin</option>
+                  <option>Guest</option>
                 </select>
               </div>
 

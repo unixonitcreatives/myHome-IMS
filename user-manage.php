@@ -2,6 +2,7 @@
 // Initialize the session
 session_start();
 
+
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: login.php");
@@ -263,7 +264,7 @@ if(isset($_GET['alert'])){
                             while($row = mysqli_fetch_array($result)){
                               echo "<tr>";
                               echo "<td>" . $row['username'] . "</td>";
-                              echo "<td>" . $row['userType'] . "</td>";
+                              echo "<td>" . $row['usertype'] . "</td>";
                               echo "<td>" . $row['time_created'] . "</td>";
                               echo "<td>";
                               echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
