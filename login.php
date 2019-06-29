@@ -66,6 +66,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;
                             $_SESSION["usertype"] = $usertype;
 
+                            header("location: index.php");
+
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was incorrect.";

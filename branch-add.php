@@ -246,7 +246,7 @@ mysqli_close($link);
         ADD BRANCH
         <small>You can add new company's branch information here</small>
       </h1>
-      
+
       <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
       </ol>

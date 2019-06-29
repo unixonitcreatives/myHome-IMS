@@ -1,4 +1,5 @@
- <div class="user-panel">
+
+<div class="user-panel">
         <div class="pull-left image">
           <img src="dist/img/profile.jpg" class="img-circle" alt="User Image">
         </div>
