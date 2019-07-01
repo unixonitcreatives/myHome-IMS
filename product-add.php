@@ -8,22 +8,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   exit;
 }
 
-//Check user type ng logged in user
-if(strval($_SESSION["usertype"])=="Administrator"){
-  //this area, wala na dapat codes, proceed lng sa page
-  echo "<script>alert('Admin, Access Granted.');</script>";
-}else if(strval($_SESSION["usertype"])=="Cashier"){
-  //this area, wala na dapat codes, proceed lng sa page
-  echo "<script>alert('Cashier, Access Granted.');</script>";
-}else if(strval($_SESSION["usertype"])=="Guest"){
-  //this area, kapag hindi ka Admin, Redirect ka sa index.php
-  $page = "Add Suppliers";
-  echo "<script>alert('Oops! user:". $_SESSION["username"] ."! Your account type has no privelege to access this page ($page). '); window.history.back();</script>";
-} else {
-  echo "<script>alert('Something went wrong, please contact support. Redirecting to dashboard.'); window.location='index.php';</script>";
-  exit;
 
-}
 
 // Define variables and initialize with empty values
 $supplier_name=$category=$branch_name=$product_description=$model=$po_number=$qty=$retail_price=$cost_price=$date_arrival=$alertMessage="";

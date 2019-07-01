@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     //Assigning posted values to variables.
     $username = test_input($_POST['username']);
     $password = test_input($_POST['password']);
-    $usertype = test_input($_POST['userType']);
+    $usertype = test_input($_POST['usertype']);
 
     // Validate username
 
@@ -43,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($alertMessage)){
 
-    $hash = password_hash($password, PASSWORD_DEFAULT);
+    //$hash = password_hash($password, PASSWORD_DEFAULT);
     //Checking the values are existing in the database or not
-    $query = "INSERT INTO users (username, password, userType, time_created) VALUES ('$username', '$hash', '$usertype', CURRENT_TIMESTAMP)";
+    $query = "INSERT INTO users (username, password, usertype, time_created) VALUES ('$username', '$password', '$usertype', CURRENT_TIMESTAMP)";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
@@ -310,7 +310,7 @@ function test_input($data) {
 
                 <div class="form-group">
                 <label>User Type</label>
-                <select class="form-control select2" style="width: 100%;" name="userType" required>
+                <select class="form-control select2" style="width: 100%;" name="usertype" required>
                   <option>Administrator</option>
                   <option>Finance Officer</option>
                   <option>Information Officer</option>
