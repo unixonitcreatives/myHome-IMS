@@ -112,16 +112,20 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <h3 class="box-title">Reports</h3>
                 <div class="box-body">
                   <div class="row">
-                    
+
                     <form class="form-vertical" enctype="multipart/form-data" method="post" accept-charset="utf-8" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="col-md-6">
-                    </div>
                       <div class="form-group">
-                        <label>Notes</label>
-                        <input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
+                        <label>Search</label><input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
                       </div>
+                    </div>
+
+                    
                     </form>
 
+
+                  </div>
+                    <div class="row">
 
                     <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
