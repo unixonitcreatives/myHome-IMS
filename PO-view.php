@@ -36,13 +36,13 @@ if (mysqli_num_rows($result) > 0) {
     $note               = $row['paymentTerms'];
 
     if($row['po_status'] == 1){
-      $showStatus = "<span class='label label-warning invoice-col'>Pending</span>";
+      $showStatus = "<p class='label label-warning invoice-col'>Pending</p>";
       $Status = "Pending";
     }elseif ($row['po_status'] == 2){
-      $showStatus = "<span class='label label-success invoice-col'>Approved</span>";
+      $showStatus = "<p class='label label-success invoice-col'>Approved</p>";
       $Status = "Approved";
     }elseif ($row['po_status'] == 3){
-      $showStatus = "<span class='label label-danger invoice-col'>Void</span>";
+      $showStatus = "<h4><p class='label label-danger invoice-col'>Void</p></h4>";
       $Status = "Void";
 
     }else {
