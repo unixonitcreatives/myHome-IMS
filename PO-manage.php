@@ -160,7 +160,7 @@ if(isset($_GET['alert'])){
                           $status = $row['po_status']; //ung 'po status' yan dapat name sa dbase. etong line lang gagalawin mo
 
                           echo "<tr>";
-                          echo "<td>" . $row['po_trans_id'] . "</td>";
+                          echo "<td>#" . $row['po_trans_id'] . "</td>";
                           echo "<td>" . $row['inv_date'] . "</td>";
                           
                           echo "<td>" . $row['supplier_name'] . "</td>";

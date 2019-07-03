@@ -33,19 +33,20 @@ if (mysqli_num_rows($result) > 0) {
     $po_total_amount    = $row['po_total_amount'];
     $supplier_address   = $row['supplier_address'];
     $po_unit            = $row['po_unit'];
+    $note               = $row['paymentTerms'];
 
     if($row['po_status'] == 1){
-      $showStatus = "<span class='text-yellow'>Pending</span>";
+      $showStatus = "<span class='label label-warning invoice-col'>Pending</span>";
       $Status = "Pending";
     }elseif ($row['po_status'] == 2){
-      $showStatus = "<span class='text-success'>Approved</span>";
+      $showStatus = "<span class='label label-success invoice-col'>Approved</span>";
       $Status = "Approved";
     }elseif ($row['po_status'] == 3){
-      $showStatus = "<span class='text-danger'>Void</span>";
+      $showStatus = "<span class='label label-danger invoice-col'>Void</span>";
       $Status = "Void";
 
     }else {
-      $showStatus = "<span class='text-default'>Error</span>";
+      $showStatus = "<span class='text-default invoice-col'>Error</span>";
 
     }
 
@@ -182,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           </div>
           <!-- info row -->
           <div class="row invoice-info">
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-3 invoice-col">
               From
               <address>
                 <strong>
@@ -196,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               </address>
             </div>
             <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-3 invoice-col">
               To
               <address>
                 <strong>MyHome Interior Furniture Co.</strong><br>
@@ -207,18 +208,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               </address>
             </div>
             <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-              <h3>
+            <div class="col-sm-3 invoice-col">
+              <h4>
                 <b>Purchase Order &nbsp;</b>#
                   <?php
                   echo $users_id;
                   ?>
 
                 <br>
-                <b>Status: &nbsp;</b><?php echo $showStatus; ?><br>
-                <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br>
+                
+                <b>Date:</b> <script> document.write(new Date().toLocaleDateString()); </script> <br><br>
+                <b>Status: &nbsp;</b><?php echo $showStatus; ?></label><br>
 
-              </h3>
+              </h4>
             </div>
             <!-- /.col -->
           </div>
@@ -269,13 +271,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   }
 
                   ?>
-                  <tr>
-                    <td>No of Items : </td>
-                    <td><?php echo $num_rows; ?> </td>
-                  </tr>
+                  
 
                 </tbody>
+                <tfooter class="table-footer">
 
+                    <td>No of Items : <?php echo $num_rows; ?></td>
+                    <td></td>
+                    <td></td>
+                    <td align="right"><h4>Grand Total: &nbsp;</h4></td>
+                    <td><h4> ₱ <?php echo number_format($totalPrice,2,'.',',');?></h4></td>
+
+                </tfooter>
               </table>
             </div>
             <!-- /.col -->
@@ -285,20 +292,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           <div class="row">
             <!-- accepted payments column -->
             <div class="col-xs-6">
-              <p class="lead">Payment Methods:</p>
+              <p class="lead">Important Notes:</p>
+              <!--
               <img src="dist/img/credit/visa.png" alt="Visa">
               <img src="dist/img/credit/mastercard.png" alt="Mastercard">
               <img src="dist/img/credit/american-express.png" alt="American Express">
               <img src="dist/img/credit/paypal2.png" alt="Paypal">
-
+              -->
               <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-               <?php echo $row['paymentTerms']; ?>
+               <?php echo $note; ?>
               </p>
             </div>
             <!-- /.col -->
             <div class="col-xs-6">
-              <p class="lead">Amount Due 2/22/2014</p>
-
               <div>
                 <table class="table-responsive">
                   <!--
@@ -319,8 +325,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             </tr>
           -->
           <tr>
-            <td width="20%"><h3>Grand Total: &nbsp;</h3></td>
-            <td width="80%"><h3> ₱ <?php
+            <td width="40%"><h3>Grand Total: &nbsp;</h3></td>
+            <td width="60%"><h3> ₱ <?php
             echo number_format($totalPrice,2,'.',',');?></h3></td>
           </tr>
         </table>
