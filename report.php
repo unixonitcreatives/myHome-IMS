@@ -105,11 +105,81 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         REPORTS
         <small></small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
-      </ol>
     </section>
+    <section class="content">
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">Reports</h3>
+                <div class="box-body">
+                  <div class="row">
+                    <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                      <thead>
+                        <tr>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Customer Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Contact Number</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Email</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Address</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        // Include config file
+                        require_once 'config.php';
 
+                        // Attempt select query execution
+                        $query = "SELECT * FROM customers";
+                        if($result = mysqli_query($link, $query)){
+                          if(mysqli_num_rows($result) > 0){
+
+                            while($row = mysqli_fetch_array($result)){
+                              echo "<tr>";
+                              echo "<td>" . $row['customer_name'] . "</td>";
+                              echo "<td>" . $row['customer_contact'] . "</td>";
+                              echo "<td>" . $row['customer_email'] . "</td>";
+                              echo "<td>" . $row['customer_address'] . "</td>";
+                              echo "<td>";
+
+                              echo "<a href='customer-view.php?id=". $row['id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
+
+                              echo " &nbsp; <a href='customer-update.php?id=". $row['id'] ."&name=". $row['customer_name']."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."&name=". $row['customer_name']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                              echo "</td>";
+                              echo "</tr>";
+                            }
+
+                            // Free result set
+                            mysqli_free_result($result);
+                          } else{
+                            echo "<p class='lead'><em>No records were found.</em></p>";
+                          }
+                        } else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+
+                        // Close connection
+                        mysqli_close($link);
+                        ?>
+                      </tbody>
+                    </table>
+                    <!-- /.content -->
+                  </div>
+                  <!-- /.content-wrapper -->
+                  <!-- /.content-wrapper -->
+                  <!-- /.box-header -->
+                </div>
+                <!-- /.content -->
+              </div>
+              <!-- /.content-wrapper -->
+
+            </section>
+            <!-- .Search Area end -->
+
+
+            <!-- /.content -->
+          </div>
+        </div>
+      </section>
     <!-- Main content -->
 
     <!-- /.content -->
@@ -138,17 +208,65 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-});
-</script>
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+ </script>
+ <!-- Alert animation -->
+ <script type="text/javascript">
+ $(document).ready(function () {
+
+   window.setTimeout(function() {
+     $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+       $(this).remove();
+     });
+   }, 1000);
+
+ });
+ </script>
+
+<script>
+$(".remove").click(function(){
+                                                    var id = $(this).parents("tr").attr("id");
+
+                                                    if(confirm('Are you sure to remove this record ?'))
+                                                    {
+                                                        $.ajax({
+                                                           url: 'customer-delete.php',
+                                                           type: 'POST',
+                                                           data: {id: id},
+
+                                                           error: function(data) {
+                                                              $("#"+id).remove();
+                                                              alert('Record removed successfully');
+
+                                                           },
+
+                                                           success: function(data) {
+                                                                $("#"+id).remove();
+                                                                alert("Record removed successfully");
+                                                           }
+
+                                                        });
+                                                    }
+                                                });
+
+                                            </script>
 </body>
 </html>
