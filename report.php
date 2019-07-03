@@ -115,10 +115,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Customer Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Contact Number</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Email</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Address</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Inv ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Description</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO#</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Quantity</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Cost Price</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date Arrived</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -128,16 +135,34 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM customers";
+                        $query = "SELECT * FROM inventory";
+                        //inv_id
+                        //supplier_name
+                        //category
+                        //branch_name
+                        //product_description
+                        //model
+                        //po_number
+                        //qty
+                        //retail_price
+                        //cost_price
+                        //date_arriv
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
 
                             while($row = mysqli_fetch_array($result)){
                               echo "<tr>";
-                              echo "<td>" . $row['customer_name'] . "</td>";
-                              echo "<td>" . $row['customer_contact'] . "</td>";
-                              echo "<td>" . $row['customer_email'] . "</td>";
-                              echo "<td>" . $row['customer_address'] . "</td>";
+                              echo "<td>" . $row['inv_id'] . "</td>";
+                              echo "<td>" . $row['supplier_name'] . "</td>";
+                              echo "<td>" . $row['category'] . "</td>";
+                              echo "<td>" . $row['branch_name'] . "</td>";
+                              echo "<td>" . $row['product_description'] . "</td>";
+                              echo "<td>" . $row['model'] . "</td>";
+                              echo "<td>" . $row['po_number'] . "</td>";
+                              echo "<td>" . $row['qty'] . "</td>";
+                              echo "<td>" . $row['cost_price'] . "</td>";
+                              echo "<td>" . $row['retail_price'] . "</td>";
+                              echo "<td>" . $row['date_arriv'] . "</td>";
                               echo "<td>";
 
                               echo "<a href='customer-view.php?id=". $row['id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
