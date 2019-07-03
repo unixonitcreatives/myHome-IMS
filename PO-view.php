@@ -169,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   <br>
                 </div>
                 <small class="pull-right">
-                    <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button> 
+                    <button onclick="Print()" target="_blank" class="btn btn-default no-print" ><i class="fa fa-print">Print</i></button> 
                 </small>
 
               </h2>
@@ -330,6 +330,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <div class="row no-print">
     <div class="col-xs-12">
 
+      
 
       <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
       <button type="submit" class="btn btn-success pull-right" name="Approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
@@ -337,6 +338,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
       <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
+        
       <button type="submit" class="btn btn-danger" name="Void"><i class="fa fa-trash"></i>Void Purchase Order</a></button>
       </form>
 
