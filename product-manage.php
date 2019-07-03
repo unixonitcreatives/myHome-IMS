@@ -7,6 +7,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+require_once 'config.php';
+
+$alertMessage=$po_status=$date_arrive=$po_trans_id="";
+
+//Checking the values are existing in the database or not
+$query = "Select * from inventory order by inv_id";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if(isset($_GET['alert'])){
+  if($_GET['alert'] == 'deletesuccess'){
+    $alertMessage = "<div class='alert alert-danger' role='alert'>Data deleted successfully.</div>"; }
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -90,114 +103,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <div class="user-panel">
-             <div class="pull-left image">
-               <img src="dist/img/profile.jpg" class="img-circle" alt="User Image">
-             </div>
-             <div class="pull-left info">
-               <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
-               <!-- Status -->
-               <a href="#"><i class="fa fa-circle text-success"></i> Online
-               </a>
-             </div>
-           </div>
-
-           <!-- Sidebar Menu -->
-           <ul class="sidebar-menu" data-widget="tree">
-             <!-- Optionally, you can add icons to the links -->
-              <li class="active"><a href="index.php"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-                             <li class="treeview">
-                                 <a href="#"><i class="fa fa-id-card-o"></i> <span>Suppliers</span>
-                                     <span class="pull-right-container">
-                                         <i class="fa fa-angle-left pull-right"></i>
-                                     </span>
-                                 </a>
-                                 <ul class="treeview-menu">
-                                     <li><a href="supplier-add.php">Add Suppliers</a></li>
-                                     <li><a href="supplier-manage.php">Manage Suppliers</a></li>
-                                 </ul>
-                             </li>
-
-                             <li class="treeview">
-                                 <a href="#"><i class="fa fa-th-large"></i> <span>Category</span>
-                                     <span class="pull-right-container">
-                                         <i class="fa fa-angle-left pull-right"></i>
-                                     </span>
-                                 </a>
-                                 <ul class="treeview-menu">
-                                     <li><a href="category-add.php">Add Categories</a></li>
-                                     <li><a href="category-manage.php">Manage Categories</a></li>
-                                 </ul>
-                             </li>
-
-                             <li class="treeview">
-                                 <a href="#"><i class="fa fa-archive"></i> <span>Branches</span>
-                                     <span class="pull-right-container">
-                                         <i class="fa fa-angle-left pull-right"></i>
-                                     </span>
-                                 </a>
-                                 <ul class="treeview-menu">
-                                     <li><a href="branch-add.php">Add Branches</a></li>
-                                     <li><a href="branch-manage.php">Manage Branches</a></li>
-                                 </ul>
-                             </li>
-
-                             <li class="treeview">
-                                 <a href="#"><i class="fa fa-cart-plus"></i> <span>Purchase Order</span>
-                                     <span class="pull-right-container">
-                                         <i class="fa fa-angle-left pull-right"></i>
-                                     </span>
-                                 </a>
-                                 <ul class="treeview-menu">
-                                     <li><a href="PO-add.php">Add PO</a></li>
-                                     <li><a href="PO-manage.php">Manage PO</a></li>
-                                     <li><a href="PO-request.php">Request PO</a></li>
-                                 </ul>
-                             </li>
-
-                             <li class="treeview">
-                                 <a href="#"><i class="fa fa-th"></i> <span>Products</span>
-                                     <span class="pull-right-container">
-                                         <i class="fa fa-angle-left pull-right"></i>
-                                     </span>
-                                 </a>
-                                 <ul class="treeview-menu">
-                                     <li><a href="product-add.php">Add Products</a></li>
-                                     <li><a href="product-manage.php">Manage Products</a></li>
-                                     <li><a href="product-aging.php">Aging Products</a></li>
-                                 </ul>
-                             </li>
-
-                             <li class="treeview">
-                                 <a href="#"><i class="fa fa-users"></i> <span>Customers</span>
-                                     <span class="pull-right-container">
-                                         <i class="fa fa-angle-left pull-right"></i>
-                                     </span>
-                                 </a>
-                                 <ul class="treeview-menu">
-                                     <li><a href="customer-add.php">Add Customers</a></li>
-                                     <li><a href="customer-manage.php">Manage Customers</a></li>
-                                 </ul>
-                             </li>
-
-                             <li class="treeview">
-                                 <a href="#"><i class="fa fa-user-circle-o"></i> <span>Add Users</span>
-                                     <span class="pull-right-container">
-                                         <i class="fa fa-angle-left pull-right"></i>
-                                     </span>
-                                 </a>
-                                 <ul class="treeview-menu">
-                                     <li><a href="user-add.php">Add Users</a></li>
-                                     <li><a href="user-manage.php">Manage Users</a></li>
-                                 </ul>
-                             </li>
-
-                             <li><a href="report.php"><i class="fa fa-pie-chart"></i> <span>Reports</span></a>
-                             </li>
-
-                             <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
-                             </li>
-                         </ul>
+      <?php include ('template/sidebar-admin.php'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -210,7 +116,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <section class="content-header">
       <h1>
         MANAGE PRODUCT
-        <small></small>
+        <small>You can see a brief summary and overview of operation of business</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
@@ -218,7 +124,95 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </section>
 
     <!-- Main content -->
+    <?php echo $alertMessage; ?>
+    <!-- Main content -->
+    <!-- Main content -->
+    <div class="box-body">
+      <!-- Search Area -->
+      <section class="content">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Manage Products</h3>
+            <br><a href="product-add.php" class="text-center">+ Add New Product</a>
+            <div class="box-body">
+              <div class="row">
+                <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                  <thead>
+                    <tr>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO #</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Description</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Quantity</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Cost Price</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date Delivered</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    // Include config file
+                    require_once 'config.php';
 
+                    // Attempt select query execution
+                    $query = "SELECT * FROM inventory order by date_arriv asc";
+                    if($result = mysqli_query($link, $query)){
+                      if(mysqli_num_rows($result) > 0){
+
+                        while($row = mysqli_fetch_array($result)){
+
+                          echo "<tr>";
+                          echo "<td>" . $row['po_number'] . "</td>";
+                          echo "<td>" . $row['supplier_name'] . "</td>";
+                          echo "<td>" . $row['product_description'] . "</td>";
+                          echo "<td>" . $row['model'] . "</td>";
+                          echo "<td>" . $row['category'] . "</td>";
+                          echo "<td>" . $row['qty'] . "</td>";
+                          echo "<td>" . $row['retail_price'] . "</td>";
+                          echo "<td>" . $row['cost_price'] . "</td>";
+                          echo "<td>" . $row['date_arriv'] . "</td>";
+                          echo "<td>" . $row['branch_name'] . "</td>";
+
+                          echo "<td><a href='PO-view.php?id=". $row['inv_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
+                          echo "<a href='PO-delete.php?id=". $row['inv_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                          echo "</td>";
+                          echo "</tr>";
+                        }
+
+                        // Free result set
+                        mysqli_free_result($result);
+                      } else{
+                        echo "<p class='lead'><em>No records were found.</em></p>";
+                      }
+                    } else{
+                      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
+
+                    // Close connection
+                    mysqli_close($link);
+                    ?>
+                  </tbody>
+                </table>
+                <!-- /.content -->
+              </div>
+              <!-- /.content-wrapper -->
+              <!-- /.content-wrapper -->
+              <!-- /.box-header -->
+            </div>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+
+        </section>
+        <!-- .Search Area end -->
+
+
+        <!-- /.content -->
+      </div>
+    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -245,17 +239,37 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-});
-</script>
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  })
+ </script>
+ <!-- Alert animation -->
+ <script type="text/javascript">
+ $(document).ready(function () {
+
+   window.setTimeout(function() {
+     $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+       $(this).remove();
+     });
+   }, 1000);
+
+ });
+ </script>
 </body>
 </html>

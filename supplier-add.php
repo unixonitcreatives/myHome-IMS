@@ -11,24 +11,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   exit;
 }
 
-
-//Check user type ng logged in user
-if(strval($_SESSION["usertype"])=="Administrator"){
-  //this area, wala na dapat codes, proceed lng sa page
-  echo "<script>alert('Admin, Access Granted.');</script>";
-}else if(strval($_SESSION["usertype"])=="Cashier"){
-  //this area, wala na dapat codes, proceed lng sa page
-  echo "<script>alert('Cashier, Access Granted.');</script>";
-}else if(strval($_SESSION["usertype"])=="Guest"){
-  //this area, kapag hindi ka Admin, Redirect ka sa index.php
-  $page = "Add Suppliers";
-  echo "<script>alert('Oops! user:". $_SESSION["username"] ."! Your account type has no privelege to access this page ($page). '); window.history.back();</script>";
-} else {
-  echo "<script>alert('Something went wrong, please contact support. Redirecting to dashboard.'); window.location='index.php';</script>";
-  exit;
-
-}
-
 // Define variables and initialize with empty values
 $supplier_name=$supplier_contact_person=$supplier_email=$supplier_number=$supplier_address=$alertMessage="";
 
@@ -190,118 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-
-          <div class="user-panel">
-            <div class="pull-left image">
-              <img src="dist/img/profile.jpg" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-              <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
-              <!-- Status -->
-              <a href="#"><i class="fa fa-circle text-success"></i> Online
-              </a>
-            </div>
-          </div>
-
-          <!-- Sidebar Menu -->
-          <ul class="sidebar-menu" data-widget="tree">
-            <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="index.php"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-id-card-o"></i> <span>Suppliers</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="supplier-add.php">Add Suppliers</a></li>
-                <li><a href="supplier-manage.php">Manage Suppliers</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#"><i class="fa fa-th-large"></i> <span>Category</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="category-add.php">Add Categories</a></li>
-                <li><a href="category-manage.php">Manage Categories</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#"><i class="fa fa-archive"></i> <span>Branches</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="branch-add.php">Add Branches</a></li>
-                <li><a href="branch-manage.php">Manage Branches</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#"><i class="fa fa-cart-plus"></i> <span>Purchase Order</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="PO-add.php">Add PO</a></li>
-                <li><a href="PO-manage.php">Manage PO</a></li>
-                <li><a href="PO-request.php">Request PO</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#"><i class="fa fa-th"></i> <span>Products</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="product-add.php">Add Products</a></li>
-                <li><a href="product-manage.php">Manage Products</a></li>
-                <li><a href="product-aging.php">Aging Products</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#"><i class="fa fa-users"></i> <span>Customers</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="customer-add.php">Add Customers</a></li>
-                <li><a href="customer-manage.php">Manage Customers</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#"><i class="fa fa-user-circle-o"></i> <span>Add Users</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="user-add.php">Add Users</a></li>
-                <li><a href="user-manage.php">Manage Users</a></li>
-              </ul>
-            </li>
-
-            <li><a href="report.php"><i class="fa fa-pie-chart"></i> <span>Reports</span></a>
-            </li>
-
-            <li><a href="support.php"><i class="fa fa-superpowers"></i> <span>Support</span></a>
-            </li>
-            <li><a href="logout.php"><i class="fa fa-superpowers"></i> <span>Logout</span></a>
-            </li>
-          </ul>
-
+          <?php include ('template/sidebar-admin.php'); ?>
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -385,141 +256,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       </footer>
 
       <!-- Add the sidebar's background. This div must be placed
-      immediately after the control sidebar -->
+           immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
-    </div>
-    <!-- ./wrapper -->
+      </div>
+      <!-- ./wrapper -->
+
+      <!-- jQuery 3 -->
+      <script src="bower_components/jquery/dist/jquery.min.js"></script>
+      <!-- Bootstrap 3.3.7 -->
+      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <!-- SlimScroll -->
+      <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+      <!-- FastClick -->
+      <script src="bower_components/fastclick/lib/fastclick.js"></script>
+      <!-- AdminLTE App -->
+      <script src="dist/js/adminlte.min.js"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="dist/js/demo.js"></script>
+
+      <!-- DataTables -->
+      <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+      <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 
-    <!-- jQuery 3 -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- Select2 -->
-    <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-    <!-- InputMask -->
-    <script src="plugins/input-mask/jquery.inputmask.js"></script>
-    <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    <!-- date-range-picker -->
-    <script src="bower_components/moment/min/moment.min.js"></script>
-    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- bootstrap datepicker -->
-    <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <!-- bootstrap color picker -->
-    <script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-    <!-- bootstrap time picker -->
-    <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- iCheck 1.0.1 -->
-    <script src="plugins/iCheck/icheck.min.js"></script>
-    <!-- FastClick -->
-    <script src="bower_components/fastclick/lib/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
-    <!-- Page script -->
+      <!-- page script -->
+      <script>
+      $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+          'paging'      : true,
+          'lengthChange': false,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : true
+        })
+      })
+      </script>
+      <!-- Alert animation -->
+      <script type="text/javascript">
+      $(document).ready(function () {
 
-    <!-- SlimScroll -->
-    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="bower_components/fastclick/lib/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
+       window.setTimeout(function() {
+         $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+           $(this).remove();
+         });
+       }, 1000);
 
-    <!-- Alert animation -->
-    <script type="text/javascript">
-    $(document).ready(function () {
+      });
+      </script>
 
-      window.setTimeout(function() {
-        $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-          $(this).remove();
-        });
-      }, 1000);
+                                                   <script>
+                                                    $(".remove").click(function(){
+                                                        var id = $(this).parents("tr").attr("id");
 
-    });
-  </script>
+                                                        if(confirm('Are you sure to remove this record ?'))
+                                                        {
+                                                            $.ajax({
+                                                               url: 'supplier-delete.php',
+                                                               type: 'POST',
+                                                               data: {id: id},
 
-  <script>
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
+                                                               error: function(data) {
+                                                                  $("#"+id).remove();
+                                                                  alert('Record removed successfully');
+                                                               },
 
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
+                                                               success: function(data) {
+                                                                    $("#"+id).remove();
+                                                                    alert("Record removed successfully");
+                                                               }
 
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
+                                                            });
+                                                        }
+                                                    });
 
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    })
-
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass   : 'iradio_minimal-blue'
-    })
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass   : 'iradio_minimal-red'
-    })
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass   : 'iradio_flat-green'
-    })
-
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
-
-    //Timepicker
-    $('.timepicker').timepicker({
-      showInputs: false
-    })
-  })
-</script>
-
-<script>
-//uppercase text box
-function upperCaseF(a){
-  setTimeout(function(){
-    a.value = a.value.toUpperCase();
-  }, 1);
-}
-</script>
+                                                </script>
 
 </body>
 </html>

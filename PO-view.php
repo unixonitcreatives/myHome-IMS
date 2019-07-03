@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-          <?php include ('template/sidebar.php'); ?>
+          <?php include ('template/sidebar-admin.php'); ?>
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -169,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   <br>
                 </div>
                 <small class="pull-right">
-
+                    <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button> 
                 </small>
 
               </h2>
@@ -329,7 +329,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <!-- this row will not appear when printing -->
   <div class="row no-print">
     <div class="col-xs-12">
-      <button onclick="Print()" target="_blank" class="btn btn-default" ><i class="fa fa-print">Print</i></button>
+
 
       <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
       <button type="submit" class="btn btn-success pull-right" name="Approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>

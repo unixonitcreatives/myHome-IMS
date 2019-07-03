@@ -143,7 +143,7 @@ function test_input($data) {
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-    <?php include ('template/sidebar.php'); ?>
+    <?php include ('template/sidebar-admin.php'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
