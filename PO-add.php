@@ -243,7 +243,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
             <div class="form-group">
               <label>Notes</label>
-              <input type="number" class="form-control" placeholder="Notes" name="paymentTerms">
+              <input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
             </div>
           
           </div>

@@ -36,10 +36,13 @@ if (mysqli_num_rows($result) > 0) {
 
     if($row['po_status'] == 1){
       $showStatus = "<span class='text-yellow'>Pending</span>";
+      $Status = "Pending";
     }elseif ($row['po_status'] == 2){
       $showStatus = "<span class='text-success'>Approved</span>";
+      $Status = "Approved";
     }elseif ($row['po_status'] == 3){
       $showStatus = "<span class='text-danger'>Void</span>";
+      $Status = "Void";
 
     }else {
       $showStatus = "<span class='text-default'>Error</span>";
@@ -169,7 +172,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   <br>
                 </div>
                 <small class="pull-right">
-                    <button onclick="Print()" target="_blank" class="btn btn-default no-print" ><i class="fa fa-print">Print</i></button> 
+                    <button onclick="window.history.back()" target="_blank" class="btn btn-default no-print" ><i class="fa fa-arrow-left">&nbsp;Back</i></button> 
+                    <button onclick="Print()" target="_blank" class="btn btn-default no-print" ><i class="fa fa-print">&nbsp;Print</i></button> 
                 </small>
 
               </h2>
@@ -288,7 +292,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               <img src="dist/img/credit/paypal2.png" alt="Paypal">
 
               <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                Pwede maglagay ng note dito company, pwede din to gawin text box sana
+               <?php echo $row['paymentTerms']; ?>
               </p>
             </div>
             <!-- /.col -->
@@ -333,14 +337,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       
 
       <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-      <button type="submit" class="btn btn-success pull-right" name="Approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
+        <?php 
+          //<button type="submit" class="btn btn-success pull-right" name="Approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
+
+          if($Status == "Approved"){
+            echo "<button type='submit' class='btn btn-success pull-right' name='Approved' disabled><i class='fa fa-thumbs-o-up'></i> Approve Purchase Order</button>"; //disable Approve
+          } else {
+            echo "<button type='submit' class='btn btn-success pull-right' name='Approved'><i class='fa fa-thumbs-o-up'></i> Approve Purchase Order</button>"; // enable Approve
+            
+          }
+
+        ?>
       </form>
 
 
       <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-        
-      <button type="submit" class="btn btn-danger" name="Void"><i class="fa fa-trash"></i>Void Purchase Order</a></button>
+        <?php 
+        if($Status == "Void"){
+          echo "<button type='submit' class='btn btn-danger' name='Void' disabled><i class='fa fa-trash'></i> Void Purchase Order</button>"; //disable void  
+
+        } 
+
+
+        else {
+                echo "<button type='submit' class='btn btn-danger' name='Void'><i class='fa fa-trash'></i> Void Purchase Order</button>"; //enable void
+        }
+
+        ?>
       </form>
+
+
 
 
       <?php
