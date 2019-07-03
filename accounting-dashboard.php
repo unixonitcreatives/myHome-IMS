@@ -2,14 +2,17 @@
 // Initialize the session
 session_start();
 
+
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
 
+
+
 // Define variables and initialize with empty values
-$username=$password=$usertype=$alertMessage="";
+$supplier_name=$supplier_contact_person=$supplier_email=$supplier_number=$supplier_address=$alertMessage=$userType="";
 
 require_once "config.php";
 
@@ -17,40 +20,51 @@ require_once "config.php";
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     //Assigning posted values to variables.
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
-    $usertype = test_input($_POST['usertype']);
+    $supplier_name = test_input($_POST['supplier_name']);
+    $supplier_contact_person = test_input($_POST['supplier_contact_person']);
+    $supplier_email = test_input($_POST['supplier_email']);
+    $supplier_number = test_input($_POST['supplier_number']);
+    $supplier_address = test_input($_POST['supplier_address']);
 
-    // Validate username
+    // Validate supplier name
 
-    if(empty($username)){
-        $alertMessage = "Please enter a username.";
+    if(empty($supplier_name)){
+        $alertMessage = "Please enter a supplier name.";
     }
 
-    // Validate password
+    // Validate supplier contact person
 
-    if(empty($password)){
-        $alertMessage = "Please enter a password.";
+    if(empty($supplier_contact_person)){
+        $alertMessage = "Please enter a supplier contact person.";
     }
 
-    // Validate user type
+    // Validate supplier email
 
-    if(empty($usertype)){
-        $alertMessage = "Please enter a user type.";
+    if(empty($supplier_email)){
+        $alertMessage = "Please enter a supplier email.";
     }
 
+    // Validate supplier contact number
 
+    if(empty($supplier_number)){
+        $alertMessage = "Please enter a supplier contact number.";
+    }
+
+    // Validate supplier contact number
+
+    if(empty($supplier_address)){
+        $alertMessage = "Please enter a supplier address.";
+    }
     // Check input errors before inserting in database
     if(empty($alertMessage)){
 
-    //$hash = password_hash($password, PASSWORD_DEFAULT);
     //Checking the values are existing in the database or not
-    $query = "INSERT INTO users (username, password, usertype, time_created) VALUES ('$username', '$password', '$usertype', CURRENT_TIMESTAMP)";
+    $query = "INSERT INTO suppliers (supplier_name, supplier_contact_person, supplier_email, supplier_number, supplier_address, created_at) VALUES ('$supplier_name', '$supplier_contact_person', '$supplier_email', '$supplier_number', '$supplier_address', CURRENT_TIMESTAMP)";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
          $alertMessage = "<div class='alert alert-success' role='alert'>
-  Newuser successfully added in database.
+  New Supplier Successfully Added in Database.
 </div>";
     }else{
         $alertMessage = "<div class='alert alert-danger' role='alert'>
@@ -75,6 +89,8 @@ function test_input($data) {
     return $data;
 }
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +98,7 @@ function test_input($data) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Add Users</title>
+  <title>MyHome | Dashboard asd</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -157,11 +173,11 @@ function test_input($data) {
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <?php include ('template/sidebar-admin.php'); ?>
+      <?php include ('template/sidebar-accounting.php'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
+
 
   <!-- =============================================== -->
 
@@ -170,8 +186,8 @@ function test_input($data) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        ADD USER
-        <small></small>
+        DASHBOARD
+        <small>asdasdas</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
@@ -179,70 +195,52 @@ function test_input($data) {
     </section>
 
     <!-- Main content -->
-<section class="content">
-    <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Register new user</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <?php echo $alertMessage; ?>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-              <div class="box-body">
-                <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" class="form-control" placeholder="Username" name="username" required>
-                </div>
-
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password" name="password" required>
-                </div>
-
-                <div class="form-group">
-                <label>User Type</label>
-                <select class="form-control select2" style="width: 100%;" name="usertype" required>
-                  <option>Administrator</option>
-                  <option>Manager</option>
-                  <option>Accounting</option>
-                </select>
-              </div>
-
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-success">Save</button>
-              </div>
-            </form>
-          </div>
-          <!-- /.box -->
-
-
-        </div>
-    <!-- /.content -->
-  </div>
-</section>
-    <!-- /.content -->
-  </div>
+    <section class="content">
+    </section>
   <!-- /.content-wrapper -->
-
+</div>
   <footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
 
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+
 </div>
 <!-- ./wrapper -->
+
 
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- Page script -->
+
 <!-- SlimScroll -->
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -264,5 +262,83 @@ $(document).ready(function () {
 
 });
 </script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
+
+<script>
+  //uppercase text box
+  function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+}
+</script>
+
 </body>
 </html>

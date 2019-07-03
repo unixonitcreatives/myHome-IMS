@@ -60,13 +60,14 @@ if($result){
     exit;
 
   }
-  /*else
-  if ($rows['userlevel'] == 'guest') {
-    header('location: guest.php');
-    session_register("username");
-    session_register("password");
+  else
+  if ($rows['usertype'] == 'Accounting') {
+    $_SESSION["loggedin"] = true;
+    $_SESSION["username"] = $username;
+    $_SESSION["usertype"] = $rows;
+    header('location: ../myHome-IMS/accounting-dashboard.php');
 
-  }*/
+  }
   else
   {
     // Display an error message

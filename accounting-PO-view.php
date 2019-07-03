@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-          <?php include ('template/sidebar-admin.php'); ?>
+          <?php include ('template/sidebar-accounting.php'); ?>
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -336,70 +336,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   </div>
   <!-- /.row -->
 
-  <!-- this row will not appear when printing -->
-  <div class="row no-print">
-    <div class="col-xs-12">
 
-
-
-      <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-        <?php
-          //<button type="submit" class="btn btn-success pull-right" name="Approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
-
-          if($Status == "Approved"){
-            echo "<button type='submit' class='btn btn-success pull-right' name='Approved' disabled><i class='fa fa-thumbs-o-up'></i> Approve Purchase Order</button>"; //disable Approve
-          } else {
-            echo "<button type='submit' class='btn btn-success pull-right' name='Approved'><i class='fa fa-thumbs-o-up'></i> Approve Purchase Order</button>"; // enable Approve
-
-          }
-
-        ?>
-      </form>
-
-
-      <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-        <?php
-        if($Status == "Void"){
-          echo "<button type='submit' class='btn btn-danger' name='Void' disabled><i class='fa fa-trash'></i> Void Purchase Order</button>"; //disable void
-
-        }
-
-
-        else {
-                echo "<button type='submit' class='btn btn-danger' name='Void'><i class='fa fa-trash'></i> Void Purchase Order</button>"; //enable void
-        }
-
-        ?>
-      </form>
-
-
-
-
-      <?php
-          if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Approved']))
-          {
-             $query = "UPDATE po_transactions SET po_status = 2 WHERE po_trans_id='$users_id'";
-             $approved = mysqli_query($link, $query) or die(mysqli_error($link));
-
-             $showStatus = "<span class='label label-success'>Approved</span>";
-             header("Location: PO-manage.php");
-          }
-
-          elseif ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Void']))
-          {
-             $query = "UPDATE po_transactions SET po_status = 3 WHERE po_trans_id='$users_id'";
-             $approved = mysqli_query($link, $query) or die(mysqli_error($link));
-
-             $showStatus = "<span class='label label-success'>Approved</span>";
-             header("Location: PO-manage.php");
-          }
-
-      ?>
-
-
-        </div>
-      </div>
-    </section>
     <!-- /.content -->
     <div class="clearfix"></div>
   </div>
