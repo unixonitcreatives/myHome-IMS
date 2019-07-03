@@ -58,9 +58,10 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="PO-add.php">Add PO</a></li>
-                                <li><a href="PO-manage.php">Manage PO</a></li>
+                                <!-- <li><a href="PO-add.php">Add PO</a></li> -->
                                 <li><a href="PO-request.php">Request PO</a></li>
+                                <li><a href="PO-manage.php">Manage PO</a></li>
+
                             </ul>
                         </li>
 

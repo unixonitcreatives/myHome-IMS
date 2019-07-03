@@ -50,13 +50,13 @@ if($result){
     exit;
   }
   else
-  if ($rows['usertype'] == "Guest") {
+  if ($rows['usertype'] == "Manager") {
     session_start();
     // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = $rows;
-    header('location: ../myHome-IMS/guest.php');
+    header('location: ../myHome-IMS/manager-dashboard.php');
     exit;
 
   }
