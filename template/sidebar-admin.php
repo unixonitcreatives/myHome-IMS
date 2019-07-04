@@ -66,6 +66,20 @@
                         </li>
 
                         <li class="treeview">
+                            <a href="#"><i class="fa fa-cart-plus"></i> <span>Sales Order</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <!-- <li><a href="PO-add.php">Add PO</a></li> -->
+                                <li><a href="SO-add.php">Add SO</a></li>
+                                <li><a href="SO-manage.php">Manage SO</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="treeview">
                             <a href="#"><i class="fa fa-th"></i> <span>Products</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>

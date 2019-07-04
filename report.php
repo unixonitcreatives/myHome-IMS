@@ -115,9 +115,49 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                     <form class="form-vertical" enctype="multipart/form-data" method="post" accept-charset="utf-8" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Search</label><input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
-                      </div>
+                                    <div class="form-group">
+                                      <label>Supplier Name</label>
+                                      <input type="text" class="form-control" id="" maxlength="50" placeholder="Supplier Name" name="name">
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Note</label>
+                                      <input type="text" class="form-control" id="" placeholder="Note" name="note">
+                                    </div>
+
+                                    <!--
+                                      //Date Picker "From"
+                                    <div class="form-group">
+                                      <label>From</label>
+
+                                      <div class="input-group date">
+                                        <div class="input-group-addon">
+                                          <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id="datepicker" name="from" data-mask>
+                                      </div>
+                                    </div>
+
+                                      //Date Picker "To"
+                                    <div class="form-group">
+                                      <label>To</label>
+                                      <div class="input-group date">
+                                        <div class="input-group-addon">
+                                          <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id="datepicker2" name="to" data-mask>
+                                      </div>
+                                    </div>
+                                    -->
+                                     
+                                    <div class="form-group">
+                                    <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Search</button>
+                                  
+                                    <button id="btnExport" class="btn btn-success" onclick="javascript:xport.toXLS('example2', 'IMS-Report');"> Convert to Excel </button>
+                                    </div>
+
+                                     <iframe id="txtArea1" style="display:none"></iframe>
+                                    
                     </div>
 
                     
@@ -127,57 +167,51 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                   </div>
                     <div class="row">
 
-                    <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Inv ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Description</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO#</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Quantity</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Cost Price</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date Arrived</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Note</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Total Price</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
+
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        // Include config file
-                        require_once 'config.php';
 
+                        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+                          // Include config files
+                          require_once 'config.php';
+                         $name = $_POST['name']; 
+                         $note = $_POST['note']; 
                         // Attempt select query execution
-                        $query = "SELECT * FROM inventory";
-                        //inv_id
-                        //supplier_name
-                        //category
-                        //branch_name
-                        //product_description
-                        //model
-                        //po_number
-                        //qty
-                        //retail_price
-                        //cost_price
-                        //date_arriv
+                        $query = "SELECT * FROM po_transactions WHERE supplier_name LIKE '%$name%' AND paymentTerms LIKE '%$note%'";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
 
                             while($row = mysqli_fetch_array($result)){
                               echo "<tr>";
-                              echo "<td>" . $row['inv_id'] . "</td>";
+                              echo "<td>" . $row['po_trans_id'] . "</td>";
+                              echo "<td>" . $row['inv_date'] . "</td>";
                               echo "<td>" . $row['supplier_name'] . "</td>";
-                              echo "<td>" . $row['category'] . "</td>";
-                              echo "<td>" . $row['branch_name'] . "</td>";
-                              echo "<td>" . $row['product_description'] . "</td>";
-                              echo "<td>" . $row['model'] . "</td>";
-                              echo "<td>" . $row['po_number'] . "</td>";
-                              echo "<td>" . $row['qty'] . "</td>";
-                              echo "<td>" . $row['cost_price'] . "</td>";
-                              echo "<td>" . $row['retail_price'] . "</td>";
-                              echo "<td>" . $row['date_arriv'] . "</td>";
+                              echo "<td>" . $row['paymentTerms'] . "</td>";
+                              echo "<td>" . $row['totalPrice'] . "</td>";
+                              $status = $row['po_status'];
+                              if($status == 1){
+                                echo "<td> <span class='label label-warning'>Pending</span> </td>";
+                              } elseif ($status == 2) {
+                                  echo "<td> <span class='label label-success'>Approved</span> </td>";
+                              } elseif ($status == 3) {
+                                echo "<td> <span class='label label-danger'>Void</span> </td>";
+                              } else {
+                                echo "<td> <span class='label label-default'>Error</span> </td>";
+                              }
+
+
                               echo "<td>";
 
                               echo "<a href='customer-view.php?id=". $row['id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
@@ -196,7 +230,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         } else{
                           echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                         }
-
+                  }
                         // Close connection
                         mysqli_close($link);
                         ?>
@@ -261,7 +295,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
-      'searching'   : true,
+      'searching'   : false,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
@@ -306,7 +340,108 @@ $(".remove").click(function(){
                                                         });
                                                     }
                                                 });
+//Convert to Excel
+var xport = {
+  _fallbacktoCSV: true,  
+  toXLS: function(tableId, filename) {   
+    this._filename = (typeof filename == 'undefined') ? tableId : filename;
+    
+    //var ieVersion = this._getMsieVersion();
+    //Fallback to CSV for IE & Edge
+    if ((this._getMsieVersion() || this._isFirefox()) && this._fallbacktoCSV) {
+      return this.toCSV(tableId);
+    } else if (this._getMsieVersion() || this._isFirefox()) {
+      alert("Not supported browser");
+    }
+
+    //Other Browser can download xls
+    var htmltable = document.getElementById(tableId);
+    var html = htmltable.outerHTML;
+
+    this._downloadAnchor("data:application/vnd.ms-excel" + encodeURIComponent(html), 'xls'); 
+  },
+  toCSV: function(tableId, filename) {
+    this._filename = (typeof filename === 'undefined') ? tableId : filename;
+    // Generate our CSV string from out HTML Table
+    var csv = this._tableToCSV(document.getElementById(tableId));
+    // Create a CSV Blob
+    var blob = new Blob([csv], { type: "text/csv" });
+
+    // Determine which approach to take for the download
+    if (navigator.msSaveOrOpenBlob) {
+      // Works for Internet Explorer and Microsoft Edge
+      navigator.msSaveOrOpenBlob(blob, this._filename + ".csv");
+    } else {      
+      this._downloadAnchor(URL.createObjectURL(blob), 'csv');      
+    }
+  },
+  _getMsieVersion: function() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf("MSIE ");
+    if (msie > 0) {
+      // IE 10 or older => return version number
+      return parseInt(ua.substring(msie + 5, ua.indexOf(".", msie)), 10);
+    }
+
+    var trident = ua.indexOf("Trident/");
+    if (trident > 0) {
+      // IE 11 => return version number
+      var rv = ua.indexOf("rv:");
+      return parseInt(ua.substring(rv + 3, ua.indexOf(".", rv)), 10);
+    }
+
+    var edge = ua.indexOf("Edge/");
+    if (edge > 0) {
+      // Edge (IE 12+) => return version number
+      return parseInt(ua.substring(edge + 5, ua.indexOf(".", edge)), 10);
+    }
+
+    // other browser
+    return false;
+  },
+  _isFirefox: function(){
+    if (navigator.userAgent.indexOf("Firefox") > 0) {
+      return 1;
+    }
+    
+    return 0;
+  },
+  _downloadAnchor: function(content, ext) {
+      var anchor = document.createElement("a");
+      anchor.style = "display:none !important";
+      anchor.id = "downloadanchor";
+      document.body.appendChild(anchor);
+
+      // If the [download] attribute is supported, try to use it
+      
+      if ("download" in anchor) {
+        anchor.download = this._filename + "." + ext;
+      }
+      anchor.href = content;
+      anchor.click();
+      anchor.remove();
+  },
+  _tableToCSV: function(table) {
+    // We'll be co-opting `slice` to create arrays
+    var slice = Array.prototype.slice;
+
+    return slice
+      .call(table.rows)
+      .map(function(row) {
+        return slice
+          .call(row.cells)
+          .map(function(cell) {
+            return '"t"'.replace("t", cell.textContent);
+          })
+          .join(",");
+      })
+      .join("\r\n");
+  }
+};
 
                                             </script>
+
+
 </body>
 </html>

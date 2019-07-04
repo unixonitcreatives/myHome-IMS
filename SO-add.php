@@ -91,12 +91,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
       <!-- Ionicons -->
       <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+      <!-- daterange picker -->
+      <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+      <!-- bootstrap datepicker -->
+      <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+      <!-- iCheck for checkboxes and radio inputs -->
+      <link rel="stylesheet" href="plugins/iCheck/all.css">
+      <!-- Bootstrap Color Picker -->
+      <link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+      <!-- Bootstrap time Picker -->
+      <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+      <!-- Select2 -->
+      <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
       <!-- Theme style -->
       <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
       <!-- AdminLTE Skins. Choose a skin from the css/skins
-      folder instead of downloading all of them to reduce the load. -->
+           folder instead of downloading all of them to reduce the load. -->
       <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-      <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -181,7 +192,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <section class="content">
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Purchase Order Form </h3>
+                <h3 class="box-title">Sales Order Form </h3>
 
 
               </div>
@@ -190,78 +201,105 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="row">
                   <?php echo $alertMessage; ?>
                   <form class="form-vertical" enctype="multipart/form-data" method="post" accept-charset="utf-8" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                   
+
                     <div class="col-md-6">
                       <!-- 1st column content -->
+                                      <div class="form-group">
+                                        <label class="text text-red">*</label>
+                                        <label>Name</label>
+                                        <select class="form-control select2" style="width: 100%;" id="" maxlength="50" placeholder="customer name" name="customer_name" required>
+                                        <option selected="selected">Default Customer</option>
+                                        <?php
 
-                      <div class="form-group">
-                        <label>Supplier</label>
-                        <select class="form-control" style="width: 100%;" name='po_supplier'>
-                          <option>--SELECT SUPPLIER--</option>
-                          <?php
-                          $query = "select supplier_name from suppliers order by supplier_name";
-                          $result = mysqli_query($link, $query);
+                                         // Include config file
+                                         require_once "config.php";
+                                         // Attempt select query execution
+                                         $query = "SELECT * FROM customers";
+                                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
+                                         if($result = mysqli_query($link, $query)){
+                                             if(mysqli_num_rows($result) > 0){
 
-                          $po_supplier_name = $_POST['supplier_name'];
+                                                     while($row = mysqli_fetch_array($result)){
 
-                          while ($row = mysqli_fetch_assoc($result)) { ?>
-                            <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
-                          <?php } ?>
-                        </select>
-                      </div>
+                                                             echo "<option>" . $row['customer_name'] . "</option>";
+                                                     }
 
-                      <!--  <div class="form-group">
-                      <label>Address</label>
-                      <input type="text" class="form-control" placeholder="Address (auto-fill)" disabled>
+                                                 // Free result set
+                                                 mysqli_free_result($result);
+                                             } else{
+                                                 echo "<p class='lead'><em>No records were found.</em></p>";
+                                             }
+                                         } else{
+                                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                         }
+
+                                         mysqli_close($link);
+
+                                        ?>
+                                      </select>
+                                      </div>
                     </div>
-
-                    <div class="form-group">
-                    <label>Contact Person</label>
-                    <input type="text" class="form-control" placeholder="Contact Person (auto-fill or manual?)" disabled>
-                  </div> -->
-
-                </div>
-
-                <div class="col-md-6">
-                  <!-- 2nd column content -->
-
-                  <!-- <div class="form-group">
-                  <label>Date</label>
-                  <input type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask disabled>
-                </div> -->
-
-
-                <!--<div class="form-group">
-                <label>Payment Mode</label>
-                <select class="form-control" style="width: 100%;" name='paymentTerms[]'>
-                <option selected="selected">Cash</option>
-                <option>Cheque</option>
-                <option disabled="disabled">Card (Available Soon)</option>
-                <option>Other</option>
-              </select>
-            </div>-->
-
-
-            <div class="form-group">
-              <label>Notes</label>
-              <input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
-            </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Notes</label>
+                        <input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
+                      </div>
           
-          </div>
+                    </div>
 
           <div class="col-md-12">
             <!-- 2nd row content -->
             <div class="table-responsive">
               <table class="table table-bordered" id="crud_table">
                 <tr>
+                  <th width="18%">Item</th>
                   <th width="18%">Quantity</th>
                   <th width="18%">Unit</th>
-                  <th width="18%">Description</th>
                   <th width="18%">Unit Price</th>
                   <th width="18%">Amount</th>
                   <th width="10%"></th>
                 </tr>
 
                 <tr>
+                  <td>
+                    <div class="form-group">
+                      <select class="form-control select2" style="width: 100%;" id="po_description" name="po_description[]" placeholder="Product Name" required>
+                                        <?php
+
+                                         // Include config file
+                                         require_once "config.php";
+                                         // Attempt select query execution
+                                         $query = "SELECT * FROM inventory";
+                                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
+                                         if($result = mysqli_query($link, $query)){
+                                             if(mysqli_num_rows($result) > 0){
+
+                                                     while($row = mysqli_fetch_array($result)){
+
+                                                             echo "<option>" . $row['supplier_name'] . "</option>";
+                                                     }s
+
+                                                 // Free result set
+                                                 mysqli_free_result($result);
+                                             } else{
+                                                 echo "<p class='lead'><em>No records were found.</em></p>";
+                                             }
+                                         } else{
+                                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                         }
+
+                                         mysqli_close($link);
+
+                                        ?>
+                                      </select>
+
+
+
+
+
+                    </div>
+                  </td>
                   <td>
                     <div class="form-group">
                       <input type="number" class="form-control" id="po_qty" name="po_qty[]" placeholder="Product Qty">
@@ -272,11 +310,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                       <input type="text" class="form-control" id="po_unit" name="po_unit[]" placeholder="Product Unit">
                     </div>
                   </td>
-                  <td>
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="po_description" name="po_description[]" placeholder="Product Description">
-                    </div>
-                  </td>
+                  
                   <td>
                     <div class="form-group">
                       <input type="number" class="form-control" id="po_unit_price" name="po_unit_price[]" placeholder="Product Unit Price">
@@ -284,7 +318,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="number" class="po_total_amount" id="po_total_amount" name="po_total_amount[]" placeholder= "0.00" readonly>
+                      <input type="number" class="form-control po_total_amount" id="po_total_amount" name="po_total_amount[]" placeholder= "0.00" readonly>
                     </div>
                   </td>
 
@@ -365,72 +399,127 @@ immediately after the control sidebar -->
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- Page script -->
+
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<!-- page script -->
 <script>
-$(function () {
-  //Initialize Select2 Elements
-  $('.select2').select2()
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  })
+ </script>
 
-  //Datemask dd/mm/yyyy
-  $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-  //Datemask2 mm/dd/yyyy
-  $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-  //Money Euro
-  $('[data-mask]').inputmask()
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
 
-  //Date range picker
-  $('#reservation').daterangepicker()
-  //Date range picker with time picker
-  $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-  //Date range as a button
-  $('#daterange-btn').daterangepicker(
-    {
-      ranges   : {
-        'Today'       : [moment(), moment()],
-        'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-        'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
       },
-      startDate: moment().subtract(29, 'days'),
-      endDate  : moment()
-    },
-    function (start, end) {
-      $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-    }
-  )
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
 
-  //Date picker
-  $('#datepicker').datepicker({
-    autoclose: true
-  })
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
 
-  //iCheck for checkbox and radio inputs
-  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-    checkboxClass: 'icheckbox_minimal-blue',
-    radioClass   : 'iradio_minimal-blue'
-  })
-  //Red color scheme for iCheck
-  $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-    checkboxClass: 'icheckbox_minimal-red',
-    radioClass   : 'iradio_minimal-red'
-  })
-  //Flat red color scheme for iCheck
-  $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-    checkboxClass: 'icheckbox_flat-green',
-    radioClass   : 'iradio_flat-green'
-  })
+    $('#datepicker2').datepicker({
+      autoclose: true
+    })
 
-  //Colorpicker
-  $('.my-colorpicker1').colorpicker()
-  //color picker with addon
-  $('.my-colorpicker2').colorpicker()
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
 
-  //Timepicker
-  $('.timepicker').timepicker({
-    showInputs: false
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
   })
-})
+</script>
+
+<script>
+  //uppercase text box
+  function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+}
+
+function copyTextValue(bf) {
+  var text1 = bf.checked ? document.getElementById("Name1").value : '';
+
+  document.getElementById("Name2").value = text1;
+  document.getElementById("Name3").value = text1;
+  
+}
+
+$(function()
+{
+  $('#theform').submit(function(){
+    $("input[type='submit']", this)
+      .val("Please Wait...")
+      .attr('disabled', 'disabled');
+    return true;
+  });
+});
+
+
+
+
 </script>
 
 <!-- Add Rows -->
@@ -440,11 +529,11 @@ $(document).ready(function(){
   $('#add').click(function(){
     count = count + 1;
     var html_code = "<tr id='row"+count+"'>";
+    html_code += "<td><input type='text' class='form-control' id='po_description' name='po_description[]' placeholder='Product Description'></td>";
     html_code += "<td><input type='number' class='form-control' id='po_qty' name='po_qty[]' placeholder='Product Qty'></td>";
     html_code += "<td><input type='text' class='form-control' id='po_unit' name='po_unit[]' placeholder='Product Unit'></td>";
-    html_code += "<td><input type='text' class='form-control' id='po_description' name='po_description[]' placeholder='Product Description'></td>";
     html_code += "<td><input type='number' class='form-control' id='po_unit_price' name='po_unit_price[]' placeholder='Product Unit Price'></td>";
-    html_code += "<td><input type='number' class='po_total_amount' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
+    html_code += "<td><input type='number' class='form-control po_total_amount' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
     html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-s remove'>-</button></td>";
     html_code += "</tr>";
     $('#crud_table').append(html_code);
@@ -493,8 +582,8 @@ function calc_total()
 
   $('#totalPrice').val(total.toFixed(2));
   //tax_sum=total/100*$('#tax').val();
-	//$('#tax_amount').val(tax_sum.toFixed(2));
-	//$('#total_amount').val((tax_sum+total).toFixed(2));
+  //$('#tax_amount').val(tax_sum.toFixed(2));
+  //$('#total_amount').val((tax_sum+total).toFixed(2));
 }
 </script>
 

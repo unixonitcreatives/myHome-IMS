@@ -236,7 +236,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 <!-- /.box-body -->
 
                 <div class="box-footer">
-                  <button type="submit" class="btn btn-success">Save</button>
+                  <button type="submit" id="save" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();" class="btn btn-success">Save</button>
 
                 </div>
               </form>
@@ -330,6 +330,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                                             });
                                                         }
                                                     });
+//disable button on click
+      $(function()
+{
+  $('#theform').submit(function(){
+    $("input[type='submit']", this)
+      .val("Please Wait...")
+      .attr('disabled', 'disabled');
+    return true;
+  });
+});
+
 
                                                 </script>
 

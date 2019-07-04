@@ -214,7 +214,7 @@ function test_input($data) {
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Save</button>
+                <button type="submit" id="save" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();"  class="btn btn-success">Save</button>
               </div>
             </form>
           </div>
@@ -262,6 +262,16 @@ $(document).ready(function () {
     });
   }, 1000);
 
+});
+//disable button on click
+      $(function()
+{
+  $('#theform').submit(function(){
+    $("input[type='submit']", this)
+      .val("Please Wait...")
+      .attr('disabled', 'disabled');
+    return true;
+  });
 });
 </script>
 </body>
