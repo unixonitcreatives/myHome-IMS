@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
 
       }
-      
+
       if($result){
         $alertMessage = "<div class='alert alert-success' role='alert'>
         New user successfully added in database.
@@ -245,7 +245,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               <label>Notes</label>
               <input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
             </div>
-          
+
           </div>
 
           <div class="col-md-12">
