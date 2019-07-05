@@ -149,18 +149,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                       </div>
                                     </div>
                                     -->
-                                     
+
                                     <div class="form-group">
                                     <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Search</button>
-                                  
+
                                     <button id="btnExport" class="btn btn-success" onclick="javascript:xport.toXLS('example2', 'IMS-Report');"> Convert to Excel </button>
                                     </div>
 
                                      <iframe id="txtArea1" style="display:none"></iframe>
-                                    
+
                     </div>
 
-                    
+
                     </form>
 
 
@@ -183,11 +183,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                       <tbody>
                         <?php
 
+                        require_once "config.php";
+
                         if ($_SERVER["REQUEST_METHOD"] == "POST"){
                           // Include config files
                           require_once 'config.php';
-                         $name = $_POST['name']; 
-                         $note = $_POST['note']; 
+                         $name = $_POST['name'];
+                         $note = $_POST['note'];
                         // Attempt select query execution
                         $query = "SELECT * FROM po_transactions WHERE supplier_name LIKE '%$name%' AND paymentTerms LIKE '%$note%'";
                         if($result = mysqli_query($link, $query)){
@@ -342,10 +344,10 @@ $(".remove").click(function(){
                                                 });
 //Convert to Excel
 var xport = {
-  _fallbacktoCSV: true,  
-  toXLS: function(tableId, filename) {   
+  _fallbacktoCSV: true,
+  toXLS: function(tableId, filename) {
     this._filename = (typeof filename == 'undefined') ? tableId : filename;
-    
+
     //var ieVersion = this._getMsieVersion();
     //Fallback to CSV for IE & Edge
     if ((this._getMsieVersion() || this._isFirefox()) && this._fallbacktoCSV) {
@@ -358,7 +360,7 @@ var xport = {
     var htmltable = document.getElementById(tableId);
     var html = htmltable.outerHTML;
 
-    this._downloadAnchor("data:application/vnd.ms-excel" + encodeURIComponent(html), 'xls'); 
+    this._downloadAnchor("data:application/vnd.ms-excel" + encodeURIComponent(html), 'xls');
   },
   toCSV: function(tableId, filename) {
     this._filename = (typeof filename === 'undefined') ? tableId : filename;
@@ -371,8 +373,8 @@ var xport = {
     if (navigator.msSaveOrOpenBlob) {
       // Works for Internet Explorer and Microsoft Edge
       navigator.msSaveOrOpenBlob(blob, this._filename + ".csv");
-    } else {      
-      this._downloadAnchor(URL.createObjectURL(blob), 'csv');      
+    } else {
+      this._downloadAnchor(URL.createObjectURL(blob), 'csv');
     }
   },
   _getMsieVersion: function() {
@@ -404,7 +406,7 @@ var xport = {
     if (navigator.userAgent.indexOf("Firefox") > 0) {
       return 1;
     }
-    
+
     return 0;
   },
   _downloadAnchor: function(content, ext) {
@@ -414,7 +416,7 @@ var xport = {
       document.body.appendChild(anchor);
 
       // If the [download] attribute is supported, try to use it
-      
+
       if ("download" in anchor) {
         anchor.download = this._filename + "." + ext;
       }
