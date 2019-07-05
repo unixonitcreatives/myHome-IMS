@@ -264,40 +264,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <tr>
                   <td>
                     <div class="form-group">
-                      <select class="form-control select2" style="width: 100%;" id="po_description" name="po_description[]" placeholder="Product Name" required>
-                                        <?php
-
-                                         // Include config file
-                                         require_once "config.php";
-                                         // Attempt select query execution
-                                         $query = "SELECT * FROM inventory";
-                                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
-                                         if($result = mysqli_query($link, $query)){
-                                             if(mysqli_num_rows($result) > 0){
-
-                                                     while($row = mysqli_fetch_array($result)){
-
-                                                             echo "<option>" . $row['supplier_name'] . "</option>";
-                                                     }s
-
-                                                 // Free result set
-                                                 mysqli_free_result($result);
-                                             } else{
-                                                 echo "<p class='lead'><em>No records were found.</em></p>";
-                                             }
-                                         } else{
-                                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                                         }
-
-                                         mysqli_close($link);
-
-                                        ?>
-                                      </select>
-
-
-
-
-
+                      <input type="text" class="form-control" id="po_desciption" name="po_desciption[]" placeholder="Product Name">
                     </div>
                   </td>
                   <td>
