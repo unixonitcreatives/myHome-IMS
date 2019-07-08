@@ -14,44 +14,40 @@ require_once 'config.php';
 // Define variables and initialize with empty values
 $supplier_name=$category=$branch_name=$product_description=$model=$po_number=$qty=$retail_price=$cost_price=$date_arrival=$alertMessage="";
 
-$users_id = $_GET['inv_id'];
-
-
-$query = "SELECT * from inventory WHERE id='$users_id'";
+$inv_id = $_GET['inv_id'];
+$query = "SELECT * from inventory WHERE inv_id='$inv_id'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)){
-      $supplier_name = $row['supplier_name'];
-      $category = $row['category'];
-      $branch_name = $row['branch_name'];
-      $product_description = $row['product_description'];
-      $model = $row['model'];
-      $po_number = $row['po_number'];
-      $qty = $row['qty'];
-      $retail_price = $row['retail_price'];
-      $cost_price = $row['cost_price'];
-      $date_arrival = $row['date_arriv'];
+      $supplier_name        = $row['supplier_name'];
+      $category             = $row['category'];
+      $branch_name          = $row['branch_name'];
+      $product_description  = $row['product_description'];
+      $model                = $row['model'];
+      $po_number            = $row['po_number'];
+      $qty                  = $row['qty'];
+      $retail_price         = $row['retail_price'];
+      $cost_price           = $row['cost_price'];
+      $date_arr             = $row['date_arriv'];
 
     }
 }else {
     $alertMessage="<div class='alert alert-danger' role='alert'>Theres Nothing to see Here.</div>";
 }
 
-//If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   //Assigning posted values to variables.
-  $supplier_name = test_input($_POST['supplier_name']);
-  $category = test_input($_POST['category']);
-  $branch_name = test_input($_POST['branch_name']);
-  $product_description = test_input($_POST['product_description']);
-  $model = test_input($_POST['model']);
-  $po_number = test_input($_POST['po_number']);
-  $qty = test_input($_POST['qty']);
-  $retail_price = test_input($_POST['retail_price']);
-  $cost_price = test_input($_POST['cost_price']);
-  $date_arrival = test_input($_POST['date_arriv']);
-
+  $supplier_name        = test_input($_POST['supplier_name']);
+  $category             = test_input($_POST['category']);
+  $branch_name          = test_input($_POST['branch_name']);
+  $product_description  = test_input($_POST['product_description']);
+  $model                = test_input($_POST['model']);
+  $po_number            = test_input($_POST['po_number']);
+  $qty                  = test_input($_POST['qty']);
+  $retail_price         = test_input($_POST['retail_price']);
+  $cost_price           = test_input($_POST['cost_price']);
+  $date_arr             = test_input($_POST['date_arriv']);
 
 
   if(empty($supplier_name)){
@@ -90,13 +86,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $alertMessage = "Please enter a actual price.";
   }
 
-  if(empty($date_arrival)){
+  if(empty($date_arr)){
     $alertMessage = "Please enter a date or arrival.";
   }
 
   // Check input errors before inserting in database
   if(empty($alertMessage)){
-
 
     $supplier_name = test_input($_POST['supplier_name']);
     $category = test_input($_POST['category']);
@@ -110,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $date_arr = test_input($_POST['date_arriv']);
 
   //Checking the values are existing in the database or not
-    $query = "INSERT INTO inventory (supplier_name, category, branch_name, product_description, model, po_number, qty, retail_price, cost_price, date_arriv) VALUES ('$supplier_name', '$category', '$branch_name', '$product_description', '$model', '$po_number', '$qty', '$retail_price', '$cost_price', '$date_arr')";
+    $query = "UPDATE inventory SET supplier_name='$supplier_name', category='$category', branch_name='$branch_name', product_description='$product_description', model='$model', po_number='$po_number', qty='$qty', retail_price='$retail_price', cost_price='$cost_price', date_arriv='$date_arr' WHERE inv_id='$inv_id'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
@@ -254,13 +249,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
-                <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?inv_id=<?php echo $inv_id; ?>">
                     <?php echo $alertMessage; ?>
                   <div class="col-md-6">
                     <!-- 1st column content -->
                     <div class="form-group">
                       <label>Supplier</label> <a href="supplier-add.php">+add new</a>
                       <select class="form-control select2" style="width: 100%;" name="supplier_name">
+                        <option><?php echo $supplier_name; ?></option>
                         <?php
                         require_once "config.php";
                         $query = "select supplier_name from suppliers order by supplier_name";
@@ -277,6 +273,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="form-group">
                       <label>Category</label> <a href="category-add.php">+add new</a>
                       <select class="form-control select2" style="width: 100%;" name="category">
+                          <option><?php echo $category; ?></option>
                         <?php
                         require_once "config.php";
                         $query = "select category from categories order by category";
@@ -293,6 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="form-group">
                       <label>Branch</label> <a href="branch-add.php">+add new</a>
                       <select class="form-control select2" style="width: 100%;" name="branch_name">
+                          <option><?php echo $branch_name; ?></option>
                         <?php
                         require_once "config.php";
                         $query = "select branch_name from branches order by branch_name";
@@ -308,12 +306,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     <div class="form-group">
                       <label>Product Description</label>
-                      <input type="text" class="form-control" placeholder="Product Description" name="product_description">
+                      <input type="text" class="form-control" placeholder="Product Description" name="product_description" value="<?php echo $product_description; ?>">
                     </div>
 
                     <div class="form-group">
                       <label>Model</label>
-                      <input type="text" class="form-control" placeholder="Model No." name="model">
+                      <input type="text" class="form-control" placeholder="Model No." name="model" value="<?php echo $model;?>">
                     </div>
 
                   </div>
@@ -321,27 +319,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>PO Number</label>
-                      <input type="number" class="form-control" placeholder="PO Number" name="po_number">
+                      <input type="number" class="form-control" placeholder="PO Number" name="po_number" value="<?php echo $po_number; ?>">
                     </div>
 
                     <div class="form-group">
                       <label>Quantity</label>
-                      <input type="number" class="form-control" placeholder="Quantity" name="qty">
+                      <input type="number" class="form-control" placeholder="Quantity" name="qty" value="<?php echo $qty; ?>">
                     </div>
 
                     <div class="form-group">
                       <label>Retail Price</label>
-                      <input type="number" class="form-control" placeholder="Retail Price" name="retail_price">
+                      <input type="number" class="form-control" placeholder="Retail Price" name="retail_price" value="<?php echo $retail_price; ?>">
                     </div>
 
                     <div class="form-group">
                       <label>Supplier Price</label>
-                      <input type="number" class="form-control" placeholder="Cost Price" name="cost_price">
+                      <input type="number" class="form-control" placeholder="Cost Price" name="cost_price" value="<?php echo $cost_price;?>">
                     </div>
 
                     <div class="form-group">
                       <label>Date Arrival</label>
-                      <input type="date" class="form-control" placeholder="Date Arrival" name="date_arriv">
+                      <input type="date" class="form-control" name="date_arriv" value="<?php echo $date_arr;?>">
                     </div>
 
                   </div>
@@ -349,7 +347,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="box-footer">
                   <!-- Buttons -->
-                  <button type="submit" id="save" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();" class="btn btn-success pull-right">Save</button>
+                  <button type="submit" class="btn btn-success pull-right">Save</button>
 
                 </div>
               </div>

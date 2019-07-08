@@ -73,7 +73,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <!-- <li><a href="PO-add.php">Add PO</a></li> -->
-                                <li><a href="SO-add.php">Add SO</a></li>
+                                <li><a href="SO-add.php">Create SO</a></li>
                                 <li><a href="SO-manage.php">Manage SO</a></li>
 
                             </ul>

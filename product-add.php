@@ -238,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     <!-- 1st column content -->
                     <div class="form-group">
                       <label>Supplier</label> <a href="supplier-add.php">+add new</a>
-                      <select class="form-control select2" style="width: 100%;" name="supplier_name">
+                      <select class="form-control select2" style="width: 100%;" name="supplier_name" >
                         <?php
                         require_once "config.php";
                         $query = "select supplier_name from suppliers order by supplier_name";

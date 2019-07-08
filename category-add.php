@@ -34,10 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
-         $alertMessage =
-         "<div class='callout alert-success'>
-         New categoryr successfully added in database.
-         </div>";
+      $alertMessage = "<div class='alert alert-success' role='alert'>
+New category successfully added in database.
+</div>";
 
     }else{
         $alertMessage = "<div class='alert alert-danger fade in' role='alert'>
@@ -50,9 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 //session_destroy();
 
 // Close connection
-mysqli_close($link);
+
 
     }
+    mysqli_close($link);
   }
 
 function test_input($data) {
@@ -254,6 +254,19 @@ $(document).ready(function () {
       .attr('disabled', 'disabled');
     return true;
   });
+});
+</script>
+
+<!-- Alert animation -->
+<script type="text/javascript">
+$(document).ready(function () {
+
+  window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+      $(this).remove();
+    });
+  }, 1000);
+
 });
 </script>
 </body>

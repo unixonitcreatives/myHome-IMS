@@ -175,9 +175,8 @@ if(isset($_GET['alert'])){
                           echo "<td>" . $row['cost_price'] . "</td>";
                           echo "<td>" . $row['date_arriv'] . "</td>";
                           echo "<td>" . $row['branch_name'] . "</td>";
-
-                          echo "<td><a href='product-update.php?id=". $row['inv_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
-                          echo "<a href='PO-delete.php?id=". $row['inv_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                          echo "<td><a href='product-update.php?inv_id=". $row['inv_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
+                          echo "<a href='product-delete.php?inv_id=". $row['inv_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                           echo "</td>";
                           echo "</tr>";
                         }
