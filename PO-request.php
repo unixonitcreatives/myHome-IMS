@@ -26,7 +26,6 @@ $alertMessage="";
 
 require_once "config.php";
 
-//If the form is submitted or not.
 //If the form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
   $po_supplier_name =$_POST['po_supplier'];

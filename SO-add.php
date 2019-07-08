@@ -9,29 +9,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 // Define variables and initialize with empty values
-$inv_num=
-$po_supplier_name=
+$customer_name=
+$so_date=
+$model=
 $po_qty=
-$po_unit=
-$po_description=
+$po_units=
 $po_unit_price=
 $po_total_amount=
-$totalPrice=
-$remarks=
-$user=
-$paymentTerms=
-$transID=
 $alertMessage="";
 
 
 require_once "config.php";
 
-//If the form is submitted or not.
 //If the form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-  $po_supplier_name =$_POST['po_supplier'];
-  $paymentTerms =$_POST['paymentTerms'];
-  $totalPrice =$_POST['totalPrice'];
+  $customers_name = $POST[''];
 
   $query = "INSERT INTO po_transactions (inv_date, supplier_name, paymentTerms, totalPrice, po_status) VALUES ( CURRENT_TIMESTAMP, '$po_supplier_name', '$paymentTerms', '$totalPrice', 1)";
   $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -209,7 +201,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <label class="text text-red">*</label>
                         <label>Name</label>
                         <select class="form-control select2" style="width: 100%;" id="" maxlength="50" placeholder="customer name" name="customer_name" required>
-                          <option selected="selected">Default Customer</option>
+                          <option selected="selected">~~SELECT~~</option>
                           <?php
 
                           // Include config file
@@ -230,7 +222,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Date</label>
-                        <input type="date" class="form-control"  name="soDate">
+                        <input type="date" class="form-control"  name="so_date">
                       </div>
 
                     </div>
@@ -261,7 +253,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             </td>
                             <td>
                               <div class="form-group">
-                                <input type="text" class="form-control" id="po_unit" name="po_unit[]" placeholder="Product Unit">
+                                <select class="form-control" id="po_unit" name="po_unit[]" placeholder="Product Unit">
+                                  <option value="PC/S">pc/s</option>
+                                  <option value="SET/S">set/s</option>
+                                </select>
                               </div>
                             </td>
 
@@ -285,6 +280,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
                           <tfoot >
+                            <tr>
+                              <td align="right" colspan="4">Discount/s:</td>
+                              <td>
+                                <div class="form-group">
+                                  <input type="number" class="form-control" id="discount" name="discount" placeholder="0.00">
+                                </div>
+                              </td>
+                              <td>
+
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="right" colspan="4">Delivery Fee:</td>
+                              <td>
+                                <div class="form-group">
+                                  <input type="number" class="form-control" id="deliveryFee" name="deliveryFee" placeholder="0.00">
+                                </div>
+                              </td>
+                              <td>
+
+                              </td>
+                            </tr>
                             <tr>
                               <td align="right" colspan="4">Grand Total Amount:</td>
                               <td>
@@ -485,7 +502,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         var html_code = "<tr id='row"+count+"'>";
         html_code += "<td><input type='text' class='form-control' id='model name='model[]' placeholder='model'></td>";
         html_code += "<td><input type='number' class='form-control' id='po_qty' name='po_qty[]' placeholder='Product Qty'></td>";
-        html_code += "<td><input type='text' class='form-control' id='po_unit' name='po_unit[]' placeholder='Product Unit'></td>";
+        html_code += "<td><select class='form-control' id='po_unit' name='po_unit[]' placeholder='Product Unit'><option value='PC/S'>pc/s</option><option value='SET/S'>set/s</option></select></td>";
         html_code += "<td><input type='number' class='form-control' id='po_unit_price' name='po_unit_price[]' placeholder='Product Unit Price'></td>";
         html_code += "<td><input type='number' class='form-control po_total_amount' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
         html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-s remove'>-</button></td>";
@@ -519,6 +536,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         {
           var qty = $(this).find('#po_qty').val();
           var price = $(this).find('#po_unit_price').val();
+
           $(this).find('#po_total_amount').val(qty*price);
 
           calc_total();
@@ -530,11 +548,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     {
       total=0;
 
+
       $('.po_total_amount').each(function() {
         total += parseInt($(this).val());
       });
 
-      $('#totalPrice').val(total.toFixed(2));
+      less = total-$('#discount').val();
+      delfee = less+$('#deliveryFee').val();
+      $('#totalPrice').val((delfee).toFixed(2));
       //tax_sum=total/100*$('#tax').val();
       //$('#tax_amount').val(tax_sum.toFixed(2));
       //$('#total_amount').val((tax_sum+total).toFixed(2));
