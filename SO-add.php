@@ -281,6 +281,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                           <tfoot >
                             <tr>
+                              <td align="right" colspan="4">Sub Total Amount:</td>
+                              <td>
+                                <div class="form-group">
+                                  <input type="number" class="form-control" id="subTotal" name="subTotal" placeholder="0.00" readonly>
+                                </div>
+                              </td>
+                              <td>
+
+                              </td>
+                            </tr>
+                            <tr>
                               <td align="right" colspan="4">Discount/s:</td>
                               <td>
                                 <div class="form-group">
@@ -553,9 +564,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         total += parseInt($(this).val());
       });
 
-      less = total-$('#discount').val();
-      delfee = less+$('#deliveryFee').val();
-      $('#totalPrice').val((delfee).toFixed(2));
+      $('#subTotal').val((total).toFixed(2));
+      $('#totalPrice').val((total).toFixed(2));
       //tax_sum=total/100*$('#tax').val();
       //$('#tax_amount').val(tax_sum.toFixed(2));
       //$('#total_amount').val((tax_sum+total).toFixed(2));
