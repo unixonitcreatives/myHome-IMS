@@ -8,83 +8,75 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-// Define variables and initialize with empty values
-$username=$time_created=$alertMessage=$password=$usertype="";
-
 require_once "config.php";
 
+$customers_lname=$customers_fname=$customers_contact=$customers_email=$customers_address=$alertMessage="";
 
-$users_id = $_GET['id'];
-$query = "SELECT * from users WHERE id='$users_id'";
-$result = mysqli_query($link, $query) or die(mysqli_error($link));
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)){
-        $username               =   $row['username'];
-        $password               =   $row['password'];
-        $usertype               =   $row['userType'];
-    }
-}else {
-    $alertMessage="<div class='alert alert-danger' role='alert'>Theres Nothing to see Here.</div>";
-}
 
 //If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     //Assigning posted values to variables.
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
-    $usertype = test_input($_POST['userType']);
+    $customers_name = test_input($_POST['customer_name']);
+    $customers_contact = test_input($_POST['customer_contact']);
+    $customers_email = test_input($_POST['customer_email']);
+    $customers_address = test_input($_POST['customer_address']);
 
-    // Validate username
-
-    if(empty($username)){
-        $alertMessage = "Please enter a username.";
+    // Validate category
+    if(empty($customers_name)){
+        $alertMessage = "Please enter a fullname.";
     }
-
-    // Validate password
-
-    if(empty($password)){
-        $alertMessage = "Please enter a password.";
+    if(empty($customers_contact)){
+        $alertMessage = "Please enter a contact number.";
     }
-
-    // Validate usertype
-
-    if(empty($usertype)){
-        $alertMessage = "Please enter a usertype.";
+    if(empty($customers_email)){
+        $alertMessage = "Please enter a email address.";
+    }
+    if(empty($customers_address)){
+        $alertMessage = "Please enter a address.";
     }
 
 
     // Check input errors before inserting in database
     if(empty($alertMessage)){
-    $hash = password_hash($password, PASSWORD_DEFAULT);
     //Checking the values are existing in the database or not
-    $query = "UPDATE users SET username='$username', password='$hash', userType='$usertype' WHERE id='$users_id'";
+    $query = "INSERT INTO customers (customer_name,customer_contact,customer_email,customer_address, created_at) VALUES ('$customers_name','$customers_contact','$customers_email','$customers_address', CURRENT_TIMESTAMP)";
+
+    //logs query
+
+    $logsquery = "INSERT INTO logs (user,description,created_at) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Added customer $customers_name', CURRENT_TIMESTAMP)";
+
+    $logsquery = "INSERT INTO logs (user,description) VALUES ('" . htmlspecialchars($_SESSION["username"]) . "','Added customer $customers_name')";
+
+    $logsresult = mysqli_query($link, $logsquery) or die(mysqli_error($link));
+
+
+
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
     if($result){
-        $alertMessage = "<div class='alert alert-success' role='alert'>
-  User data successfully updated in database.
+         $alertMessage = "<div class='alert alert-success' role='alert'>
+  New customer successfully added in database.
 </div>";
+
+
+
     }else {
-        $alertMessage = "<div class='alert alert-success' role='alert'>
-  Error updating record.
-</div>";}
-
-// remove all session variables
-//session_unset();
-// destroy the session
-//session_destroy();
-
-// Close connection
-mysqli_close($link);
-}
+        $alertMessage = "<div class='alert alert-danger' role='alert'>
+  Error Adding data in Database.
+</div>";
     }
-
+    }
+  }
 function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
 }
+
+// Close connection
+mysqli_close($link);
 
 ?>
 
@@ -93,7 +85,7 @@ function test_input($data) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Add Users</title>
+  <title>MyHome | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -168,8 +160,7 @@ function test_input($data) {
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <?php include ('template/sidebar-admin.php'); ?>
+    <?php include ('template/sidebar-manager.php'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -181,7 +172,7 @@ function test_input($data) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        ADD USER
+        ADD CUSTOMER
         <small></small>
       </h1>
       <ol class="breadcrumb">
@@ -195,37 +186,33 @@ function test_input($data) {
           <!-- general form elements -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Branch's Information</h3>
+              <h3 class="box-title">Customer's Information</h3>
+              <br><a href="customer-manage.php" class="text-center">View Customers</a>
             </div>
             <!-- /.box-header -->
             <?php echo $alertMessage; ?>
             <!-- form start -->
-              <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
+            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
                 <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" class="form-control" placeholder="Username" name="username" value="<?php echo $username; ?>">
+                  <label>Customer Name</label>
+                  <input type="text" class="form-control" placeholder="Fullname" name="customer_name" required>
                 </div>
 
                 <div class="form-group">
-                <label>User Type</label>
-                <select class="form-control select2" style="width: 100%;" name="userType">
-                  <option value="<?php echo $usertype; ?>"><?php echo $usertype; ?></option>
-                  <option>Administrator</option>
-                  <option>Finance Officer</option>
-                  <option>Information Officer</option>
-                  <option>Accounts Officer</option>
-                  <option>Warehouse Officer</option>
-                  <option>Cashier</option>
-                  <option>Super Admin</option>
-                </select>
-              </div>
-
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password" name="password" value="<?php echo $password; ?>">
+                <label>Phone</label>
+                  <input type="text" class="form-control" placeholder="Phone" name="customer_contact" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                 </div>
 
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" class="form-control" placeholder="Email" name="customer_email" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Address</label>
+                  <input type="text" class="form-control" placeholder="Address" name="customer_address" required>
+                </div>
               </div>
               <!-- /.box-body -->
 
@@ -254,11 +241,37 @@ function test_input($data) {
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- Page script -->
+
 <!-- SlimScroll -->
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -267,6 +280,7 @@ function test_input($data) {
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
 <!-- Alert animation -->
 <script type="text/javascript">
 $(document).ready(function () {
@@ -278,6 +292,74 @@ $(document).ready(function () {
   }, 1000);
 
 });
+</script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
 </script>
 </body>
 </html>

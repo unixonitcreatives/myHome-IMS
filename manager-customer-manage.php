@@ -8,11 +8,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   exit;
 }
 
-require_once 'config.php';
+require_once "config.php";
 
 $alertMessage="";
 //Checking the values are existing in the database or not
-$query = "Select * from branches order by id";
+$query = "Select * from customers order by id";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if(isset($_GET['alert'])){
   if($_GET['alert'] == 'deletesuccess'){
@@ -27,7 +27,7 @@ if(isset($_GET['alert'])){
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>MyHome | Manage Branch</title>
+    <title>MyHome | Manage Customer</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -38,10 +38,10 @@ if(isset($_GET['alert'])){
     <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -102,7 +102,7 @@ if(isset($_GET['alert'])){
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-          <?php include ('template/sidebar-admin.php'); ?>
+        <?php include ('template/sidebar-manager.php'); ?>
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -114,17 +114,15 @@ if(isset($_GET['alert'])){
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            MANAGE BRANCH
-            <small>You can manage your company's branches here</small>
+            MANAGE CUSTOMER
+            <small></small>
           </h1>
-
           <ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-dashboard active"></i> Dashboard</a></li>
           </ol>
         </section>
         <?php echo $alertMessage; ?>
         <!-- Main content -->
-
         <!-- Main content -->
         <div class="box-body">
           <!-- Search Area -->
@@ -132,36 +130,41 @@ if(isset($_GET['alert'])){
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Search for Category Information</h3>
-                <br><a href="branch-add.php" class="text-center">+ Add New Branch</a>
-
+                <br><a href="customer-add.php" class="text-center">+ Add New Customer</a>
                 <div class="box-body">
                   <div class="row">
-
                     <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch Address</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Customer Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Contact Number</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Email</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Address</th>
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         // Include config file
-                        require_once "config.php";
+                        require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM branches";
+                        $query = "SELECT * FROM customers";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
 
                             while($row = mysqli_fetch_array($result)){
                               echo "<tr>";
-                              echo "<td>" . $row['branch_name'] . "</td>";
-                              echo "<td>" . $row['branch_address'] . "</td>";
+                              echo "<td>" . $row['customer_name'] . "</td>";
+                              echo "<td>" . $row['customer_contact'] . "</td>";
+                              echo "<td>" . $row['customer_email'] . "</td>";
+                              echo "<td>" . $row['customer_address'] . "</td>";
                               echo "<td>";
-                              echo "<a href='branch-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='branch-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+
+                              echo "<a href='customer-view.php?id=". $row['id'] ."' title='View Record' data-toggle='modal' data-target='#modal-default'><span class='glyphicon glyphicon-eye-open'></span></a>";
+
+                              echo " &nbsp; <a href='customer-update.php?id=". $row['id'] ."&name=". $row['customer_name']."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."&name=". $row['customer_name']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                               echo "</td>";
                               echo "</tr>";
                             }
@@ -183,6 +186,7 @@ if(isset($_GET['alert'])){
                     <!-- /.content -->
                   </div>
                   <!-- /.content-wrapper -->
+                  <!-- /.content-wrapper -->
                   <!-- /.box-header -->
                 </div>
                 <!-- /.content -->
@@ -197,6 +201,26 @@ if(isset($_GET['alert'])){
           </div>
         </div>
       </section>
+      <div class="modal fade" id="modal-default">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Customer Information</h4>
+              </div>
+              <div class="modal-body">
+                <p>Infos&hellip;</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 
       <footer class="main-footer">
         <?php include('template/footer.php'); ?>
@@ -252,5 +276,33 @@ if(isset($_GET['alert'])){
 
  });
  </script>
+
+<script>
+$(".remove").click(function(){
+                                                    var id = $(this).parents("tr").attr("id");
+
+                                                    if(confirm('Are you sure to remove this record ?'))
+                                                    {
+                                                        $.ajax({
+                                                           url: 'customer-delete.php',
+                                                           type: 'POST',
+                                                           data: {id: id},
+
+                                                           error: function(data) {
+                                                              $("#"+id).remove();
+                                                              alert('Record removed successfully');
+
+                                                           },
+
+                                                           success: function(data) {
+                                                                $("#"+id).remove();
+                                                                alert("Record removed successfully");
+                                                           }
+
+                                                        });
+                                                    }
+                                                });
+
+                                            </script>
   </body>
   </html>

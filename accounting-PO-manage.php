@@ -8,18 +8,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-require_once 'config.php';
+require_once "config.php";
 
-$alertMessage=$po_status=$date_arrive=$po_trans_id="";
-
+$alertMessage=$status="";
 //Checking the values are existing in the database or not
-$query = "Select * from inventory order by inv_id";
+$query = "Select * from po_transactions order by inv_date asc";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if(isset($_GET['alert'])){
   if($_GET['alert'] == 'deletesuccess'){
     $alertMessage = "<div class='alert alert-danger' role='alert'>Data deleted successfully.</div>"; }
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +25,7 @@ if(isset($_GET['alert'])){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Manage Product</title>
+  <title>MyHome | Manage PO</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -102,8 +100,7 @@ if(isset($_GET['alert'])){
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <?php include ('template/sidebar-admin.php'); ?>
+      <?php include ('template/sidebar-accounting.php'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -115,7 +112,7 @@ if(isset($_GET['alert'])){
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        MANAGE PRODUCT
+        MANAGE PURCHASE ORDER
         <small>You can see a brief summary and overview of operation of business</small>
       </h1>
       <ol class="breadcrumb">
@@ -132,23 +129,20 @@ if(isset($_GET['alert'])){
       <section class="content">
         <div class="box box-success">
           <div class="box-header with-border">
-            <h3 class="box-title">Manage Products</h3>
-            <br><a href="product-add.php" class="text-center">+ Add New Product</a>
+            <h3 class="box-title">Manage Purchase Order</h3>
+            <br><a href="PO-add.php" class="text-center">+ Add New PO</a>
             <div class="box-body">
               <div class="row">
                 <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                   <thead>
                     <tr>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO #</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO-ID</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date</th>
+
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Description</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Quantity</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Cost Price</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date Delivered</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Notes</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Total Price</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -158,25 +152,39 @@ if(isset($_GET['alert'])){
                     require_once 'config.php';
 
                     // Attempt select query execution
-                    $query = "SELECT * FROM inventory order by date_arriv asc";
+                    $query = "SELECT * FROM po_transactions order by po_trans_id asc";
                     if($result = mysqli_query($link, $query)){
                       if(mysqli_num_rows($result) > 0){
 
                         while($row = mysqli_fetch_array($result)){
+                          $status = $row['po_status']; //ung 'po status' yan dapat name sa dbase. etong line lang gagalawin mo
 
                           echo "<tr>";
-                          echo "<td>" . $row['po_number'] . "</td>";
+                          echo "<td>#" . $row['po_trans_id'] . "</td>";
+                          echo "<td>" . $row['inv_date'] . "</td>";
+
                           echo "<td>" . $row['supplier_name'] . "</td>";
-                          echo "<td>" . $row['product_description'] . "</td>";
-                          echo "<td>" . $row['model'] . "</td>";
-                          echo "<td>" . $row['category'] . "</td>";
-                          echo "<td>" . $row['qty'] . "</td>";
-                          echo "<td>" . $row['retail_price'] . "</td>";
-                          echo "<td>" . $row['cost_price'] . "</td>";
-                          echo "<td>" . $row['date_arriv'] . "</td>";
-                          echo "<td>" . $row['branch_name'] . "</td>";
-                          echo "<td><a href='product-update.php?inv_id=". $row['inv_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
-                          echo "<a href='product-delete.php?inv_id=". $row['inv_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                          echo "<td>" . $row['paymentTerms'] . "</td>";
+                          echo "<td>₱" . number_format($row['totalPrice'],2) . "</td>";
+
+                          // eto ung mag chcheck kung ano value nung 'po status' tapos papalitan nya color
+                          // STATUS: 1=PENDING; 2=APPROVED; 3=VOID
+                          if($status == 1){
+                            echo "<td> <span class='label label-warning'>Pending</span> </td>";
+                          } elseif ($status == 2) {
+                              echo "<td> <span class='label label-success'>Approved</span> </td>";
+                          } elseif ($status == 3) {
+                            echo "<td> <span class='label label-danger'>Void</span> </td>";
+                          } else {
+                            echo "<td> <span class='label label-default'>Error</span> </td>";
+                          }
+                          //end here
+
+                          //echo "<td> <span class='label label-warning'>Pending</span> </td>";
+                          echo "<td>";
+
+                          echo "<a href='accounting-PO-view.php?id=". $row['po_trans_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
+                          //echo " &nbsp; <a href='PO-delete.php?id=". $row['po_trans_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                           echo "</td>";
                           echo "</tr>";
                         }
@@ -254,7 +262,7 @@ if(isset($_GET['alert'])){
       'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : true
+      'autoWidth'   : false
     })
   })
  </script>
@@ -270,5 +278,6 @@ if(isset($_GET['alert'])){
 
  });
  </script>
+
 </body>
 </html>

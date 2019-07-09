@@ -103,7 +103,7 @@ if(isset($_GET['alert'])){
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <?php include ('template/sidebar-admin.php'); ?>
+      <?php include ('template/sidebar-manager.php'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -149,7 +149,7 @@ if(isset($_GET['alert'])){
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Cost Price</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date Delivered</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Branch</th>
-                      <th>Action</th>
+      
                     </tr>
                   </thead>
                   <tbody>
@@ -175,8 +175,6 @@ if(isset($_GET['alert'])){
                           echo "<td>" . $row['cost_price'] . "</td>";
                           echo "<td>" . $row['date_arriv'] . "</td>";
                           echo "<td>" . $row['branch_name'] . "</td>";
-                          echo "<td><a href='product-update.php?inv_id=". $row['inv_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
-                          echo "<a href='product-delete.php?inv_id=". $row['inv_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                           echo "</td>";
                           echo "</tr>";
                         }

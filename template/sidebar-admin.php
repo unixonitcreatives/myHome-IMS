@@ -1,14 +1,15 @@
- <div class="user-panel">
-        <div class="pull-left image">
+
+<div class="user-panel">
+        <!-- <div class="pull-left image">
           <img src="dist/img/profile.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
-          <!-- Status -->
+          <!-- Status
           <a href="#"><i class="fa fa-circle text-success"></i> Online
           </a>
         </div>
-      </div>
+      </div> -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -57,9 +58,24 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="PO-add.php">Add PO</a></li>
-                                <li><a href="PO-manage.php">Manage PO</a></li>
+                                <!-- <li><a href="PO-add.php">Add PO</a></li> -->
                                 <li><a href="PO-request.php">Request PO</a></li>
+                                <li><a href="PO-manage.php">Manage PO</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-cart-plus"></i> <span>Sales Order</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <!-- <li><a href="PO-add.php">Add PO</a></li> -->
+                                <li><a href="SO-add.php">Create SO</a></li>
+                                <li><a href="SO-manage.php">Manage SO</a></li>
+
                             </ul>
                         </li>
 

@@ -26,6 +26,7 @@ $alertMessage="";
 
 require_once "config.php";
 
+//If the form is submitted or not.
 //If the form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
   $po_supplier_name =$_POST['po_supplier'];
@@ -103,7 +104,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
-
       <!-- Google Font -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     </head>
@@ -156,7 +156,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <aside class="main-sidebar">
           <!-- sidebar: style can be found in sidebar.less -->
           <section class="sidebar">
-          <?php include ('template/sidebar-admin.php'); ?>
+          <?php include ('template/sidebar-manager.php'); ?>
           </section>
           <!-- /.sidebar -->
         </aside>
@@ -242,7 +242,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
             <div class="form-group">
               <label>Notes</label>
-              <input type="text" class="form-control" placeholder="Notes" name="paymentTerms">
+              <input type="number" class="form-control" placeholder="Notes" name="paymentTerms">
             </div>
 
           </div>
@@ -316,7 +316,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       </div>
       <div class="box-footer">
         <!-- Buttons -->
-        <button type="submit" name="save" id="save" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();" class="btn btn-success pull-right">Save</button>
+        <button type="submit" name="save" id="save" class="btn btn-success pull-right">Save</button>
       </div>
 
     </form>
@@ -509,17 +509,6 @@ $(document).ready(function () {
     });
   }, 1000);
 
-});
-
-//disable button on click
-      $(function()
-{
-  $('#theform').submit(function(){
-    $("input[type='submit']", this)
-      .val("Please Wait...")
-      .attr('disabled', 'disabled');
-    return true;
-  });
 });
 </script>
 </body>
