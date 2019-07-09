@@ -281,6 +281,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                           <tfoot >
                             <tr>
+                              <td align="right" colspan="4">Delivery Fee:</td>
+                              <td>
+                                <div class="form-group">
+                                  <input type="number" class="form-control" id="deliveryFee" name="deliveryFee" value="100" placeholder="0.00">
+                                </div>
+                              </td>
+                              <td>
+
+                              </td>
+                            </tr>
+                            <tr>
                               <td align="right" colspan="4">Sub Total Amount:</td>
                               <td>
                                 <div class="form-group">
@@ -291,22 +302,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                               </td>
                             </tr>
+                            
+                            
                             <tr>
                               <td align="right" colspan="4">Discount/s:</td>
                               <td>
                                 <div class="form-group">
-                                  <input type="number" class="form-control" id="discount" name="discount" placeholder="0.00">
-                                </div>
-                              </td>
-                              <td>
-
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="right" colspan="4">Delivery Fee:</td>
-                              <td>
-                                <div class="form-group">
-                                  <input type="number" class="form-control" id="deliveryFee" name="deliveryFee" placeholder="0.00">
+                                  <input type="number" class="form-control" id="disc" name="discount" placeholder="0.00">
                                 </div>
                               </td>
                               <td>
@@ -532,6 +534,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $('#totalPrice').on('keyup change',function(){
         calc_total();
       });
+            $('#deliveryFee').on('keyup change',function(){
+        calc_total();
+      });
+
+      $('#discount').on('keyup change',function(){
+        calc_total();
+      });
+
 
 
     });
@@ -559,17 +569,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     {
       total=0;
 
+        var deliveryFee = parseFloat(document.getElementById("deliveryFee").value);
+        var disc = parseInt(document.getElementById("disc").value);
+        var discount_total = disc;
 
       $('.po_total_amount').each(function() {
         total += parseInt($(this).val());
       });
+        var discount_grand_total = total * discount_total;
+      $('#subTotal').val((total+deliveryFee).toFixed(2));
 
-      $('#subTotal').val((total).toFixed(2));
-      $('#totalPrice').val((total).toFixed(2));
+       $('#totalPrice').val(((total - disc) + deliveryFee).toFixed(2));
+      calc_grand_total();
+      
+
       //tax_sum=total/100*$('#tax').val();
       //$('#tax_amount').val(tax_sum.toFixed(2));
       //$('#total_amount').val((tax_sum+total).toFixed(2));
     }
+
+    function calc_grand_total()
+    {
+     
+    }
+
+
+
   </script>
 
 
