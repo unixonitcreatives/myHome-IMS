@@ -324,7 +324,7 @@ $stmt->execute();
                     <select class="form-control" style="width: 100%;" name='po_supplier'>
                       <option>--SELECT SUPPLIER--</option>
                       <?php
-                      $query = "select supplier_name from suppliers";
+                      $query = "select supplier_name from suppliers order by supplier_name";
                       $result = mysqli_query($link, $query);
 
                       $po_supplier_name = $_POST['supplier_name'];
