@@ -538,7 +538,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         calc_total();
       });
 
-      $('#discount').on('keyup change',function(){
+      $('#disc').on('keyup change',function(){
         calc_total();
       });
 
@@ -570,7 +570,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       total=0;
 
         var deliveryFee = parseFloat(document.getElementById("deliveryFee").value);
-        var disc = parseInt(document.getElementById("disc").value);
+        var disc = parseInt(document.getElementById("disc").value||0);
         var discount_total = disc;
 
       $('.po_total_amount').each(function() {
