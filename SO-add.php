@@ -308,7 +308,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                               <td align="right" colspan="4">Discount/s:</td>
                               <td>
                                 <div class="form-group">
-                                  <input type="number" class="form-control" id="disc" name="discount" placeholder="0.00">
+                                  <input type="number" class="form-control" id="disc" value="0" name="discount" placeholder="0.00">
                                 </div>
                               </td>
                               <td>
@@ -580,18 +580,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $('#subTotal').val((total+deliveryFee).toFixed(2));
 
        $('#totalPrice').val(((total - disc) + deliveryFee).toFixed(2));
-      calc_grand_total();
-      
-
+    
       //tax_sum=total/100*$('#tax').val();
       //$('#tax_amount').val(tax_sum.toFixed(2));
       //$('#total_amount').val((tax_sum+total).toFixed(2));
     }
 
-    function calc_grand_total()
-    {
-     
-    }
 
 
 
