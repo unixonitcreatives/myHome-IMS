@@ -172,7 +172,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <!-- Content Header (Page header) -->
           <section class="content-header">
             <h1>
-              ADD PURCHASE ORDER
+              ADD SALES ORDER
               <small></small>
             </h1>
             <ol class="breadcrumb">
