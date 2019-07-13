@@ -24,7 +24,7 @@ if (mysqli_num_rows($result) > 0) {
 }else {
     $alertMessage="<div class='alert alert-danger' role='alert'>Theres Nothing to see Here.</div>";
 }
-//If the form is submitted or not.
+
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     //Assigning posted values to variables.

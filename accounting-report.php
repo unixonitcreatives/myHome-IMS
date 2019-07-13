@@ -90,7 +90,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <?php include ('template/sidebar-admin.php'); ?>
+      <?php include ('template/sidebar-accounting.php'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
