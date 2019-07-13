@@ -531,6 +531,12 @@ document.getElementById("selectname").onchange = function() {
   document.getElementById("username").value = strUser;
   document.getElementById("price").value = strPrice;
 
+  // jQuery
+
+$('body').on('change', '#selectname', function() {
+$('#username2').val($('#selectname option:selected').val());
+});
+
 };
 </script>
 </body>
