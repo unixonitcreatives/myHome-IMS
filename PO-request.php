@@ -194,16 +194,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                       <div class="form-group">
                         <label>Supplier</label>
-                        <select class="form-control" style="width: 100%;" name='po_supplier'>
+                        <select class="form-control" style="width: 100%;" name='po_supplier' id="selectname">
                           <option>--SELECT SUPPLIER--</option>
                           <?php
-                          $query = "select supplier_name from suppliers order by supplier_name";
+                          $query = "select * from samplepo";
                           $result = mysqli_query($link, $query);
 
-                          $po_supplier_name = $_POST['supplier_name'];
+                          $po_supplier_name = $_POST['suppliername'];
 
                           while ($row = mysqli_fetch_assoc($result)) { ?>
-                            <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
+                            <option value="<?php echo $row['product1']; ?>"><?php echo $row['suppliername']; ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -273,7 +273,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="po_description" name="po_description[]" placeholder="Product Description">
+                      <input type="text" class="form-control" id="username" name="username[]" placeholder="Product Description" value="">
                     </div>
                   </td>
                   <td>
@@ -521,6 +521,14 @@ $(document).ready(function () {
     return true;
   });
 });
+</script>
+
+<script>
+document.getElementById("selectname").onchange = function() {
+  var e = document.getElementById("selectname");
+  var strUser = e.options[e.selectedIndex].value;
+  document.getElementById("username").value = strUser;
+};
 </script>
 </body>
 </html>
