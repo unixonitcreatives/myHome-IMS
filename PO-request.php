@@ -278,7 +278,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   </td>
                   <td>
                     <div class="form-group">
-                      <input type="number" class="form-control" id="po_unit_price" name="po_unit_price[]" placeholder="Product Unit Price">
+                      <input type="number" class="form-control" id="price" name="price[]" placeholder="Product Unit Price" value="">
                     </div>
                   </td>
                   <td>
@@ -527,7 +527,10 @@ $(document).ready(function () {
 document.getElementById("selectname").onchange = function() {
   var e = document.getElementById("selectname");
   var strUser = e.options[e.selectedIndex].value;
+  var strPrice = e.options[e.selectedIndex].value;
   document.getElementById("username").value = strUser;
+  document.getElementById("price").value = strPrice;
+
 };
 </script>
 </body>
