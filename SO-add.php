@@ -172,7 +172,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <!-- Content Header (Page header) -->
           <section class="content-header">
             <h1>
-              ADD PURCHASE ORDER
+              ADD SALES ORDER
               <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -224,7 +224,46 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <label>Date</label>
                         <input type="date" class="form-control"  name="so_date">
                       </div>
+<<<<<<< HEAD
+          
+                    </div>
 
+          <div class="col-md-12">
+            <!-- 2nd row content -->
+            <div class="table-responsive">
+              <table class="table table-bordered" id="crud_table">
+                <tr>
+                  <th width="18%">Item</th>
+                  <th width="18%">Quantity</th>
+                  <th width="18%">Unit</th>
+                  <th width="18%">Unit Price</th>
+                  <th width="18%">Amount</th>
+                  <th width="10%"></th>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="po_desciption" name="po_desciption[]" placeholder="Product Name">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="number" class="form-control" id="po_qty" name="po_qty[]" placeholder="Product Qty">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="po_unit" name="po_unit[]" placeholder="Product Unit">
+                    </div>
+                  </td>
+                  
+                  <td>
+                    <div class="form-group">
+                      <input type="number" class="form-control" id="po_unit_price" name="po_unit_price[]" placeholder="Product Unit Price">
+=======
+
+>>>>>>> 22678c3e62ebbefce94288cadb373a519b4974f3
                     </div>
 
                     <div class="col-md-12">

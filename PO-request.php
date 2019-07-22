@@ -223,7 +223,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                           $query = "select po_trans_id, supplier_name from po_transactions";
                           $result = mysqli_query($link, $query);
 
-                          $po_supplier_name = $_POST['supplier_name'];
+                          $po_supplier_name = $_POST['suppliername'];
 
                           while ($row = mysqli_fetch_assoc($result)) { ?>
                             <option value="<?php echo $row['po_trans_id']; ?>"><?php echo $row['supplier_name']; ?></option>
@@ -483,6 +483,23 @@ $(document).ready(function () {
     return true;
   });
 });
+</script>
+
+<script>
+document.getElementById("selectname").onchange = function() {
+  var e = document.getElementById("selectname");
+  var strUser = e.options[e.selectedIndex].value;
+  var strPrice = e.options[e.selectedIndex].value;
+  document.getElementById("username").value = strUser;
+  document.getElementById("price").value = strPrice;
+
+  // jQuery
+
+$('body').on('change', '#selectname', function() {
+$('#username2').val($('#selectname option:selected').val());
+});
+
+};
 </script>
 </body>
 </html>

@@ -112,7 +112,7 @@ if(isset($_GET['alert'])){
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        MANAGE PURCHASE ORDER
+        MANAGE Sales ORDER
         <small>You can see a brief summary and overview of operation of business</small>
       </h1>
       <ol class="breadcrumb">
@@ -129,25 +129,24 @@ if(isset($_GET['alert'])){
       <section class="content">
         <div class="box box-success">
           <div class="box-header with-border">
-            <h3 class="box-title">Manage Purchase Order</h3>
-            <br><a href="PO-add.php" class="text-center">+ Add New PO</a>
+            <h3 class="box-title">Manage Sales Order</h3>
+            <br><a href="SO-add.php" class="text-center">+ Add New SO</a>
             <div class="box-body">
               <div class="row">
                 <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                   <thead>
                     <tr>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO-ID</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SO-ID</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date</th>
                       
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Notes</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Customer</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Total Price</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php
+                    <?php /* I-COMMENT KO MUNA TO
 
                     // Include config file
                     require_once 'config.php';
@@ -202,7 +201,9 @@ if(isset($_GET['alert'])){
 
                     // Close connection
                     mysqli_close($link);
-                    ?>
+                    COMMENT END HERE */ ?>
+
+
                   </tbody>
                 </table>
                 <!-- /.content -->
