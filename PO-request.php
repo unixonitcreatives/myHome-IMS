@@ -79,6 +79,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <!DOCTYPE html>
     <html>
     <head>
+      <script>
+      function showUser(str) {
+          if (str == "") {
+              document.getElementById("txtHint").innerHTML = "";
+              return;
+          } else {
+              if (window.XMLHttpRequest) {
+                  // code for IE7+, Firefox, Chrome, Opera, Safari
+                  xmlhttp = new XMLHttpRequest();
+              } else {
+                  // code for IE6, IE5
+                  xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+              }
+              xmlhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      document.getElementById("txtHint").innerHTML = this.responseText;
+                  }
+              };
+              xmlhttp.open("GET","PO-add-2.php?q="+str,true);
+              xmlhttp.send();
+          }
+      }
+      </script>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>MyHome | Add PO</title>
@@ -194,16 +217,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                       <div class="form-group">
                         <label>Supplier</label>
-                        <select class="form-control" style="width: 100%;" name='po_supplier'>
+                        <select class="form-control" style="width: 100%;" name='po_supplier' onchange="showUser(this.value)">
                           <option>--SELECT SUPPLIER--</option>
                           <?php
-                          $query = "select supplier_name from suppliers order by supplier_name";
+                          $query = "select po_trans_id, supplier_name from po_transactions";
                           $result = mysqli_query($link, $query);
 
                           $po_supplier_name = $_POST['supplier_name'];
 
                           while ($row = mysqli_fetch_assoc($result)) { ?>
-                            <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
+                            <option value="<?php echo $row['po_trans_id']; ?>"><?php echo $row['supplier_name']; ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -247,70 +270,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
           </div>
 
-          <div class="col-md-12">
+          <div class="col-md-12" id="txtHint">
             <!-- 2nd row content -->
-            <div class="table-responsive">
-              <table class="table table-bordered" id="crud_table">
-                <tr>
-                  <th width="18%">Quantity</th>
-                  <th width="18%">Unit</th>
-                  <th width="18%">Description</th>
-                  <th width="18%">Unit Price</th>
-                  <th width="18%">Amount</th>
-                  <th width="10%"></th>
-                </tr>
 
-                <tr>
-                  <td>
-                    <div class="form-group">
-                      <input type="number" class="form-control" id="po_qty" name="po_qty[]" placeholder="Product Qty">
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="po_unit" name="po_unit[]" placeholder="Product Unit">
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="po_description" name="po_description[]" placeholder="Product Description">
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-group">
-                      <input type="number" class="form-control" id="po_unit_price" name="po_unit_price[]" placeholder="Product Unit Price">
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-group">
-                      <input type="number" class="po_total_amount" id="po_total_amount" name="po_total_amount[]" placeholder= "0.00" readonly>
-                    </div>
-                  </td>
-
-                  <td>
-                    <div align="right">
-                          <button type="button" name="add" id="add" class="btn btn-success pull-left">Add Row</button>
-                        </div>
-                  </td>
-                </tr>
-
-
-                <tfoot >
-                  <tr>
-                    <td align="right" colspan="4">Grand Total Amount:</td>
-                    <td>
-                      <div class="form-group">
-                        <input type="number" class="form-control" id="totalPrice" name="totalPrice" placeholder="0.00" readonly>
-                      </div>
-                    </td>
-                    <td>
-
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-
-            </div>
           </div>
         </div>
       </div>
