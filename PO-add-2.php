@@ -62,7 +62,7 @@
 
 
 
-                  <select class="form-control" style="width: 100%;" name='po_supplier' onchange="showUser(this.value)">
+                  <select class="form-control" style="width: 100%;" name='po_supplier'">
                     <option>--SELECT SUPPLIER--</option>
                     <?php
 
