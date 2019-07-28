@@ -225,7 +225,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <input type="date" class="form-control"  name="so_date">
                       </div>
 <<<<<<< HEAD
-          
+
                     </div>
 
           <div class="col-md-12">
@@ -257,7 +257,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                       <input type="text" class="form-control" id="po_unit" name="po_unit[]" placeholder="Product Unit">
                     </div>
                   </td>
-                  
+
                   <td>
                     <div class="form-group">
                       <input type="number" class="form-control" id="po_unit_price" name="po_unit_price[]" placeholder="Product Unit Price">
@@ -341,8 +341,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                               </td>
                             </tr>
-                            
-                            
+
+
                             <tr>
                               <td align="right" colspan="4">Discount/s:</td>
                               <td>
@@ -619,7 +619,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $('#subTotal').val((total+deliveryFee).toFixed(2));
 
        $('#totalPrice').val(((total - disc) + deliveryFee).toFixed(2));
-    
+
       //tax_sum=total/100*$('#tax').val();
       //$('#tax_amount').val(tax_sum.toFixed(2));
       //$('#total_amount').val((tax_sum+total).toFixed(2));

@@ -73,11 +73,11 @@
                     $query = "select request_po.po_description from request_po where request_po.po_trans_id = '".$q."'";
                     $result = mysqli_query($link, $query);
 
-                    $po_supplier_name = $_POST['po_description'];
+                    //$po_supplier_name = $_POST['po_description'];
 
                     while ($row = mysqli_fetch_assoc($result)) { ?>
                       <option value="<?php echo $row['po_description']; ?>"><?php echo $row['po_description']; ?></option>
-                    <?php } ?>
+                    <?php } mysqli_close($link); ?>
                   </select>
                 </div>
               </td>
