@@ -62,7 +62,7 @@
 
 
 
-                  <select class="form-control" style="width: 100%;" name='po_supplier' onchange="showUser(this.value)">
+                  <select class="form-control" style="width: 100%;" name='po_supplier'>
                     <option>--SELECT SUPPLIER--</option>
                     <?php
 
@@ -70,7 +70,7 @@
 
                     require_once "config.php";
 
-                    $query = "select request_po.po_description from request_po where request_po.po_trans_id = '".$q."'";
+                    $query = "select request_po.po_description from request_po where request_po.po_trans_id = '".$q."' ";
                     $result = mysqli_query($link, $query);
 
                     //$po_supplier_name = $_POST['po_description'];
@@ -102,7 +102,7 @@
                 <td align="right">Grand Total Amount:</td>
                 <td>
                   <div class="form-group">
-                    <input type="number" class= "totalPrice" id="totalPrice" name="totalPrice[]" value="0" readonly>
+                    <input type="number" class= "totalPrice" id="totalPrice[]" name="totalPrice[]" value="0" readonly>
                   </div>
                 </td>
               </tr>
