@@ -55,7 +55,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         '".$_POST['po_total_amount'][$j]."',
         '".$user."')";
 
-        $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
+        if("" == trim($_POST['qty']))
+        { 
+          
+        }
+        else {
+          $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
+        } 
 
       }
 
@@ -228,7 +234,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                           $po_supplier_name = $_POST['suppliername'];
 
                           while ($row = mysqli_fetch_assoc($result)) { ?>
-                            <option value="<?php echo $row['po_trans_id']; ?>"><?php echo $row['supplier_name']; ?></option>
+                            <option value="<?php echo $row['supplier_name']; ?>"><?php echo $row['supplier_name']; ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -396,73 +402,6 @@ $(function () {
 })
 </script>
 
-<!-- Add Rows -->
-<script>
-$(document).ready(function(){
-  var count = 1;
-  $('#add').click(function(){
-    count = count + 1;
-    var html_code = "<tr id='row"+count+"'>";
-    html_code += "<td><input type='number' class='form-control' id='po_qty' name='po_qty[]' placeholder='Product Qty'></td>";
-    html_code += "<td><input type='text' class='form-control' id='po_unit' name='po_unit[]' placeholder='Product Unit'></td>";
-    html_code += "<td><input type='text' class='form-control' id='po_description' name='po_description[]' placeholder='Product Description'></td>";
-    html_code += "<td><input type='number' class='form-control' id='po_unit_price' name='po_unit_price[]' placeholder='Product Unit Price'></td>";
-    html_code += "<td><input type='number' class='po_total_amount' id='po_total_amount' name='po_total_amount[]' placeholder='0.00' readonly></td>";
-    html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-s remove'>-</button></td>";
-    html_code += "</tr>";
-    $('#crud_table').append(html_code);
-  });
-  $(document).on('click', '.remove', function(){
-    var delete_row = $(this).data("row");
-    $('#' + delete_row).remove();
-  });
-
-
-  $('#crud_table tbody').on('keyup change',function(){
-    calc();
-  });
-  $('#totalPrice').on('keyup change',function(){
-    calc_total();
-  });
-
-
-});
-
-$(document).ready(calculate);
-$(document).on("keyup", calculate);
-
-function calc()
-{
-  $('#crud_table tbody tr').each(function(i, element) {
-    var html = $(this).html();
-    if(html!='')
-    {
-      var qty = $(this).find('#po_qty').val();
-      var price = $(this).find('#po_unit_price').val();
-      $(this).find('#po_total_amount').val(qty*price);
-
-      calc_total();
-    }
-  });
-}
-
-function calc_total()
-{
-  total=0;
-
-  $('.po_total_amount').each(function() {
-    total += parseInt($(this).val());
-  });
-
-  $('#totalPrice').val(total.toFixed(2));
-  //tax_sum=total/100*$('#tax').val();
-	//$('#tax_amount').val(tax_sum.toFixed(2));
-	//$('#total_amount').val((tax_sum+total).toFixed(2));
-}
-</script>
-
-
-
 <!-- Alert animation -->
 <script type="text/javascript">
 $(document).ready(function () {
@@ -503,5 +442,7 @@ $('#username2').val($('#selectname option:selected').val());
 
 };
 </script>
+
+
 </body>
 </html>

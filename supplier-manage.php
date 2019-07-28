@@ -215,6 +215,7 @@ if(isset($_GET['alert'])){
                   <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Supplier Information</h4>
               </div>
+              
               <div class="modal-body">
                 <p>Infos&hellip;</p>
               </div>
@@ -223,9 +224,9 @@ if(isset($_GET['alert'])){
               </div>
             </div>
             <!-- /.modal-content -->
-          </div>
+    </div>
           <!-- /.modal-dialog -->
-        </div>
+</div>
         <!-- /.modal -->
 
 <footer class="main-footer">

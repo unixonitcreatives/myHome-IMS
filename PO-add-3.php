@@ -38,10 +38,9 @@
         <div class="table-responsive">
 
 
-          <table class="table table-striped bordered" id="crud_table">
+          <table class="table table-bordered" id="crud_table">
             <thead>
                     <tr>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">TR ID</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Name</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
@@ -49,7 +48,6 @@
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
 
                       <th>Quantity</th>
-                      <th>Price</th>
                     </tr>
                   </thead>
             <tbody>
@@ -62,25 +60,18 @@
                     $query = "SELECT * FROM inventory WHERE supplier_name = '". $q ."' ";
                     if($result = mysqli_query($link, $query)){
                       if(mysqli_num_rows($result) > 0){
-                        $ctr = 0;
+
                         while($row = mysqli_fetch_array($result)){
-                          $ctr += 1;
-                          echo "<tr id='row".$ctr."'>";
-                          echo "<td>" . $ctr . "</td>";
+
+                          echo "<tr>";
                           echo "<td>" . $row['product_description'] . "</td>";
                           echo "<td>" . $row['model'] . "</td>";
                           echo "<td>" . $row['category'] . "</td>";
                           echo "<td>" . $row['qty'] . "</td>";
-                          //echo "<td id='po_unit_price'>" . $row['cost_price'] . "</td>";
+                          echo "<td>" . $row['cost_price'] . "</td>";
 
-                          echo "<td><input type='text' class='' id='po_unit_price' name='po_unit_price[]' value='".$row['cost_price']."' readonly/></td>";
-
-                          //echo "<td><input type='text' class='form-control' id='po_unit_price' name='po_unit_price[]'/></td>";
-
-                          echo "<td><input type='text' class='' id='po_qty' name='po_qty[]'/></td>";
-
-                          echo "<td><input type='text' class='po_total_amount' id='po_total_amount' name='po_total_amount[]' readonly /></td>";
-
+                          echo "<td><input type='text' placeholder='No stock' readonly /></td>";
+    
                           echo "</td>";
                           echo "</tr>";
                         }
@@ -97,25 +88,8 @@
                     // Close connection
                     mysqli_close($link);
                     ?>
-            </tbody>
-
-                  
+                  </tbody>
             <tfoot>
-              <tr></tr>
-              <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="pull-right"><strong class="form-control">Total:</strong></td>
-              <td>
-                  <div class="form-group">
-                    <input type="number" class="form-control" id="totalPrice" name="totalPrice" value="0" readonly>
-                  </div>
-                </td>
-              <tr>
             </tfoot>
           </table>
 
@@ -126,51 +100,6 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<script>
-  $('#crud_table tbody').on('keyup change',function(){
-    calc();
-  });
-  $('#totalPrice').on('keyup change',function(){
-    calc_total();
-  });
-
-
-});
-
-$(document).ready(calculate);
-$(document).on("keyup", calculate);
-
-function calc()
-{
-  $('#crud_table tbody tr').each(function(i, element) {
-    var html = $(this).html();
-    if(html!='')
-    {
-      var qty = $(this).find('#po_qty').val();
-      var price = $(this).find('#po_unit_price').val();
-      $(this).find('#po_total_amount').val(qty*price);
-
-      calc_total();
-    }
-  });
-}
-
-function calc_total()
-{
-  total=0;
-
-  $('.po_total_amount').each(function() {
-    total += parseInt($(this).val());
-  });
-
-  $('#totalPrice').val(total.toFixed(2));
-  //tax_sum=total/100*$('#tax').val();
-  //$('#tax_amount').val(tax_sum.toFixed(2));
-  //$('#total_amount').val((tax_sum+total).toFixed(2));
-}
-</script>
-
-
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -270,20 +199,28 @@ $(function () {
 </script>
 
 <script>
-
-
-
-
+function calculateSum() {
+  var t = 0,
+  e = 0,
+  p = 0;
+  $(".total_price").each(function() {
+    isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
+  }),
+  e = t.toFixed(2),
+  $("#grandTotal").val(e)
+}
 </script>
 
 <!-- Alert animation -->
 <script type="text/javascript">
 $(document).ready(function () {
+
   window.setTimeout(function() {
     $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
       $(this).remove();
     });
   }, 1000);
+
 });
 </script>
 </body>
