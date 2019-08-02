@@ -35,104 +35,88 @@
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-green fixed sidebar-mini">
 
-        <div class="table-responsive">
+  <div class="table-responsive">
+    <!--Table-->
+    <table class="table table-bordered" id="productTable">
+      <thead>
+        <tr>
+          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model</th>
+          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Stock Count</th>
+          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
+          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php
+        $q = $_GET['q'];
+
+        $arrayNumber = 0;
+        for($x = 1; $x < 4; $x++) { //begin loop?><!--MODEL-->
+          <tr id="row<?php echo $x; ?>" class="<?php echo $arrayNumber; //Multidimensional Array?>">
+            <td>
+              <div class="form-group">
+                <select class="form-control" name="productName[]" id="productName<?php echo $x; ?>" onchange="getProductData(<?php echo $x; ?>)">
+                  <option>~~SELECT~~</option>
+                  <?php
+                  $query = "SELECT * FROM inventory WHERE supplier_name = '". $q ."'  ";;
+                  $productData = $connect->query($query);
+
+                  while($row = $productData->fetch_array()) {
+                    echo "<option value='".$row['inv_id']."' id='changeProduct".$row['inv_id']."'>".$row['product_description']."</option>";
+                  } // /while
+
+                  ?>
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group"><!--QTY-->
+                <input type="number" name="quantity[]" id="quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x; ?>)" autocomplete="off" class="form-control" min="1">
+              </div>
+            </td>
+            <td>
+              <div class="form-group"><!--UNIT PRICE-->
+                <input type="text" name="rate[]" id="rate<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" />
+                <!--==para saan kaya hidden input==-->
+                <input type="hidden" name="rateValue[]" id="rateValue<?php echo $x; ?>" autocomplete="off" class="form-control" />
+              </div>
+            </td>
+            <td>
+              <div class="form-group"><!--TOTAL PRICE-->
+                <input type="text" name="total[]" id="total<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
+                <!--==para saan kaya hidden input==-->
+                <input type="hidden" name="totalValue[]" id="totalValue<?php echo $x; ?>" autocomplete="off" class="form-control" />
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <button type="button" class="btn btn-default" onclick="addRow()" id="addRowBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button>
+              </div>
+            </td>
+          </tr>
+          <?php $arrayNumber++; }//end loop ?>
+        </tbody>
+        <tfoot>
+            <div class="form-group">  <!--subamount-->
+              <label for="subTotal" class="col-sm-3 control-label">Sub Amount</label>
+                <input type="text" class="form-control" id="subTotal" name="subTotal" disabled="true" />
+                <input type="hidden" class="form-control" id="subTotalValue" name="subTotalValue" />
+            </div>  <!--/subamount-->
+        </tfoot>
+      </table>
+      <!--/table-->
 
 
-          <table class="table table-striped bordered" id="crud_table">
-            <thead>
-                    <tr>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">TR ID</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Name</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Stock Count</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
-
-                      <th>Quantity</th>
-                      <th>Price</th>
-                    </tr>
-                  </thead>
-            <tbody>
-                    <?php
-                    // Include config file
-                    require_once 'config.php';
-
-                    // Attempt select query execution
-                    $q = $_GET['q'];
-                    $query = "SELECT * FROM inventory WHERE supplier_name = '". $q ."' ";
-                    if($result = mysqli_query($link, $query)){
-                      if(mysqli_num_rows($result) > 0){
-                        $ctr = 0;
-                        while($row = mysqli_fetch_array($result)){
-                          $ctr += 1;
-                          echo "<tr id='row".$ctr."'>";
-                          echo "<td>" . $ctr . "</td>";
-                          echo "<td>" . $row['product_description'] . "</td>";
-                          echo "<td>" . $row['model'] . "</td>";
-                          echo "<td>" . $row['category'] . "</td>";
-                          echo "<td>" . $row['qty'] . "</td>";
-                          //echo "<td id='po_unit_price'>" . $row['cost_price'] . "</td>";
-
-                          echo "<td><input type='text' class='' id='po_unit_price' name='po_unit_price[]' value='".$row['cost_price']."' readonly/></td>";
-
-                          //echo "<td><input type='text' class='form-control' id='po_unit_price' name='po_unit_price[]'/></td>";
-
-                          echo "<td><input type='text' class='' id='po_qty' name='po_qty[]'/></td>";
-
-                          echo "<td><input type='text' class='po_total_amount' id='po_total_amount' name='po_total_amount[]' readonly /></td>";
-
-                          echo "</td>";
-                          echo "</tr>";
-                        }
-
-                        // Free result set
-                        mysqli_free_result($result);
-                      } else{
-                        echo "<p class='lead'><em>No records were found.</em></p>";
-                      }
-                    } else{
-                      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                    }
-
-                    // Close connection
-                    mysqli_close($link);
-                    ?>
-            </tbody>
-
-                  
-            <tfoot>
-              <tr></tr>
-              <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="pull-right"><strong class="form-control">Total:</strong></td>
-              <td>
-                  <div class="form-group">
-                    <input type="number" class="form-control" id="totalPrice" name="totalPrice" value="0" readonly>
-                  </div>
-                </td>
-              <tr>
-            </tfoot>
-          </table>
-
-        </div>
-
-</form>
-</section>
-<!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<script>
-  $('#crud_table tbody').on('keyup change',function(){
+    </div>
+    <!-- /.content-wrapper -->
+    <script>
+    /*$('#crud_table tbody').on('keyup change',function(){
     calc();
   });
   $('#totalPrice').on('keyup change',function(){
-    calc_total();
-  });
+  calc_total();
+});
 
 
 });
@@ -142,32 +126,32 @@ $(document).on("keyup", calculate);
 
 function calc()
 {
-  $('#crud_table tbody tr').each(function(i, element) {
-    var html = $(this).html();
-    if(html!='')
-    {
-      var qty = $(this).find('#po_qty').val();
-      var price = $(this).find('#po_unit_price').val();
-      $(this).find('#po_total_amount').val(qty*price);
+$('#crud_table tbody tr').each(function(i, element) {
+var html = $(this).html();
+if(html!='')
+{
+var qty = $(this).find('#po_qty').val();
+var price = $(this).find('#po_unit_price').val();
+$(this).find('#po_total_amount').val(qty*price);
 
-      calc_total();
-    }
-  });
+calc_total();
+}
+});
 }
 
 function calc_total()
 {
-  total=0;
+total=0;
 
-  $('.po_total_amount').each(function() {
-    total += parseInt($(this).val());
-  });
+$('.po_total_amount').each(function() {
+total += parseInt($(this).val());
+});
 
-  $('#totalPrice').val(total.toFixed(2));
-  //tax_sum=total/100*$('#tax').val();
-  //$('#tax_amount').val(tax_sum.toFixed(2));
-  //$('#total_amount').val((tax_sum+total).toFixed(2));
-}
+$('#totalPrice').val(total.toFixed(2));
+//tax_sum=total/100*$('#tax').val();
+//$('#tax_amount').val(tax_sum.toFixed(2));
+//$('#total_amount').val((tax_sum+total).toFixed(2));
+}*/
 </script>
 
 
@@ -286,5 +270,6 @@ $(document).ready(function () {
   }, 1000);
 });
 </script>
+<script src="dist/js/orderSample.js"></script>
 </body>
 </html>

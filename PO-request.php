@@ -56,12 +56,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         '".$user."')";
 
         if("" == trim($_POST['qty']))
-        { 
-          
+        {
+
         }
         else {
           $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
-        } 
+        }
 
       }
 
@@ -108,7 +108,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           }
       }
 
-      
+
       </script>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -279,7 +279,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           </div>
 
           <div class="col-md-12" id="txtHint">
-            <!-- 2nd row content -->
+            <!-- PO-add-2.php -->
 
           </div>
         </div>
@@ -442,6 +442,8 @@ $('#username2').val($('#selectname option:selected').val());
 
 };
 </script>
+
+<script src="dist/js/orderSample.js"></script>
 
 
 </body>
